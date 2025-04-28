@@ -9,6 +9,7 @@ import SellingLabel from "./SellingLabel";
 type Product = {
     id: string;
     title: string;
+    handle: string;
     price: number;
     originalPrice?: number;
     discountPercentage?: number;
@@ -28,7 +29,7 @@ type Product = {
 // Product Card Component
 export const ProductCard = ({ product }: { product: Product }) => {
     return (
-        <Link href={`/product/${product.slug}`}>
+        <Link href={`/products/${product.handle}?variant=${product.id}`}>
             <div className="group relative flex flex-col">
                 <div className="relative aspect-[5/7.2] w-full overflow-hidden bg-slate-100">
                     {product.badge && (

@@ -4,9 +4,43 @@ import rawProductData from "@/app/products.json";
 import { ProductCard } from "./ProductCard";
 
 
+type Variant = {
+    id: number;
+    title: string;
+    option1: string;
+    option2: string;
+    option3: string | null;
+    sku: string;
+    requires_shipping: boolean;
+    taxable: boolean;
+    featured_image?: {
+        id: number;
+        product_id: number;
+        position: number;
+        created_at: string;
+        updated_at: string;
+        alt: string | null;
+        width: number;
+        height: number;
+        src: string;
+        variant_ids: number[];
+    };
+    available: boolean;
+    price: string;
+    grams: number;
+    compare_at_price: string | null;
+    position: number;
+    product_id: number;
+    created_at: string;
+    updated_at: string;
+};
+
+
+
 type Product = {
     id: string;
     title: string;
+    handle: string; // Product handle (for /products/[handle])
     price: number;
     originalPrice?: number;
     discountPercentage?: number;
@@ -23,7 +57,7 @@ type Product = {
 // Transform raw product data into Product type array (one product per color)
 const products: Product[] = rawProductData.flatMap((product) => {
     // Ensure variants and options exist
-    if (!product.variants || !product.options) {
+    if (!product.variants || !product.options || !product.handle) {
         console.warn(`Product ${product.id} missing variants or options`);
         return [];
     }
@@ -36,7 +70,8 @@ const products: Product[] = rawProductData.flatMap((product) => {
         }
         acc[color].push(variant);
         return acc;
-    }, {} as Record<string, typeof product.variants>);
+    }, {} as Record<string, Variant[]>);
+
 
     // Create one product per color
     return Object.keys(variantsByColor).map((color) => {
@@ -44,6 +79,7 @@ const products: Product[] = rawProductData.flatMap((product) => {
         return {
             id: firstVariant.id.toString(),
             title: `${product.title} - ${color}`,
+            handle: product.handle, // Product handle for URL
             price: parseFloat(firstVariant.price),
             originalPrice: firstVariant.compare_at_price
                 ? parseFloat(firstVariant.compare_at_price)

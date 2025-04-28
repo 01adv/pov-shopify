@@ -68,11 +68,6 @@ export const ProductCard = ({ product }: { product: Product }) => {
                             ({product.reviewCount})
                         </span>
                     </div>
-                    {/* {product.discountPercentage && (
-                        <Badge className="w-fit bg-primary text-white py-2 px-7">
-                            {product.discountPercentage}% OFF
-                        </Badge>
-                    )} */}
                     <div className="mt-auto flex flex-col md:flex-row items-baseline gap-2 lg:gap-3">
                         {product.originalPrice && (product?.originalPrice > product.price) && (
                             <span className="text-sm text-slate-500 line-through">

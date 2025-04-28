@@ -88,7 +88,7 @@ export default function StickyProductHeader({ product }: StickyProductHeaderProp
                 <div className="flex items-start gap-3 mb-3">
                     {/* Product thumbnail */}
                     <div className="h-16 w-16 flex-shrink-0">
-                        <Image height={100} width={100} src={product.image || "/placeholder.svg"} alt={product.name} className="h-full w-full object-cover" />
+                        <Image height={100} width={100} src={product.image || "/placeholder.png"} alt={product.name} className="h-full w-full object-cover" />
                     </div>
 
                     {/* Product details */}

@@ -53,7 +53,7 @@ export default function CustomerReviews() {
             <h2 className="text-2xl text-center mb-3 lg:mb-6 text-muted-foreground">Customer Reviews</h2>
 
             <div className="max-lg:flex max-lg:justify-center">
-                <div className="grid lg:grid-cols-3 gap-4 lg:gap-8 mb-12 w-full bg-orange-100 max-w-md lg:max-w-full">
+                <div className="grid lg:grid-cols-3 gap-4 lg:gap-8 mb-12 w-full max-w-md lg:max-w-full">
                     {/* Overall Rating */}
                     <div className="flex flex-col items-center lg:items-start">
                         <div className="flex items-center mb-1 gap-1">

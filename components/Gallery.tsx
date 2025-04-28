@@ -51,7 +51,7 @@ export default function ProductGallery() {
                                 <div className="relative aspect-[208/308] sm:aspect-[250/375] w-[208px] sm:w-[250px]">
                                     <Image
                                         fill
-                                        src={image.src || "/placeholder.svg"}
+                                        src={image.src || "/placeholder.png"}
                                         alt={`Product image ${index + 1}`}
                                         className="object-contain"
                                     />
@@ -92,7 +92,7 @@ export default function ProductGallery() {
                     <div className="h-[600px] w-[412px] relative">
                         <Image
                             fill
-                            src={images[0].src || "/placeholder.svg"}
+                            src={images[0].src || "/placeholder.png"}
                             alt="Main product image"
                             className="h-full w-full object-cover"
                         />
@@ -107,7 +107,7 @@ export default function ProductGallery() {
                         <div key={`desktop-${image.id}`} className="h-[500px] w-[333px] lg:w-full relative">
                             <Image
                                 fill
-                                src={image.src || "/placeholder.svg"}
+                                src={image.src || "/placeholder.png"}
                                 alt={`Product image ${index + 2}`}
                                 className="h-full w-full object-cover"
                             />

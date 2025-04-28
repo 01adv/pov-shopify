@@ -109,19 +109,6 @@ function ProductCard({ product }: { product: Product }) {
         <Link href={`/product/${product.slug}`}>
             <div className="group relative flex flex-col">
                 <div className="relative aspect-[5/7.2] w-full overflow-hidden bg-slate-100">
-                    {/* {product.badge && (
-                    product.badge.type === "selling-fast" ? (
-                        <SellingLabel label={"Selling Fast"} />
-                    ) : (
-
-                        <Badge
-                            className={`absolute left-3 top-3 bg-slate-100 text-black
-                                }`}
-                        >
-                            {product.badge.text}
-                        </Badge>
-                    )
-                )} */}
                     {product.badge && (
                         <div className="absolute inset-0 z-10">
                             {product.badge.type === "selling-fast" ? (
@@ -140,6 +127,7 @@ function ProductCard({ product }: { product: Product }) {
                         src={product.image || "/placeholder.png"}
                         alt={product.title}
                         fill
+                        loading="lazy"
                         className="object-cover transition-transform duration-300 group-hover:scale-[102%]"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     />

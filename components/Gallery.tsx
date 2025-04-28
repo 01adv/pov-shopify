@@ -45,7 +45,7 @@ export default function ProductGallery() {
                         {images.map((image, index) => (
                             <div
                                 key={`mobile-${image.id}`}
-                                className="w-full flex-shrink-0 bg-red-100 relative flex justify-center items-center"
+                                className="w-full flex-shrink-0 relative flex justify-center items-center"
                             >
                                 {/* Set aspect ratio container */}
                                 <div className="relative aspect-[208/308] sm:aspect-[250/375] w-[208px] sm:w-[250px]">
@@ -54,6 +54,7 @@ export default function ProductGallery() {
                                         src={image.src || "/placeholder.png"}
                                         alt={`Product image ${index + 1}`}
                                         className="object-contain"
+                                        loading="lazy"
                                     />
                                     {image.label && (
                                         <SellingLabel label={image.label} />
@@ -110,6 +111,7 @@ export default function ProductGallery() {
                                 src={image.src || "/placeholder.png"}
                                 alt={`Product image ${index + 2}`}
                                 className="h-full w-full object-cover"
+                                loading="lazy"
                             />
                             {image.label && (
                                 <SellingLabel label={image.label} />

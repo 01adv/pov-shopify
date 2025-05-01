@@ -1,190 +1,137 @@
-import { ChevronDown, Settings2, Star } from "lucide-react"
-import Image from "next/image"
+import { ChevronDown, Settings2 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge"
-import SellingLabel from "./SellingLabel"
-import Link from "next/link"
+import rawProductData from "@/app/products.json";
+import { ProductCard } from "./ProductCard";
 
-// Product type definition
+
+type Variant = {
+    id: number;
+    title: string;
+    option1: string;
+    option2: string;
+    option3: string | null;
+    sku: string;
+    requires_shipping: boolean;
+    taxable: boolean;
+    featured_image?: {
+        id: number;
+        product_id: number;
+        position: number;
+        created_at: string;
+        updated_at: string;
+        alt: string | null;
+        width: number;
+        height: number;
+        src: string;
+        variant_ids: number[];
+    };
+    available: boolean;
+    price: string;
+    grams: number;
+    compare_at_price: string | null;
+    position: number;
+    product_id: number;
+    created_at: string;
+    updated_at: string;
+};
+
+
+
 type Product = {
-    id: string
-    title: string
-    price: number
-    originalPrice: number
-    discountPercentage?: number
-    rating: number
-    reviewCount: number
+    id: string;
+    title: string;
+    handle: string; // Product handle (for /products/[handle])
+    price: number;
+    originalPrice?: number;
+    discountPercentage?: number;
+    rating: number;
+    reviewCount: number;
     badge?: {
-        text: string
-        type: "selling-fast" | "sale" | "new" | "out-of-stock"
+        text: string;
+        type: "selling-fast" | "sale" | "new" | "out-of-stock";
+    };
+    image: string;
+    slug: string;
+};
+
+// Transform raw product data into Product type array (one product per color)
+const products: Product[] = rawProductData.flatMap((product) => {
+    // Ensure variants and options exist
+    if (!product.variants || !product.options || !product.handle) {
+        console.warn(`Product ${product.id} missing variants or options`);
+        return [];
     }
-    image: string
-    slug: string
-}
 
-// Sample product data - replace this with your fetched data
-const products: Product[] = [
-    {
-        id: "1",
-        title: "Prestige Peplum Jacket with Satin block - Tango Red",
-        price: 11100.00,
-        originalPrice: 15800.00,
-        discountPercentage: 30,
-        rating: 5,
-        reviewCount: 3,
-        badge: {
-            text: "SELLING FAST",
-            type: "selling-fast",
-        },
-        image: "/placeholder.png",
-        slug: "prestige-peplum-jacket-red",
-    },
-    {
-        id: "2",
-        title: "Prestige Peplum Jacket with Satin block - Iris Black",
-        price: 11100.00,
-        originalPrice: 15800.00,
-        discountPercentage: 30,
-        rating: 5,
-        reviewCount: 3,
-        badge: {
-            text: "SELLING FAST",
-            type: "selling-fast",
-        },
-        image: "",
-        slug: "prestige-peplum-jacket-black",
-    },
-    {
-        id: "3",
-        title: "Resilience Sheath Dress - Tango Red",
-        price: 5500.00,
-        originalPrice: 11000.00,
-        rating: 5,
-        reviewCount: 3,
-        badge: {
-            text: "Sale",
-            type: "sale",
-        },
-        image: "",
-        slug: "resilience-sheath-dress-red",
-    },
-    {
-        id: "4",
-        title: "Resilience Sheath Dress - Jute Black",
-        price: 4700.00,
-        originalPrice: 9400.00,
-        rating: 5,
-        reviewCount: 3,
-        badge: {
-            text: "Sale",
-            type: "sale",
-        },
-        image: "",
-        slug: "resilience-sheath-dress-black",
-    },
-    {
-        id: "5",
-        title: "Resilience Sheath Dress - Jute Black",
-        price: 4700.00,
-        originalPrice: 9400.00,
-        rating: 5,
-        reviewCount: 3,
-        badge: {
-            text: "Sale",
-            type: "sale",
-        },
-        image: "",
-        slug: "resilience-sheath-dress-black",
-    },
-]
+    // Group variants by color (option1)
+    const variantsByColor = product?.variants?.reduce((acc, variant) => {
+        const color = variant?.option1;
+        if (!acc[color]) {
+            acc[color] = [];
+        }
+        acc[color].push(variant);
+        return acc;
+    }, {} as Record<string, Variant[]>);
 
-// Helper function to format price
-const formatPrice = (price: number) => {
-    return `Rs. ${price.toFixed(2).toLocaleString()}`
-}
 
-// Product Card Component
-function ProductCard({ product }: { product: Product }) {
-    return (
-        <Link href={`/product/${product.slug}`}>
-            <div className="group relative flex flex-col">
-                <div className="relative aspect-[5/7.2] w-full overflow-hidden bg-slate-100">
-                    {product.badge && (
-                        <div className="absolute inset-0 z-10">
-                            {product.badge.type === "selling-fast" ? (
-                                <SellingLabel label={product.badge.text} />
-                            ) : (
-                                <Badge
-                                    className={`mt-3 ml-3 bg-slate-100 text-muted-foreground px-3 py-1 tracking-widest rounded-full  
-                                    }`}
-                                >
-                                    {product.badge.text}
-                                </Badge>
-                            )}
-                        </div>
-                    )}
-                    <Image
-                        src={product.image || "/placeholder.png"}
-                        alt={product.title}
-                        fill
-                        loading="lazy"
-                        className="object-cover transition-transform duration-300 group-hover:scale-[102%]"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    />
-                </div>
-                <div className="py-4 space-y-2">
-                    <h3 className=" text-[13px] text-muted-foreground group-hover:underline ">{product.title}</h3>
-                    <div className=" flex gap-2 items-center ">
-                        {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="h-3 w-3 text-muted-foreground fill-muted-foreground" />
-                        ))}
-                        <span className="ml-1 text-xs text-muted-foreground">({product.reviewCount})</span>
-                    </div>
-                    {product.discountPercentage && (
-                        <Badge className=" w-fit bg-primary text-white py-2 px-7">{product.discountPercentage}% OFF</Badge>
-                    )}
-                    <div className="mt-auto flex flex-col md:flex-row items-baseline gap-2  lg:gap-3">
-                        <span className="text-sm text-slate-500 line-through">{formatPrice(product.originalPrice)}</span>
-                        <span className="text-lg text-muted-foreground">{formatPrice(product.price)}</span>
-                    </div>
+    // Create one product per color
+    return Object.keys(variantsByColor).map((color) => {
+        const firstVariant = variantsByColor[color][0]; // Use first variant for data
+        return {
+            id: firstVariant.id.toString(),
+            title: `${product.title} - ${color}`,
+            handle: product.handle, // Product handle for URL
+            price: parseFloat(firstVariant.price),
+            originalPrice: firstVariant.compare_at_price
+                ? parseFloat(firstVariant.compare_at_price)
+                : undefined,
+            rating: 5, // Placeholder (not in JSON)
+            reviewCount: 3, // Placeholder (not in JSON)
 
-                </div>
-            </div>
-        </Link>
-    )
-}
+            image: firstVariant.featured_image?.src || "/placeholder.png",
+            slug: `${product.handle}-${color.toLowerCase().replace(/\s+/g, "-")}`,
+        };
+    });
+});
+
 
 export default function AllWorkWear() {
     return (
-        <div className="flex min-h-screen flex-col ">
-            {/* Announcement Bar */}
-
-
+        <div className="flex min-h-screen flex-col">
             <main className="flex-1">
                 <div className="mx-auto max-w-6xl px-4 xl:px-6">
                     <div className="space-y-5 my-6">
-                        <h1 className=" text-[30px] lg:text-[40px] ">All Workwear</h1>
+                        <h1 className="text-[30px] lg:text-[40px]">All Workwear</h1>
                         <p className="text-muted-foreground/75 max-w-3xl text-base lg:text-lg tracking-wide">
-                            As seen on TV, functional workwear with POCKETS for women! Designer corporate wear without the designer
-                            price. #pocketspledge
+                            As seen on TV, functional workwear with POCKETS for women! Designer
+                            corporate wear without the designer price. #pocketspledge
                         </p>
                     </div>
 
                     {/* Filter and Sort */}
                     <div className="mt-12 md:mt-14 lg:mt-16 mb-4 md:mb-6 lg:mb-9 flex flex-wrap items-center justify-between gap-4">
                         <div className="flex items-center gap-4">
-                            <span className="md:hidden flex items-center gap-2 text-muted-foreground text-sm"><Settings2 className=" text-muted-foreground/95 h-4 w-4" /> Filter and sort</span>
-                            <span className="hidden md:block text-sm text-muted-foreground/85">Filter:</span>
+                            <span className="md:hidden flex items-center gap-2 text-muted-foreground text-sm">
+                                <Settings2 className="text-muted-foreground/95 h-4 w-4" /> Filter
+                                and sort
+                            </span>
+                            <span className="hidden md:block text-sm text-muted-foreground/85">
+                                Filter:
+                            </span>
                             <button className="hidden md:flex items-center gap-2 text-muted-foreground/95 text-sm">
-                                Availability <ChevronDown className="text-muted-foreground/95 h-4 w-4" />
+                                Availability{" "}
+                                <ChevronDown className="text-muted-foreground/95 h-4 w-4" />
                             </button>
                         </div>
                         <div className="flex items-center gap-4">
-                            <span className="hidden md:block text-sm text-muted-foreground/85">Sort by:</span>
-                            < button className="hidden md:flex items-center gap-16 text-muted-foreground/75 text-sm">
+                            <span className="hidden md:block text-sm text-muted-foreground/85">
+                                Sort by:
+                            </span>
+                            <button className="hidden md:flex items-center gap-16 text-muted-foreground/75 text-sm">
                                 Featured <ChevronDown className="h-4 w-4" />
                             </button>
-                            <span className="ml-4 text-sm text-muted-foreground">{products.length} products</span>
+                            <span className="ml-4 text-sm text-muted-foreground">
+                                {products.length} products
+                            </span>
                         </div>
                     </div>
 
@@ -198,5 +145,5 @@ export default function AllWorkWear() {
             </main>
             <div className="h-60"></div>
         </div>
-    )
+    );
 }

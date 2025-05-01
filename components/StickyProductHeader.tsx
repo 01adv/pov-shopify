@@ -8,7 +8,7 @@ interface StickyProductHeaderProps {
         name: string
         color: string
         size: string
-        originalPrice: number
+        originalPrice: number | undefined
         salePrice: number
         image: string
     }
@@ -70,8 +70,14 @@ export default function StickyProductHeader({ product }: StickyProductHeaderProp
                 {/* Price and CTA */}
                 <div className="flex items-center gap-6">
                     <div className="text-right">
-                        <p className="text-sm text-gray-500 line-through">Rs. {product.originalPrice.toLocaleString()}</p>
-                        <p className="font-medium text-gray-900">Rs. {product.salePrice.toLocaleString()}</p>
+                        {product.originalPrice && (product?.originalPrice > product.salePrice) && (
+                            <span className="text-sm text-muted-foreground/75 line-through">
+                                $ {product.originalPrice?.toFixed(2)}
+                            </span>
+                        )}
+                        <span className="font-medium text-muted-foreground">
+                            $ {product.salePrice.toFixed(2)}
+                        </span>
                     </div>
 
                     <button className="bg-black text-white px-6 py-2 flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors">
@@ -96,8 +102,15 @@ export default function StickyProductHeader({ product }: StickyProductHeaderProp
                         <p className="text-sm text-gray-600">Color: {product.color}</p>
                         <p className="text-sm text-gray-600">Size: {product.size}</p>
                         <div className="flex items-center gap-2 mt-1">
-                            <p className="text-sm text-gray-500 line-through">Rs. {product.originalPrice.toLocaleString()}</p>
-                            <p className="font-medium text-gray-900">Rs. {product.salePrice.toLocaleString()}</p>
+
+                            {product.originalPrice && (product?.originalPrice > product.salePrice) && (
+                                <span className="text-sm text-slate-500 line-through">
+                                    $ {product.originalPrice?.toFixed(2)}
+                                </span>
+                            )}
+                            <span className="text-lg text-muted-foreground">
+                                $ {product.salePrice?.toFixed(2)}
+                            </span>
                         </div>
                     </div>
                 </div>

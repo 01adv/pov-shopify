@@ -1,8 +1,8 @@
-import React from 'react'
+import { AssistantChat } from '@/components/chatbot/Assistant'
 
 const page = () => {
     return (
-        <div>page</div>
+        <div><AssistantChat /></div>
     )
 }
 

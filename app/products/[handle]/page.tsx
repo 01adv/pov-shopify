@@ -1,15 +1,15 @@
-import { notFound } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
-import { Suspense } from "react";
-import { ChevronDown, Star, Truck } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import rawProductData from "@/app/products.json";
+import { AssistantChat } from "@/components/chatbot/Assistant";
+import CustomerReviews from "@/components/CustomerReviews";
 import ProductGallery from "@/components/Gallery";
 import StickyProductHeader from "@/components/StickyProductHeader";
-import CustomerReviews from "@/components/CustomerReviews";
-import rawProductData from "@/app/products.json";
-import Chatbot from "@/components/chatbot/Chatbot";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ChevronDown, Star, Truck } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 interface Product {
     name: string;
@@ -123,8 +123,31 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <div className="mt-9 max-w-[1200px] mx-auto px-4 md:px-[50px] relative">
+            <div className="mt-3 lg:mt-9 max-w-[1200px] mx-auto px-4 md:px-[50px] relative">
                 <StickyProductHeader product={stickyProduct} />
+                <div className=" w-full lg:ml-36">
+                    <div className=" max-w-sm lg:w-[412px] py-2 px-4 bg-primary  lg:ml-2">
+                        <p className="text-white text-center font-semibold">AI Curated Outfits</p>
+                    </div>
+                    <div className="pt-3 pb-2.5 lg:pb-10 lg:ml-2 max-w-5xl">
+                        <div className="flex justify-start space-x-4 overflow-x-scroll no-scrollbar ">
+                            {Array.from({ length: 14 }).map((_, index) => (
+                                <div key={index} className="w-[88px] lg:w-[100px] flex flex-col items-center shrink-0">
+                                    <div key={index} className="w-full aspect-square relative rounded-xl">
+                                        <Image
+                                            fill
+                                            src="/img2.jpg"
+                                            alt={`Placeholder image ${index + 1}`}
+                                            className="object-cover rounded-xl object-top"
+                                        />
+                                    </div>
+                                    <p className="text-xs mt-1 line-clamp-1 px-3">Infinity icon hello</p>
+                                </div>
+                            ))}
+                        </div>
+
+                    </div>
+                </div>
                 <div className="flex flex-col md:flex-row relative">
                     {/* Left side */}
                     <ProductGallery
@@ -210,7 +233,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                                     >
                                         Size: {product.size}
                                     </label>
-                                    <div className="flex gap-3">
+                                    <div className="flex gap-3 flex-wrap">
                                         {product.availableSizes.map(({ size, available, variantId }) => (
                                             <Link
                                                 key={size}
@@ -233,7 +256,8 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                                 </div>
                                 {/* Add to Cart Button */}
                                 <Button
-                                    className="max-w-md my-5 h-11 w-full bg-black text-white text-sm rounded-none"
+                                    variant={'secondary'}
+                                    className="max-w-md my-5 h-11 w-full text-white text-sm rounded-none"
                                     disabled={!selectedVariant.available}
                                 >
                                     {selectedVariant.available ? "Add to Cart" : "Out of Stock"}
@@ -292,8 +316,9 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                 <div className="px-4 py-6">
                     <CustomerReviews />
                 </div>
-                <Chatbot />
+
             </div>
+            <AssistantChat />
         </Suspense>
     );
 }

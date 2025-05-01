@@ -1,11 +1,11 @@
 import AllWorkWear from "@/components/Allworkwear";
-import Chatbot from "@/components/chatbot/Chatbot";
+import { AssistantChat } from "@/components/chatbot/Assistant";
 
 export default function Home() {
   return (
-    <main className="h-full w-full">
+    <main className="h-full w-full relative">
       <AllWorkWear />
-      <Chatbot />
+      <AssistantChat />
     </main>
   );
 }

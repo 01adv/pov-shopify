@@ -45,7 +45,9 @@ const Header = () => {
                             <UserRound className="h-5 w-5" />
                         </button>
                         <button aria-label="Cart" className="h-5 w-5 text-gray-200">
-                            <Image src="/cart.svg" alt="Cart" width={100} height={100} />
+                            <Link href="https://pointofviewlabel.com/cart">
+                                <Image src="/cart.svg" alt="Cart" width={100} height={100} />
+                            </Link>
                         </button>
                     </div>
                 </div>

@@ -80,7 +80,7 @@ export function AssistantChat() {
 
         try {
             const response = await fetch(
-                `https://textagentbaseline-kekj.onrender.com/chat/${sessionId}`,
+                `https://textagentpov.onrender.com/chat/${sessionId}`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

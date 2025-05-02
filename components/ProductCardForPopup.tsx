@@ -1,9 +1,9 @@
-import { Product, TestProductType } from "@/lib/products"
+import { TestProductType } from "@/lib/testProducts"
 import { Card, CardContent, CardFooter } from "./ui/card"
 // import SellingLabel from "./SellingLabel"
-import { Badge } from "./ui/badge"
 import Image from "next/image"
 import Link from "next/link"
+import { Badge } from "./ui/badge"
 
 export const ProductCardForPopup = ({ product }: { product: TestProductType }) => {
     return (

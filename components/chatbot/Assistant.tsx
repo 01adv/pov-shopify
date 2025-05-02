@@ -6,8 +6,8 @@
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import useIsPhone from "@/hooks/usePhone"
-import { TestProductType } from "@/lib/products"
-import products from "@/lib/testProducts.json"
+import { TestProductType, products } from "@/lib/testProducts"
+// import rawProducts from "@/lib/testProducts"
 import { X } from "lucide-react"
 import { useRouter } from "next/navigation"
 import type React from "react"
@@ -32,6 +32,7 @@ const getOrCreateSessionId = () => {
 
 
 export function AssistantChat() {
+    // const products: TestProductType[] = rawProducts
     const isPhone = useIsPhone()
     const router = useRouter()
     const [input, setInput] = useState("")

@@ -10,21 +10,6 @@ export interface Product {
   isOnSale?: boolean;
 }
 
-export interface TestProductType {
-  id: number;
-  name: string;
-  collection: string;
-  type: string;
-  image: string;
-  description: string;
-  price: number;
-  rating?: number;
-  reviews?: number;
-  badge?: {
-    text: string;
-    type: "selling-fast" | "sale" | "new" | "out-of-stock";
-  };
-}
 export const products: Product[] = [
   {
     id: 1,

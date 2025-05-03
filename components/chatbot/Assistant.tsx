@@ -31,24 +31,26 @@ const getOrCreateSessionId = () => {
 
 
 
-export function AssistantChat() {
+export function AssistantChat({ tip }: { tip: string }) {
     // const products: TestProductType[] = rawProducts
     const isPhone = useIsPhone()
     const router = useRouter()
     const [input, setInput] = useState("")
-    const [isExpanded, setIsExpanded] = useState(false)
+    const [isExpanded, setIsExpanded] = useState(true)
     const [isTyping, setIsTyping] = useState(false)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [loader, setLoader] = useState(false)
     const [chatHeight, setChatHeight] = useState(0)
     const [sessionId, setSessionId] = useState("")
     const [recommendedProducts, setRecommendedProducts] = useState<TestProductType[]>([])
-    const [latestResponse, setLatestResponse] = useState("");
+    const [latestResponse, setLatestResponse] = useState('');
     const [isFetching, setIsFetching] = useState(false);
 
 
     const messagesEndRef = useRef<HTMLDivElement>(null)
     const messagesContainerRef = useRef<HTMLDivElement>(null)
+
+    console.log('latestResponse tip', latestResponse)
 
     const MIN_CHAT_HEIGHT = 140 // Minimum height including input bar
     const MAX_CHAT_HEIGHT = 560 // Maximum card height
@@ -171,7 +173,7 @@ export function AssistantChat() {
     const shouldScroll = chatHeight === MAX_CHAT_HEIGHT
 
     return (
-        <div className="fixed bottom-8 px-4 lg:px-0 w-full flex items-center justify-center">
+        <div className="z-40 fixed bottom-8 px-4 lg:px-0 w-full flex items-center justify-center">
             <div className="relative w-full lg:max-w-md">
                 {/* Product Popup */}
                 {!isPhone && (
@@ -229,6 +231,13 @@ export function AssistantChat() {
                                                 />
                                             </p>
                                         )}
+                                        {
+                                            (tip && !isFetching) && (
+                                                <p className="text-sm lg:text-base">
+                                                    {tip}
+                                                </p>
+                                            )
+                                        }
                                     </div>
                                 </div>
                                 {/* ) : null

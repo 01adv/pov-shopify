@@ -5,6 +5,7 @@ import ProductGallery from "@/components/Gallery";
 import StickyProductHeader from "@/components/StickyProductHeader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { aiCuratedProducts } from "@/lib/aiCuratedProductsStatic";
 import { ChevronDown, Star, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -46,10 +47,13 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
         notFound();
     }
 
+
+
     // Get the selected variant or default to the first available variant
     const selectedVariant = productData.variants.find(
         (v) => v.id.toString() === variantId && v.available
     ) || productData.variants.find((v) => v.available) || productData.variants[0];
+
 
     // Extract colors and sizes from options
     const colors = productData.options.find((o) => o.name === "Color")?.values || [];
@@ -114,6 +118,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
         image: product.image,
     };
 
+
     // Calculate discount percentage
     const discountPercentage = product.originalPrice
         ? Math.round(
@@ -125,24 +130,31 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
         <Suspense fallback={<div>Loading...</div>}>
             <div className="mt-3 lg:mt-9 max-w-[1200px] mx-auto px-4 md:px-[50px] relative">
                 <StickyProductHeader product={stickyProduct} />
+
+                {/* a hook will track to show ai curated or not */}
                 <div className=" w-full lg:ml-36">
                     <div className=" max-w-sm lg:w-[412px] py-2 px-4 bg-primary  lg:ml-2">
                         <p className="text-white text-center font-semibold">AI Curated Outfits</p>
                     </div>
                     <div className="pt-3 pb-2.5 lg:pb-10 lg:ml-2 max-w-5xl">
                         <div className="flex justify-start space-x-4 overflow-x-scroll no-scrollbar ">
-                            {Array.from({ length: 14 }).map((_, index) => (
-                                <div key={index} className="w-[88px] lg:w-[100px] flex flex-col items-center shrink-0">
-                                    <div key={index} className="w-full aspect-square relative rounded-xl">
-                                        <Image
-                                            fill
-                                            src="/img2.jpg"
-                                            alt={`Placeholder image ${index + 1}`}
-                                            className="object-cover rounded-xl object-top"
-                                        />
+                            {/* {aiCuratedProducts.filter(aiProduct => aiProduct.name !== selectedVariant.id.toString()).map((product, index) => ( */}
+                            {aiCuratedProducts.filter(aiProduct => aiProduct.name !== product.name).map((product, index) => (
+                                <Link
+                                    key={index}
+                                    href={`/products/${product.href}`}>
+                                    <div className="w-[88px] lg:w-[100px] flex flex-col items-center shrink-0">
+                                        <div className="w-full aspect-square relative rounded-xl">
+                                            <Image
+                                                fill
+                                                src={product.image || "/placeholder.png"}
+                                                alt={`Placeholder image ${index + 1}`}
+                                                className="object-cover rounded-xl object-top"
+                                            />
+                                        </div>
+                                        <p className="text-xs mt-1 line-clamp-1 px-3">{product.name}</p>
                                     </div>
-                                    <p className="text-xs mt-1 line-clamp-1 px-3">Infinity icon hello</p>
-                                </div>
+                                </Link>
                             ))}
                         </div>
 

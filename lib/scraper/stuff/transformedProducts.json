@@ -1,0 +1,457 @@
+[
+  {
+    "id": "50006520922415",
+    "title": "Prestige Peplum Jacket with Satin block - Tango Red",
+    "handle": "prestige-peplum-jacket-with-satin-block",
+    "price": 180,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/prestige-peplum-jacket-with-satin-block-jackets-361484.jpg?v=1728868256",
+    "slug": "prestige-peplum-jacket-with-satin-block-tango-red"
+  },
+  {
+    "id": "50006521086255",
+    "title": "Prestige Peplum Jacket with Satin block - Iris Black",
+    "handle": "prestige-peplum-jacket-with-satin-block",
+    "price": 180,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/prestige-peplum-jacket-with-satin-block-jackets-118949.jpg?v=1728868256",
+    "slug": "prestige-peplum-jacket-with-satin-block-iris-black"
+  },
+  {
+    "id": "50448220848431",
+    "title": "Resilience Sheath Dress - Tango Red",
+    "handle": "resilience-sheath-dress",
+    "price": 125,
+    "originalPrice": 125,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/resilience-sheath-dress-dress-958230.jpg?v=1728868249",
+    "slug": "resilience-sheath-dress-tango-red"
+  },
+  {
+    "id": "48557010059567",
+    "title": "Resilience Sheath Dress - Jute Black",
+    "handle": "resilience-sheath-dress",
+    "price": 105,
+    "originalPrice": 105,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/resilience-sheath-dress-dress-191664.jpg?v=1728868249",
+    "slug": "resilience-sheath-dress-jute-black"
+  },
+  {
+    "id": "50006518759727",
+    "title": "Focus Fit and Flare Dress with Cross Belt - Misty Blue",
+    "handle": "focus-fit-and-flare-dress-with-cross-belt",
+    "price": 125,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/focus-fit-and-flare-with-cross-belt-dress-dress-289552.jpg?v=1728868018",
+    "slug": "focus-fit-and-flare-dress-with-cross-belt-misty-blue"
+  },
+  {
+    "id": "50006518923567",
+    "title": "Focus Fit and Flare Dress with Cross Belt - Forest Green",
+    "handle": "focus-fit-and-flare-dress-with-cross-belt",
+    "price": 125,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/focus-fit-and-flare-with-cross-belt-dress-dress-350951.jpg?v=1728868019",
+    "slug": "focus-fit-and-flare-dress-with-cross-belt-forest-green"
+  },
+  {
+    "id": "50006519382319",
+    "title": "Purpose Wide Leg Flared Pants - Cacao Brown",
+    "handle": "purpose-wide-leg-flared-pants",
+    "price": 120,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/purpose-wide-leg-flared-pants-pant-946475.jpg?v=1728868248",
+    "slug": "purpose-wide-leg-flared-pants-cacao-brown"
+  },
+  {
+    "id": "50687290638639",
+    "title": "Purpose Wide Leg Flared Pants - Ceramic Beige",
+    "handle": "purpose-wide-leg-flared-pants",
+    "price": 120,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/purpose-wide-leg-flared-pants-pant-770817.jpg?v=1731354031",
+    "slug": "purpose-wide-leg-flared-pants-ceramic-beige"
+  },
+  {
+    "id": "48166709264687",
+    "title": "Innovation Zipper Slit Crepe Sheath Dress - Iris Black",
+    "handle": "innovation-zipper-slit-crepe-sheath-dress",
+    "price": 105,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/innovation-zipper-slit-sheath-crepe-dress-dress-501457.jpg?v=1728868259",
+    "slug": "innovation-zipper-slit-crepe-sheath-dress-iris-black"
+  },
+  {
+    "id": "49090634481967",
+    "title": "Innovation Zipper Slit Crepe Sheath Dress - Tango Red",
+    "handle": "innovation-zipper-slit-crepe-sheath-dress",
+    "price": 105,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/innovation-zipper-slit-sheath-crepe-dress-dress-332560.png?v=1736717679",
+    "slug": "innovation-zipper-slit-crepe-sheath-dress-tango-red"
+  },
+  {
+    "id": "48166993527087",
+    "title": "Vision Flare Crepe Midi Dress - Pink",
+    "handle": "vision-flare-crepe-midi-dress",
+    "price": 125,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/vision-flare-crepe-midi-dress-dress-783062.jpg?v=1728868392",
+    "slug": "vision-flare-crepe-midi-dress-pink"
+  },
+  {
+    "id": "49999379038511",
+    "title": "Vision Flare Crepe Midi Dress - Plum",
+    "handle": "vision-flare-crepe-midi-dress",
+    "price": 125,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/vision-flare-crepe-midi-dress-dress-855513.png?v=1728868392",
+    "slug": "vision-flare-crepe-midi-dress-plum"
+  },
+  {
+    "id": "50448118448431",
+    "title": "Eternal Double Breasted Jacket - Limited Edition - Tweed Pink",
+    "handle": "eternal-double-breasted-jacket-limited-edition",
+    "price": 180,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/eternal-double-breasted-tweed-jacket-limited-edition-jackets-443844.jpg?v=1728868012",
+    "slug": "eternal-double-breasted-jacket-limited-edition-tweed-pink"
+  },
+  {
+    "id": "50006522036527",
+    "title": "Forever Dress Pants for Women with Satin Piping - Tango Red",
+    "handle": "forever-dress-pants-for-women-with-satin-piping",
+    "price": 120,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/Redpants_2.jpg?v=1725003035",
+    "slug": "forever-dress-pants-for-women-with-satin-piping-tango-red"
+  },
+  {
+    "id": "50006522364207",
+    "title": "Forever Dress Pants for Women with Satin Piping - Winter White",
+    "handle": "forever-dress-pants-for-women-with-satin-piping",
+    "price": 120,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/forever-dress-pants-with-satin-piping-pant-385758.jpg?v=1728868069",
+    "slug": "forever-dress-pants-for-women-with-satin-piping-winter-white"
+  },
+  {
+    "id": "50308465754415",
+    "title": "Forever Dress Pants for Women with Satin Piping - Iris Black",
+    "handle": "forever-dress-pants-for-women-with-satin-piping",
+    "price": 120,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/forever-dress-pants-with-satin-piping-pant-713046.jpg?v=1728868068",
+    "slug": "forever-dress-pants-for-women-with-satin-piping-iris-black"
+  },
+  {
+    "id": "50006517907759",
+    "title": "Timeless Colorblock Sheath Dress - Barely Pink",
+    "handle": "timeless-colorblock-sheath-dress",
+    "price": 110,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/timeless-colorblock-sheath-dress-dress-747129.jpg?v=1728868391",
+    "slug": "timeless-colorblock-sheath-dress-barely-pink"
+  },
+  {
+    "id": "50308397891887",
+    "title": "Timeless Colorblock Sheath Dress - Deep Plum",
+    "handle": "timeless-colorblock-sheath-dress",
+    "price": 110,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/timeless-colorblock-sheath-dress-dress-809110.jpg?v=1728868391",
+    "slug": "timeless-colorblock-sheath-dress-deep-plum"
+  },
+  {
+    "id": "48167389102383",
+    "title": "Prodigy Neck Frill detail Crepe Jacket for Women - Navy Blue",
+    "handle": "prodigy-neck-frill-detail-crepe-jacket-for-women",
+    "price": 180,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/prodigy-neck-frill-detail-crepe-jacket-jackets-923026.jpg?v=1728868250",
+    "slug": "prodigy-neck-frill-detail-crepe-jacket-for-women-navy-blue"
+  },
+  {
+    "id": "48740479467823",
+    "title": "Catalyst Pocket Frill Formal Pants for Women - Navy Blue",
+    "handle": "catalyst-pocket-frill-formal-pants-for-women",
+    "price": 120,
+    "originalPrice": 0,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/catalyst-pocket-frill-relaxed-trousers-pant-595243.jpg?v=1736717573",
+    "slug": "catalyst-pocket-frill-formal-pants-for-women-navy-blue"
+  },
+  {
+    "id": "48167213105455",
+    "title": "Catalyst Pocket Frill Formal Pants for Women - Houndstooth Blue",
+    "handle": "catalyst-pocket-frill-formal-pants-for-women",
+    "price": 120,
+    "originalPrice": 0,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/catalyst-pocket-frill-relaxed-trousers-pant-434339.jpg?v=1736717573",
+    "slug": "catalyst-pocket-frill-formal-pants-for-women-houndstooth-blue"
+  },
+  {
+    "id": "50308450910511",
+    "title": "Intention Colorblock Dress Pants for Women - Ceramic Beige",
+    "handle": "intention-colorblock-dress-pants-for-women",
+    "price": 120,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/intention-colorblock-pants-pant-334689.jpg?v=1728868079",
+    "slug": "intention-colorblock-dress-pants-for-women-ceramic-beige"
+  },
+  {
+    "id": "48167187317039",
+    "title": "Trailblazer Adjustable Length Stretch Trousers for Women - Iris Black",
+    "handle": "trailblazer-adjustable-length-stretch-trousers-for-women",
+    "price": 85,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/trailblazer-adjustable-length-stretch-trousers-pant-746070.jpg?v=1728868387",
+    "slug": "trailblazer-adjustable-length-stretch-trousers-for-women-iris-black"
+  },
+  {
+    "id": "50308454547759",
+    "title": "Artistry Lace Jacket for Women - Limited Edition - Winter White",
+    "handle": "artistry-lace-jacket-for-women-limited-edition",
+    "price": 198,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/artistry-lace-jacket-limited-edition-jackets-140496.jpg?v=1728868012",
+    "slug": "artistry-lace-jacket-for-women-limited-edition-winter-white"
+  },
+  {
+    "id": "50308474503471",
+    "title": "Infinity Colorblock Pencil Dress - Deep Plum",
+    "handle": "infinity-colorblock-pencil-dress",
+    "price": 125,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/infinity-colorblock-pencil-dress-dress-591854.jpg?v=1728868081",
+    "slug": "infinity-colorblock-pencil-dress-deep-plum"
+  },
+  {
+    "id": "50308474667311",
+    "title": "Infinity Colorblock Pencil Dress - Forest Green",
+    "handle": "infinity-colorblock-pencil-dress",
+    "price": 125,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/infinity-colorblock-pencil-dress-dress-442933.jpg?v=1728868081",
+    "slug": "infinity-colorblock-pencil-dress-forest-green"
+  },
+  {
+    "id": "50751126438191",
+    "title": "Pinnacle Stand Collar Detail Stretch Dress for Women - Iris Black",
+    "handle": "pinnacle-stand-collar-detail-stretch-dress-for-women",
+    "price": 110,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/pinnacle-stand-collar-detail-stretch-dress-dress-486780.jpg?v=1728868250",
+    "slug": "pinnacle-stand-collar-detail-stretch-dress-for-women-iris-black"
+  },
+  {
+    "id": "50006520201519",
+    "title": "Impact Double Breasted Jacket - Cacao Brown",
+    "handle": "impact-double-breasted-jacket",
+    "price": 180,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/impact-double-breasted-jacket-jackets-828852.jpg?v=1728868078",
+    "slug": "impact-double-breasted-jacket-cacao-brown"
+  },
+  {
+    "id": "48167204028719",
+    "title": "Disruption Dual Tone Formal Pants for Women - Navy Blue",
+    "handle": "disruption-dual-tone-formal-pants-for-women",
+    "price": 98,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/disruption-dual-tone-crepe-trousers-pant-671508.jpg?v=1728868012",
+    "slug": "disruption-dual-tone-formal-pants-for-women-navy-blue"
+  },
+  {
+    "id": "48166968787247",
+    "title": "Vogue Low Flare Crepe Shift Dress - White and Black",
+    "handle": "vogue-low-flare-crepe-shift-dress",
+    "price": 118,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/vogue-low-flare-crepe-shift-dress-dress-499353.jpg?v=1728868507",
+    "slug": "vogue-low-flare-crepe-shift-dress-white-and-black"
+  },
+  {
+    "id": "48166968754479",
+    "title": "Vogue Low Flare Crepe Shift Dress - Wine",
+    "handle": "vogue-low-flare-crepe-shift-dress",
+    "price": 98,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/vogue-low-flare-crepe-shift-dress-dress-725802.jpg?v=1728868507",
+    "slug": "vogue-low-flare-crepe-shift-dress-wine"
+  },
+  {
+    "id": "48167156023599",
+    "title": "Charisma Fit and Flare Dress - Winter White",
+    "handle": "charisma-fit-and-flare-dress",
+    "price": 118,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/charisma-fit-and-flare-crepe-dress-dress-796704.jpg?v=1728868068",
+    "slug": "charisma-fit-and-flare-dress-winter-white"
+  },
+  {
+    "id": "48167156056367",
+    "title": "Charisma Fit and Flare Dress - Powder Blue",
+    "handle": "charisma-fit-and-flare-dress",
+    "price": 118,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/charisma-fit-and-flare-crepe-dress-dress-510747.jpg?v=1728868068",
+    "slug": "charisma-fit-and-flare-dress-powder-blue"
+  },
+  {
+    "id": "50308470997295",
+    "title": "Intention Colorblock Vest for Women - Ceramic Beige",
+    "handle": "intention-colorblock-vest-for-women",
+    "price": 105,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/intention-colorblock-vest-jackets-390489.jpg?v=1728868077",
+    "slug": "intention-colorblock-vest-for-women-ceramic-beige"
+  },
+  {
+    "id": "48167106150703",
+    "title": "Passion Relaxed Shift Dress - Navy Blue",
+    "handle": "passion-relaxed-shift-dress",
+    "price": 105,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/passion-relaxed-shift-crepe-dress-dress-155692.jpg?v=1728868249",
+    "slug": "passion-relaxed-shift-dress-navy-blue"
+  },
+  {
+    "id": "48167312228655",
+    "title": "Maverick Bow Detail Jacquard Top - Iris Black",
+    "handle": "maverick-bow-detail-jacquard-top",
+    "price": 60,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/maverick-bow-detail-jacquard-top-tops-316751.jpg?v=1728868248",
+    "slug": "maverick-bow-detail-jacquard-top-iris-black"
+  },
+  {
+    "id": "48167332708655",
+    "title": "Tenacity Essential Cowl Neck Viscose Top - Wine",
+    "handle": "tenacity-essential-cowl-neck-viscose-top",
+    "price": 60,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/tenacity-essential-cowl-neck-viscose-top-tops-113609.jpg?v=1728868318",
+    "slug": "tenacity-essential-cowl-neck-viscose-top-wine"
+  },
+  {
+    "id": "50136115085615",
+    "title": "Iconic Asymmetric Colorblock Sheath Dress - Green-Grey",
+    "handle": "iconic-asymmetric-colorblock-sheath-dress",
+    "price": 120,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/iconic-asymmetric-colorblock-sheath-dress-dress-970175.jpg?v=1728868066",
+    "slug": "iconic-asymmetric-colorblock-sheath-dress-green-grey"
+  },
+  {
+    "id": "50136115118383",
+    "title": "Iconic Asymmetric Colorblock Sheath Dress - Black-Grey",
+    "handle": "iconic-asymmetric-colorblock-sheath-dress",
+    "price": 120,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/iconic-asymmetric-colorblock-sheath-dress-dress-676766.jpg?v=1728868066",
+    "slug": "iconic-asymmetric-colorblock-sheath-dress-black-grey"
+  },
+  {
+    "id": "50006511976751",
+    "title": "Modern Colorblock Panel Flared Dress - Spectra Yellow",
+    "handle": "modern-colorblock-panel-flared-dress",
+    "price": 118,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/modern-colorblock-panel-flared-dress-dress-265731.jpg?v=1728868256",
+    "slug": "modern-colorblock-panel-flared-dress-spectra-yellow"
+  },
+  {
+    "id": "50006512140591",
+    "title": "Modern Colorblock Panel Flared Dress - Iris Black",
+    "handle": "modern-colorblock-panel-flared-dress",
+    "price": 118,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/modern-colorblock-panel-flared-dress-dress-952397.jpg?v=1728868257",
+    "slug": "modern-colorblock-panel-flared-dress-iris-black"
+  },
+  {
+    "id": "48167293911343",
+    "title": "Inspiration Flounce Detail Viscose Top - Baby Pink",
+    "handle": "inspiration-flounce-detail-viscose-top",
+    "price": 65,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/inspiration-flounce-detail-viscose-top-tops-919038.jpg?v=1728868075",
+    "slug": "inspiration-flounce-detail-viscose-top-baby-pink"
+  },
+  {
+    "id": "48564141392175",
+    "title": "Inspiration Flounce Detail Viscose Top - Winter White",
+    "handle": "inspiration-flounce-detail-viscose-top",
+    "price": 65,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/inspiration-flounce-detail-viscose-top-tops-456295.jpg?v=1728868075",
+    "slug": "inspiration-flounce-detail-viscose-top-winter-white"
+  },
+  {
+    "id": "48167261405487",
+    "title": "Trendsetter Modal Satin Shirt - Blue and White",
+    "handle": "trendsetter-modal-satin-shirt",
+    "price": 65,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/trendsetter-modal-satin-shirt-tops-526544.jpg?v=1728868318",
+    "slug": "trendsetter-modal-satin-shirt-blue-and-white"
+  },
+  {
+    "id": "48673200931119",
+    "title": "Integrity Shoulder Frill detail Houndstooth Jacket - Houndstooth Blue",
+    "handle": "integrity-shoulder-frill-detail-houndstooth-jacket",
+    "price": 75,
+    "originalPrice": 150,
+    "rating": 5,
+    "reviewCount": 3,
+    "image": "https://cdn.shopify.com/s/files/1/0777/2556/5231/files/integrity-shoulder-frill-detail-houndstooth-jacket-jackets-409260.jpg?v=1728868074",
+    "slug": "integrity-shoulder-frill-detail-houndstooth-jacket-houndstooth-blue"
+  }
+]

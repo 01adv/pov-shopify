@@ -6,6 +6,7 @@ import StickyProductHeader from "@/components/StickyProductHeader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { aiCuratedProducts } from "@/lib/aiCuratedProductsStatic";
+import { getRandomStylingTip } from "@/lib/helpers";
 import { ChevronDown, Star, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -48,6 +49,8 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
     }
 
 
+    // generate tip (static)
+    const tip = getRandomStylingTip(variantId || '');
 
     // Get the selected variant or default to the first available variant
     const selectedVariant = productData.variants.find(
@@ -330,7 +333,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                 </div>
 
             </div>
-            <AssistantChat />
+            <AssistantChat tip={tip} />
         </Suspense>
     );
 }

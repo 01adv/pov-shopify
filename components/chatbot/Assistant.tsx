@@ -31,12 +31,12 @@ const getOrCreateSessionId = () => {
 
 
 
-export function AssistantChat({ tip }: { tip: string }) {
+export function AssistantChat({ tip }: { tip: string | null }) {
     // const products: TestProductType[] = rawProducts
     const isPhone = useIsPhone()
     const router = useRouter()
     const [input, setInput] = useState("")
-    const [isExpanded, setIsExpanded] = useState(true)
+    const [isExpanded, setIsExpanded] = useState(false)
     const [isTyping, setIsTyping] = useState(false)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [loader, setLoader] = useState(false)
@@ -190,7 +190,7 @@ export function AssistantChat({ tip }: { tip: string }) {
                 )}
 
                 {/* Chat Interface */}
-                {isExpanded ? (
+                {isExpanded || tip ? (
                     <Card
                         className="shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4"
                         style={{ maxHeight: `${MAX_CHAT_HEIGHT}px`, minHeight: `${MIN_CHAT_HEIGHT}px` }}
@@ -232,7 +232,7 @@ export function AssistantChat({ tip }: { tip: string }) {
                                             </p>
                                         )}
                                         {
-                                            (tip && !isFetching) && (
+                                            (tip && !isFetching && latestResponse.length < 1) && (
                                                 <p className="text-sm lg:text-base">
                                                     {tip}
                                                 </p>

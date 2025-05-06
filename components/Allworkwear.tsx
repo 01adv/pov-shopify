@@ -1,6 +1,7 @@
 import { ChevronDown, Settings2 } from "lucide-react";
 
-import rawProductData from "@/app/products.json";
+// import rawProductData from "@/app/products.json";
+import rawProductData from "@/lib/all-workwear.json";
 import { ProductCard } from "./ProductCard";
 
 
@@ -37,7 +38,7 @@ type Variant = {
 
 
 
-type Product = {
+export type Product = {
     id: string;
     title: string;
     handle: string; // Product handle (for /products/[handle])
@@ -55,7 +56,7 @@ type Product = {
 };
 
 // Transform raw product data into Product type array (one product per color)
-const products: Product[] = rawProductData.flatMap((product) => {
+export const products: Product[] = rawProductData.flatMap((product) => {
     // Ensure variants and options exist
     if (!product.variants || !product.options || !product.handle) {
         console.warn(`Product ${product.id} missing variants or options`);

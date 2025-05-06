@@ -5,6 +5,7 @@ import ProductGallery from "@/components/Gallery";
 import StickyProductHeader from "@/components/StickyProductHeader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useProductContext } from "@/hooks/useProduct";
 import { aiCuratedProducts } from "@/lib/aiCuratedProductsStatic";
 import { getRandomStylingTip } from "@/lib/helpers";
 import { ChevronDown, Star, Truck } from "lucide-react";
@@ -38,6 +39,7 @@ interface ProductPageProps {
 
 export default async function ProductPage({ params, searchParams }: ProductPageProps) {
     const { handle } = await params;
+    // const {matchedProducts} = useProductContext()
     const resolvedSearchParams = await searchParams; // Resolve searchParams Promise
     const variantId = resolvedSearchParams.variant && typeof resolvedSearchParams.variant === "string" ? resolvedSearchParams.variant : undefined;
 

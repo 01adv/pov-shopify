@@ -309,7 +309,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
 }
 
 // Helper functions
-export function getColorHex(color: string): string | undefined {
+function getColorHex(color: string): string | undefined {
     const colorMap: { [key: string]: string } = {
         "Tango Red": "#C8102E",
         "Iris Black": "#1C2526",

@@ -1,18 +1,16 @@
-import rawProductData from "@/app/products.json";
 import { AssistantChat } from "@/components/chatbot/Assistant";
 import CustomerReviews from "@/components/CustomerReviews";
 import ProductGallery from "@/components/Gallery";
 import StickyProductHeader from "@/components/StickyProductHeader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useProductContext } from "@/hooks/useProduct";
-import { aiCuratedProducts } from "@/lib/aiCuratedProductsStatic";
-import { getRandomStylingTip } from "@/lib/helpers";
+import rawProductData from "@/lib/all-workwear.json";
 import { ChevronDown, Star, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import AiCuratedStuff from "./AiCuratedStuff";
 
 interface Product {
     name: string;
@@ -39,9 +37,9 @@ interface ProductPageProps {
 
 export default async function ProductPage({ params, searchParams }: ProductPageProps) {
     const { handle } = await params;
-    // const {matchedProducts} = useProductContext()
     const resolvedSearchParams = await searchParams; // Resolve searchParams Promise
     const variantId = resolvedSearchParams.variant && typeof resolvedSearchParams.variant === "string" ? resolvedSearchParams.variant : undefined;
+
 
 
     // Find the product by handle
@@ -49,10 +47,6 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
     if (!productData) {
         notFound();
     }
-
-
-    // generate tip (static)
-    const tip = getRandomStylingTip(variantId || '');
 
     // Get the selected variant or default to the first available variant
     const selectedVariant = productData.variants.find(
@@ -137,34 +131,8 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                 <StickyProductHeader product={stickyProduct} />
 
                 {/* a hook will track to show ai curated or not */}
-                <div className=" w-full lg:ml-36">
-                    <div className=" max-w-sm lg:w-[412px] py-2 px-4 bg-primary  lg:ml-2">
-                        <p className="text-white text-center font-semibold">AI Curated Outfits</p>
-                    </div>
-                    <div className="pt-3 pb-2.5 lg:pb-10 lg:ml-2 max-w-5xl">
-                        <div className="flex justify-start space-x-4 overflow-x-scroll no-scrollbar ">
-                            {/* {aiCuratedProducts.filter(aiProduct => aiProduct.name !== selectedVariant.id.toString()).map((product, index) => ( */}
-                            {aiCuratedProducts.filter(aiProduct => aiProduct.name !== product.name).map((product, index) => (
-                                <Link
-                                    key={index}
-                                    href={`/products/${product.href}`}>
-                                    <div className="w-[88px] lg:w-[100px] flex flex-col items-center shrink-0">
-                                        <div className="w-full aspect-square relative rounded-xl">
-                                            <Image
-                                                fill
-                                                src={product.image || "/placeholder.png"}
-                                                alt={`Placeholder image ${index + 1}`}
-                                                className="object-cover rounded-xl object-top"
-                                            />
-                                        </div>
-                                        <p className="text-xs mt-1 line-clamp-1 px-3">{product.name}</p>
-                                    </div>
-                                </Link>
-                            ))}
-                        </div>
+                <AiCuratedStuff handle={handle} />
 
-                    </div>
-                </div>
                 <div className="flex flex-col md:flex-row relative">
                     {/* Left side */}
                     <ProductGallery
@@ -335,13 +303,13 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                 </div>
 
             </div>
-            <AssistantChat tip={tip} />
+            <AssistantChat title={product.name.toString()} />
         </Suspense>
     );
 }
 
 // Helper functions
-function getColorHex(color: string): string | undefined {
+export function getColorHex(color: string): string | undefined {
     const colorMap: { [key: string]: string } = {
         "Tango Red": "#C8102E",
         "Iris Black": "#1C2526",
@@ -354,6 +322,7 @@ function getColorHex(color: string): string | undefined {
         "Blue and White": "#4682B4",
         "Houndstooth Blue": "#2A4D69",
         "Ceramic Beige": "#D6CFC4",
+        "Tweed Pink": "#FFC0C0",
     };
     return colorMap[color];
 }

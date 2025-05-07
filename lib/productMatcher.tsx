@@ -1,6 +1,6 @@
 // src/lib/productMatcher.ts
 import Fuse from 'fuse.js';
-import { Product } from '@/components/Allworkwear';
+import { Product } from './extractedProductsForPopup';
 
 export const matchProducts = (
   assistantProducts: string[],

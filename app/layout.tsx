@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import type React from "react";
 import "./globals.css";
+import Header from "@/components/Header";
 // import { ThemeProvider } from "@/components/theme-provider"
 
 // Import Quicksand font from Google Fonts
@@ -26,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${quicksand.variable} font-sans`}>
-        {/* <Header /> */}
+        <Header />
         <ProductProvider>
           {/* <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange> */}
           {children}

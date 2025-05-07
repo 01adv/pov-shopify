@@ -14,21 +14,14 @@ import { ProductCardForPopup } from "../ProductCardForPopup";
 import ChatLoader from "./ChatLoader";
 import { InputBar } from "./InputBar2";
 import { useProductContext } from "@/hooks/useProduct";
+import { getOrCreateSessionId } from "@/lib/helpers";
+import { getNudges } from "@/hooks/getNudges";
 
-const generateSessionId = () =>
-  `session${Math.random().toString(36).substring(2, 15)}`;
 
-const getOrCreateSessionId = () => {
-  const storedSessionId = localStorage.getItem("chatSessionId");
-  if (storedSessionId) return storedSessionId;
-  const newSessionId = generateSessionId();
-  localStorage.setItem("chatSessionId", newSessionId);
-  return newSessionId;
-};
 
-export function AssistantChat({ tip }: { tip: string | null }) {
-  const {setMatchedProducts} = useProductContext();
-  const products : Product[]  = extractProducts()
+export function AssistantChat({ title }: { title?: string }) {
+  const { setMatchedProducts, setTitle, title: contextTitle } = useProductContext();
+  const products: Product[] = extractProducts()
   const isPhone = useIsPhone();
   const router = useRouter();
   const [input, setInput] = useState("");
@@ -41,12 +34,10 @@ export function AssistantChat({ tip }: { tip: string | null }) {
   const [recommendedProducts, setRecommendedProducts] = useState<Product[]>([]);
   const [latestResponse, setLatestResponse] = useState("");
   const [isFetching, setIsFetching] = useState(false);
-  const [assistantTitle, setAssistantTitle] = useState("");
+  const [nudge, setNudge] = useState("");
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
-
-  console.log("latestResponse tip", latestResponse);
 
   const MIN_CHAT_HEIGHT = 140; // Minimum height including input bar
   const MAX_CHAT_HEIGHT = 560; // Maximum card height
@@ -58,6 +49,22 @@ export function AssistantChat({ tip }: { tip: string | null }) {
     const currentSessionId = getOrCreateSessionId();
     setSessionId(currentSessionId);
   }, []);
+  useEffect(() => {
+    const fetchNudges = async () => {
+      console.log('title n nudgeess', title, sessionId);
+      if (!title || !sessionId) return;
+
+      try {
+        const nudge = await getNudges({ productName: title, sessionId });
+        console.log('nudge', nudge);
+        setNudge(nudge);
+      } catch (error) {
+        console.error("Failed to fetch nudges", error);
+      }
+    };
+
+    fetchNudges();
+  }, [title, sessionId]);
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
@@ -91,11 +98,12 @@ export function AssistantChat({ tip }: { tip: string | null }) {
         data.response.text || "Sorry, I couldn't process that.";
       const assistantProducts = data?.response?.products;
       const assistantTitle = data?.response?.title;
+      console.log('assistant ressss', assistantResponse);
 
       // Only update if the response is different
       if (assistantResponse !== latestResponse) {
         setLatestResponse(assistantResponse);
-        setAssistantTitle(assistantTitle);
+        setTitle(assistantTitle);
         setIsFetching(false);
         setIsTyping(true);
       } else {
@@ -181,7 +189,7 @@ export function AssistantChat({ tip }: { tip: string | null }) {
         {/* Product Popup */}
         {!isPhone && (
           <ProductPopup
-            title={assistantTitle}
+            title={contextTitle}
             isOpen={isDialogOpen}
             onClose={() => setIsDialogOpen(false)}
             products={recommendedProducts}
@@ -194,7 +202,7 @@ export function AssistantChat({ tip }: { tip: string | null }) {
         )}
 
         {/* Chat Interface */}
-        {isExpanded || tip ? (
+        {isExpanded || nudge ? (
           <Card
             className="shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4"
             style={{
@@ -203,9 +211,8 @@ export function AssistantChat({ tip }: { tip: string | null }) {
             }}
           >
             <div
-              className={`flex-1 no-scrollbar ${
-                shouldScroll ? "overflow-y-auto" : "overflow-visible"
-              }`}
+              className={`flex-1 no-scrollbar ${shouldScroll ? "overflow-y-auto" : "overflow-visible"
+                }`}
               ref={messagesContainerRef}
             >
               <div className="">
@@ -244,8 +251,8 @@ export function AssistantChat({ tip }: { tip: string | null }) {
                         />
                       </p>
                     )}
-                    {tip && !isFetching && latestResponse.length < 1 && (
-                      <p className="text-sm lg:text-base">{tip}</p>
+                    {nudge && !isFetching && latestResponse.length < 1 && (
+                      <p className="text-sm lg:text-base">{nudge}</p>
                     )}
                   </div>
                 </div>

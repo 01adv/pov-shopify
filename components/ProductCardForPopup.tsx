@@ -3,11 +3,10 @@ import { Card, CardContent, CardFooter } from "./ui/card";
 import Image from "next/image";
 import Link from "next/link";
 // import { Product } from "./Allworkwear";
-import { Badge } from "./ui/badge";
 import { Product } from "@/lib/extractedProductsForPopup";
+import { Badge } from "./ui/badge";
 
 export const ProductCardForPopup = ({ product }: { product: Product }) => {
-  console.log("product in popip", product);
   return (
     <div>
       {/* static link for now */}
@@ -41,19 +40,19 @@ export const ProductCardForPopup = ({ product }: { product: Product }) => {
                 {product.colors.map((color, i) => (
                   <span
                     key={color}
-                    className={`w-4 h-4 flex items-center justify-center rounded-full border ${
-                      i === 0 ? "border-black" : "border-gray-300"
-                    }`}
+                    className={`w-4 h-4 flex items-center justify-center rounded-full border ${i === 0 ? "border-black" : "border-gray-300"
+                      }`}
                   >
                     <span
                       className="w-6 h-6 rounded-full"
                       style={{ backgroundColor: "fafafa" }}
+                    // style={{ backgroundColor: getColorHex(color) }}
                     ></span>
                   </span>
                 ))}
               </div>
 
-          
+
               {/* <p className="text-muted-foreground text-xs line-clamp-1">{product.description}</p> */}
               <p className="text-muted-foreground text-xs line-clamp-1">
                 {product.description}

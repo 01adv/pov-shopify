@@ -1,9 +1,9 @@
+import AddToCartButton from "@/components/AddToCartButton";
 import { AssistantChat } from "@/components/chatbot/Assistant";
 import CustomerReviews from "@/components/CustomerReviews";
 import ProductGallery from "@/components/Gallery";
 import StickyProductHeader from "@/components/StickyProductHeader";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import rawProductData from "@/lib/all-workwear.json";
 import { ChevronDown, Star, Truck } from "lucide-react";
 import Image from "next/image";
@@ -240,13 +240,14 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                                     </div>
                                 </div>
                                 {/* Add to Cart Button */}
-                                <Button
+                                {/* <Button
                                     variant={'secondary'}
                                     className="max-w-md my-5 h-11 w-full text-white text-sm rounded-none"
                                     disabled={!selectedVariant.available}
                                 >
                                     {selectedVariant.available ? "Add to Cart" : "Out of Stock"}
-                                </Button>
+                                </Button> */}
+                                <AddToCartButton variantId={44482757066805} />
                             </div>
                             <span
                                 id="product-details"

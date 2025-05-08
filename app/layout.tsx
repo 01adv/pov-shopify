@@ -27,8 +27,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${quicksand.variable} font-sans`}>
-        <Header />
         <ProductProvider>
+          <Header />
           {/* <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange> */}
           {children}
           {/* </ThemeProvider> */}

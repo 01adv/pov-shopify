@@ -44,6 +44,8 @@ interface ProductContextType {
   setTitle: (title: string) => void;
   text: string;
   setText: (text: string) => void;
+  itemCount: number;
+  setItemCount: (count: number) => void;
 }
 
 // Create the context with a default value
@@ -54,6 +56,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [matchedProducts, setMatchedProducts] = useState<Product[]>([]);
   const [title, setTitle] = useState<string>('');
   const [text, setText] = useState<string>('');
+  const [itemCount, setItemCount] = useState<number>(0);
 
   return (
     <ProductContext.Provider
@@ -64,6 +67,8 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         setTitle,
         text,
         setText,
+        itemCount,
+        setItemCount
       }}
     >
       {children}

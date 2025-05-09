@@ -5,6 +5,8 @@ import Link from "next/link";
 // import { Product } from "./Allworkwear";
 import { Product } from "@/lib/extractedProductsForPopup";
 import { Badge } from "./ui/badge";
+import { getHexCode } from "@/lib/colorHexMap";
+import { Circle } from "lucide-react";
 
 export const ProductCardForPopup = ({ product }: { product: Product }) => {
   return (
@@ -35,22 +37,21 @@ export const ProductCardForPopup = ({ product }: { product: Product }) => {
                 {product.title}
               </h3>
 
-              {/* color */}
               <div className="flex gap-2">
-                {product.colors.map((color, i) => (
-                  <span
-                    key={color}
-                    className={`w-4 h-4 flex items-center justify-center rounded-full border ${i === 0 ? "border-black" : "border-gray-300"
-                      }`}
-                  >
+                {product.colors
+                  .map((color) => ({ color, hex: getHexCode(color) }))
+                  .filter(({ hex }) => hex) // Skip colors with no hex match
+                  .map(({ color, hex }, i) => (
                     <span
-                      className="w-6 h-6 rounded-full"
-                      style={{ backgroundColor: "fafafa" }}
-                    // style={{ backgroundColor: getColorHex(color) }}
-                    ></span>
-                  </span>
-                ))}
+                      key={color}
+                      className={`w-4 h-4 flex items-center justify-center rounded-full border 
+          ${i === 0 ? "border-muted-foreground/80" : "border-gray-300"}`}
+                    >
+                      <Circle fill={hex!} stroke="none" className="w-4 h-4 rounded-full" />
+                    </span>
+                  ))}
               </div>
+
 
 
               {/* <p className="text-muted-foreground text-xs line-clamp-1">{product.description}</p> */}

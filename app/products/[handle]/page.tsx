@@ -5,12 +5,13 @@ import ProductGallery from "@/components/Gallery";
 import StickyProductHeader from "@/components/StickyProductHeader";
 import { Badge } from "@/components/ui/badge";
 import rawProductData from "@/lib/all-workwear.json";
-import { ChevronDown, Star, Truck } from "lucide-react";
+import { ChevronDown, Circle, Star, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import AiCuratedStuff from "./AiCuratedStuff";
+import { getHexCode } from "@/lib/colorHexMap";
 
 interface Product {
     name: string;
@@ -24,7 +25,7 @@ interface Product {
     fabric: string;
     rating: number;
     reviewCount: number;
-    availableColors: { name: string; hex?: string; variantId: string }[];
+    availableColors: { name: string; hex?: string | undefined; variantId: string }[];
     availableSizes: { size: string; available: boolean; variantId: string }[];
     variantId: string;
     handle: string;
@@ -63,7 +64,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
         const variant = productData.variants.find((v) => v.option1 === color && v.available);
         return {
             name: color,
-            hex: getColorHex(color),
+            hex: getHexCode(color) || undefined,
             variantId: variant?.id.toString() || "",
         };
     }).filter((c) => c.variantId); // Only include colors with available variants
@@ -119,11 +120,13 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
 
 
     // Calculate discount percentage
-    const discountPercentage = product.originalPrice
-        ? Math.round(
-            ((product.originalPrice - product.salePrice) / product.originalPrice) * 100
-        )
-        : undefined;
+    // const discountPercentage = product.originalPrice
+    //     ? product.originalPrice - product.salePrice > 0
+    //         ? Math.round(
+    //             ((product.originalPrice - product.salePrice) / product.originalPrice) * 100
+    //         )
+    //         : 0
+    //     : undefined;
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
@@ -156,16 +159,16 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                                     </span>
                                 </div>
                                 {/* Discount */}
-                                {discountPercentage && (
+                                {/* {discountPercentage && discountPercentage > 0 && (
                                     <Badge className="w-fit bg-primary rounded-xl text-white py-2 px-7">
                                         {discountPercentage}% OFF
                                     </Badge>
-                                )}
+                                )} */}
                                 {/* Price */}
                                 <div className="gap-5 flex items-center">
-                                    {product.originalPrice && (product?.originalPrice > product.salePrice) && (
+                                    {product.originalPrice && (product?.originalPrice > product.salePrice) && product.originalPrice > 0 && (
                                         <span className="text-lg text-muted-foreground/75 line-through">
-                                            $ {product.originalPrice?.toFixed(2)}
+                                            $ {product.originalPrice?.toFixed(2)} hh
                                         </span>
                                     )}
                                     <span className="text-lg text-muted-foreground">
@@ -190,24 +193,25 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                                         Color: {product.color}
                                     </label>
                                     <div className="flex gap-2">
-                                        {product.availableColors.map((color) => (
-                                            <Link
-                                                key={color.name}
-                                                href={`/products/${product.handle}?variant=${color.variantId}`}
-                                            >
-                                                <span
-                                                    className={`w-7 h-7 flex items-center justify-center rounded-full border ${color.name === product.color
-                                                        ? "border-black"
-                                                        : "border-gray-300"
-                                                        }`}
+                                        {product.availableColors
+                                            .filter((color) => !!color.hex) // Only show if hex exists
+                                            .map((color) => (
+                                                <Link
+                                                    key={color.name}
+                                                    href={`/products/${product.handle}?variant=${color.variantId}`}
                                                 >
                                                     <span
-                                                        className="w-6 h-6 rounded-full"
-                                                        style={{ backgroundColor: color.hex || "#000" }}
-                                                    ></span>
-                                                </span>
-                                            </Link>
-                                        ))}
+                                                        className={`w-7 h-7 flex items-center justify-center rounded-full border 
+          ${color.name === product.color ? "border-black" : "border-gray-300"}`}
+                                                    >
+                                                        <Circle
+                                                            fill={color.hex!}
+                                                            stroke="none"
+                                                            className="w-6 h-6 rounded-full"
+                                                        />
+                                                    </span>
+                                                </Link>
+                                            ))}
                                     </div>
                                 </div>
                                 {/* Size */}
@@ -310,23 +314,23 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
 }
 
 // Helper functions
-function getColorHex(color: string): string | undefined {
-    const colorMap: { [key: string]: string } = {
-        "Tango Red": "#C8102E",
-        "Iris Black": "#1C2526",
-        "Jute Black": "#2F2F2F",
-        "Misty Blue": "#A3BFFA",
-        "Forest Green": "#355E3B",
-        "Spectra Yellow": "#FFC107",
-        "Baby Pink": "#F4C2C2",
-        "Winter White": "#F5F6F5",
-        "Blue and White": "#4682B4",
-        "Houndstooth Blue": "#2A4D69",
-        "Ceramic Beige": "#D6CFC4",
-        "Tweed Pink": "#FFC0C0",
-    };
-    return colorMap[color];
-}
+// function getColorHex(color: string): string | undefined {
+//     const colorMap: { [key: string]: string } = {
+//         "Tango Red": "#C8102E",
+//         "Iris Black": "#1C2526",
+//         "Jute Black": "#2F2F2F",
+//         "Misty Blue": "#A3BFFA",
+//         "Forest Green": "#355E3B",
+//         "Spectra Yellow": "#FFC107",
+//         "Baby Pink": "#F4C2C2",
+//         "Winter White": "#F5F6F5",
+//         "Blue and White": "#4682B4",
+//         "Houndstooth Blue": "#2A4D69",
+//         "Ceramic Beige": "#D6CFC4",
+//         "Tweed Pink": "#FFC0C0",
+//     };
+//     return colorMap[color];
+// }
 
 
 // for later use in accordion

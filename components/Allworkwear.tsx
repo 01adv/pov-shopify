@@ -1,4 +1,3 @@
-import { ChevronDown, Settings2 } from "lucide-react";
 
 // import rawProductData from "@/app/products.json";
 import rawProductData from "@/lib/all-workwear.json";
@@ -122,18 +121,19 @@ export default function AllWorkWear() {
     return (
         <div className="flex min-h-screen flex-col">
             <main className="flex-1">
-                <div className="mx-auto max-w-6xl px-4 xl:px-6">
+                <div className="mx-auto max-w-6xl px-4 xl:px-12">
                     <div className="space-y-5 my-6">
                         <h1 className="text-[30px] lg:text-[40px]">All Workwear</h1>
-                        <p className="text-muted-foreground/75 max-w-3xl text-base lg:text-lg tracking-wide">
+                        <p className="text-muted-foreground/75 max-w-md lg:max-w-3xl text-base lg:text-lg tracking-wide">
                             As seen on TV, functional workwear with POCKETS for women! Designer
                             corporate wear without the designer price. #pocketspledge
                         </p>
                     </div>
 
                     {/* Filter and Sort */}
-                    <div className="mt-12 md:mt-14 lg:mt-16 mb-4 md:mb-6 lg:mb-9 flex flex-wrap items-center justify-between gap-4">
-                        <div className="flex items-center gap-4">
+                    <div className="mt-12 md:mt-14 mb-4 md:mb-6 flex flex-wrap items-center justify-between gap-4">
+                        {/* <div className="mt-12 md:mt-14 lg:mt-16 mb-4 md:mb-6 lg:mb-9 flex flex-wrap items-center justify-between gap-4"> */}
+                        {/* <div className="flex items-center gap-4">
                             <span className="md:hidden flex items-center gap-2 text-muted-foreground text-sm">
                                 <Settings2 className="text-muted-foreground/95 h-4 w-4" /> Filter
                                 and sort
@@ -145,14 +145,14 @@ export default function AllWorkWear() {
                                 Availability{" "}
                                 <ChevronDown className="text-muted-foreground/95 h-4 w-4" />
                             </button>
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <span className="hidden md:block text-sm text-muted-foreground/85">
+                        </div> */}
+                        <div className="flex items-center justify-end w-full gap-4">
+                            {/* <span className="hidden md:block text-sm text-muted-foreground/85">
                                 Sort by:
                             </span>
                             <button className="hidden md:flex items-center gap-16 text-muted-foreground/75 text-sm">
                                 Featured <ChevronDown className="h-4 w-4" />
-                            </button>
+                            </button> */}
                             <span className="ml-4 text-sm text-muted-foreground">
                                 {products.length} products
                             </span>

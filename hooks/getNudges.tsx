@@ -15,7 +15,6 @@ export const getNudges = async ({ productName, sessionId }: { productName: strin
                 body: JSON.stringify({ product_name: productName, sessionId }),
             }
         );
-        console.log('response ndudges', response);
         const data = await response.json();
         return data.nudge;
     } catch (error) {

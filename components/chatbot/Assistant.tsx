@@ -224,25 +224,13 @@ export function AssistantChat({ title }: { title?: string }) {
                                     return lastAssistantMessage ? ( */}
                 <div className="flex justify-start">
                   <div className="w-full rounded-xl p-2 bg-[#F9F9F9] border border-primary">
-                    {isFetching ? (
+                    {/* {isFetching ? (
                       <>
                         <ChatLoader />
                       </>
                     ) : (
                       <p className="text-sm lg:text-base">
-                        {/* {isTyping && !isTypingDone ? (
-                                                    <TypingEffect
-                                                        text={latestResponse}
-                                                        onDone={handleTypingDone}
-                                                    />
-                                                )
-                                                    : (
-                                                        <span
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: latestResponse,
-                                                            }}
-                                                        />
-                                                    )} */}
+                    
                         <span
                           className=""
                           dangerouslySetInnerHTML={{
@@ -251,10 +239,26 @@ export function AssistantChat({ title }: { title?: string }) {
                         />
                       </p>
                     )}
-                    {nudge && !isFetching && latestResponse.length < 1 && (
+                    {nudge && latestResponse.length < 1 && (
+                      isFetching ?
+                        <ChatLoader /> :
+                        <p className="text-sm lg:text-base">{nudge}</p>
+                    )} */}
+                    {isFetching ? (
+                      <ChatLoader />
+                    ) : latestResponse.length > 0 ? (
+                      <p className="text-sm lg:text-base">
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: latestResponse,
+                          }}
+                        />
+                      </p>
+                    ) : nudge ? (
                       <p className="text-sm lg:text-base">{nudge}</p>
-                    )}
+                    ) : null}
                   </div>
+
                 </div>
                 {/* ) : null
                                 })()} */}

@@ -313,24 +313,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
     );
 }
 
-// Helper functions
-// function getColorHex(color: string): string | undefined {
-//     const colorMap: { [key: string]: string } = {
-//         "Tango Red": "#C8102E",
-//         "Iris Black": "#1C2526",
-//         "Jute Black": "#2F2F2F",
-//         "Misty Blue": "#A3BFFA",
-//         "Forest Green": "#355E3B",
-//         "Spectra Yellow": "#FFC107",
-//         "Baby Pink": "#F4C2C2",
-//         "Winter White": "#F5F6F5",
-//         "Blue and White": "#4682B4",
-//         "Houndstooth Blue": "#2A4D69",
-//         "Ceramic Beige": "#D6CFC4",
-//         "Tweed Pink": "#FFC0C0",
-//     };
-//     return colorMap[color];
-// }
+
 
 
 // for later use in accordion

@@ -205,7 +205,7 @@ export function AssistantChat({ title }: { title?: string }) {
         {/* Chat Interface */}
         {isExpanded || nudge ? (
           <Card
-            className="shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4"
+            className="shadow-lg flex flex-col transition-all duration-300 ease-in-out pt-1 pb-3 px-3 no-scrollbar gap-3 bg-pink-200"
             // className={`shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4 ${isDialogOpen ? "hidden" : ""}`}
             style={{
               maxHeight: `${MAX_CHAT_HEIGHT}px`,
@@ -218,12 +218,11 @@ export function AssistantChat({ title }: { title?: string }) {
               ref={messagesContainerRef}
             >
               <div className="">
-                {/* {(() => {
-                                    const lastAssistantMessage = [...messages]
-                                        .reverse()
-                                        .find((msg) => msg.sender === "assistant")
-
-                                    return lastAssistantMessage ? ( */}
+                <span className=" flex justify-end w-full">
+                  <button onClick={() => { setIsExpanded(false); setNudge(''); setLatestResponse('') }}>
+                    <X className=" text-muted-foreground/40" size={16} />
+                  </button>
+                </span>
                 <div className="flex justify-start">
                   <div className="w-full rounded-xl p-2 bg-[#F9F9F9] border border-primary">
                     {/* {isFetching ? (

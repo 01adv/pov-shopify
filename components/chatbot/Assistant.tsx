@@ -16,6 +16,7 @@ import { InputBar } from "./InputBar2";
 import { useProductContext } from "@/hooks/useProduct";
 import { getOrCreateSessionId } from "@/lib/helpers";
 import { getNudges } from "@/hooks/getNudges";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 
 
 
@@ -204,8 +205,8 @@ export function AssistantChat({ title }: { title?: string }) {
         {/* Chat Interface */}
         {isExpanded || nudge ? (
           <Card
-            // className="shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4"
-            className={`shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4 ${isDialogOpen ? "hidden" : ""}`}
+            className="shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4"
+            // className={`shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4 ${isDialogOpen ? "hidden" : ""}`}
             style={{
               maxHeight: `${MAX_CHAT_HEIGHT}px`,
               minHeight: `${MIN_CHAT_HEIGHT}px`,
@@ -318,7 +319,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center pt-[80px] bg-black/30"
+      className="fixed inset-0 z-50 flex items-start justify-center pt-[110px] bg-black/30"
       onClick={onClose}
     >
       <div
@@ -342,20 +343,28 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
             </div>
             <div className="text-center flex flex-col mb-4 space-y-2">
               <span className="font-semibold text-xl">{title}</span>
-              {/* <span className="text-muted-foreground/75">
-                We&apos;ve curated {products.length} stylish dinner-ready
-                ensembles just for you.
-              </span> */}
             </div>
-            <div className="flex gap-2 overflow-x-auto no-scrollbar">
-              {products.map((product) => (
-                <div
-                  key={product.id}
-                  className="basis-[calc(100%/3)] flex-shrink-0"
-                >
-                  <ProductCardForPopup product={product} />
-                </div>
-              ))}
+            <div className="relative">
+              <Carousel
+                className="w-full"
+                opts={{
+                  align: 'start',
+                  loop: false, // Set to true if you want infinite looping
+                }}
+              >
+                <CarouselContent className="-ml-2">
+                  {products.map((product) => (
+                    <CarouselItem
+                      key={product.id}
+                      className="pl-2 basis-[calc(100%/3)]" // Show ~3 items per view
+                    >
+                      <ProductCardForPopup product={product} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="absolute -left-4 top-1/2 -translate-y-1/2" />
+                <CarouselNext className="absolute -right-4 top-1/2 -translate-y-1/2" />
+              </Carousel>
             </div>
             <div className="mt-4">
               <InputBar
@@ -372,3 +381,4 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
     </div>
   );
 };
+

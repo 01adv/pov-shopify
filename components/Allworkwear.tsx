@@ -2,6 +2,7 @@
 // import rawProductData from "@/app/products.json";
 import rawProductData from "@/lib/all-workwear.json";
 import { ProductCard } from "./ProductCard";
+import ChatBot from "./chatbot/ChatBot";
 
 
 type Variant = {
@@ -124,7 +125,8 @@ export default function AllWorkWear() {
                 <div className="mx-auto max-w-6xl px-4 xl:px-12">
                     <div className="space-y-5 my-6">
                         <h1 className="text-[30px] lg:text-[40px]">All Workwear</h1>
-                        <p className="text-muted-foreground/75 max-w-md lg:max-w-3xl text-base lg:text-lg tracking-wide">
+                        <ChatBot />
+                        <p className="hidden md:block text-muted-foreground/75 max-w-md lg:max-w-3xl text-base lg:text-lg tracking-wide">
                             As seen on TV, functional workwear with POCKETS for women! Designer
                             corporate wear without the designer price. #pocketspledge
                         </p>

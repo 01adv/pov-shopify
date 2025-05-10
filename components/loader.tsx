@@ -1,8 +1,9 @@
 "use client"
 
+import { cn } from "@/lib/utils"
 import { useEffect, useState } from "react"
 
-export function ProductLoader() {
+export function ProductLoader({ title = "Curating your selection...", description = "We are preparing your personalized outfit recommendations", className }: { title?: string, description?: string, className?: string }) {
     const [rotation, setRotation] = useState(0)
 
     useEffect(() => {
@@ -14,7 +15,7 @@ export function ProductLoader() {
     }, [])
 
     return (
-        <div className="flex flex-col items-center justify-center py-16 px-4">
+        <div className="flex flex-col items-center justify-center py-16 px-2">
             <div className="relative h-16 w-16 mb-8">
                 {[...Array(8)].map((_, i) => {
                     const angle = i * 45
@@ -35,9 +36,10 @@ export function ProductLoader() {
                     )
                 })}
             </div>
-            <h3 className="text-lg font-medium text-center">Curating your selection...</h3>
+            <h3 className={cn("text-lg font-medium text-center", className)}>{title}</h3>
             <p className="text-sm text-muted-foreground text-center mt-2">
-                We are preparing your personalized outfit recommendations
+                {description}
+
             </p>
         </div>
     )

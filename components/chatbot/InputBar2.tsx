@@ -146,7 +146,7 @@ export const InputBar: React.FC<InputBarProps> = ({
     };
 
     return (
-        <div className={cn("flex items-center rounded-full bg-white py-1.5 border-[1.5px]", className)}>
+        <div className={cn("flex items-center rounded-full bg-white py-[2px] border-[1.5px]", className)}>
             <Button variant="ghost" size="icon" className="ml-2 h-12 w-12 rounded-full p-0">
                 <Mic size={24} className="text-black" />
             </Button>
@@ -164,7 +164,7 @@ export const InputBar: React.FC<InputBarProps> = ({
                 variant="ghost"
                 size="icon"
                 onClick={handleSendMessage}
-                className="bg-gray-200 mr-2 h-12 w-12 lg:h-11 lg:w-11 rounded-full p-0"
+                className="bg-gray-200 mr-1 h-12 w-12 lg:h-11 lg:w-11 rounded-full p-0"
             >
                 <Send size={24} className="text-black rotate-45" />
             </Button>

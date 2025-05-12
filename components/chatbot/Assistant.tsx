@@ -325,19 +325,19 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center pt-[110px] bg-black/30"
+      className="fixed inset-0 z-50 flex items-start justify-center pt-[90px] bg-black/30"
       onClick={onClose}
     >
       <div
-        className="relative bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-lg max-h-[82vh] overflow-y-auto p-4"
+        className="relative bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-lg max-h-[82vh] overflow-y-auto px-4 py-2"
         onClick={(e) => e.stopPropagation()}
       >
         {loader ? (
           <ProductLoader />
         ) : (
           <>
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold">Recommended Outfits</h2>
+            <div className="flex justify-between items-center mb-2">
+              <h2 className=" font-semibold">Recommended Outfits</h2>
               <Button
                 variant="ghost"
                 size="icon"
@@ -372,7 +372,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
                 <CarouselNext className="absolute -right-4 top-1/2 -translate-y-1/2" />
               </Carousel>
             </div>
-            <div className="mt-4">
+            <div className="mt-3">
               <InputBar
                 className="border-primary w-full"
                 input={input}

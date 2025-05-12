@@ -53,10 +53,9 @@
 
 'use client';
 import { ProductCardForPopup } from '@/components/ProductCardForPopup';
+import { AssistantChat } from '@/components/chatbot/Assistant';
+import ChatBot from '@/components/chatbot/ChatBot';
 import { ProductLoader } from '@/components/loader';
-import { InputBar } from '@/components/chatbot/InputBar2';
-import { useProductContext } from '@/hooks/useProduct';
-import { useEffect, useState } from 'react';
 import {
     Carousel,
     CarouselContent,
@@ -64,6 +63,8 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from '@/components/ui/carousel'; // Import Shadcn/UI carousel components
+import { useProductContext } from '@/hooks/useProduct';
+import { useEffect, useState } from 'react';
 
 const Page = () => {
     const { matchedProducts, title } = useProductContext();
@@ -86,6 +87,9 @@ const Page = () => {
 
     return (
         <div className="max-w-2xl mx-auto px-4 py-8 relative min-h-[calc(100vh-116px)] flex flex-col mb-16">
+            <div className="max-md:sticky top-0 max-md:z-40 bg-white py-4">
+                <ChatBot />
+            </div>
             <div>
                 <h2 aria-label="title" className="text-lg text-center font-semibold">
                     {title}
@@ -114,9 +118,10 @@ const Page = () => {
                 </Carousel>
             </div>
             {/* Fixed input bar */}
-            <div className="fixed bottom-4 left-0 right-0 px-4 max-w-2xl mx-auto z-50">
+            {/* <div className="fixed bottom-4 left-0 right-0 px-4 max-w-2xl mx-auto z-50">
                 <InputBar setInput={() => { }} />
-            </div>
+            </div> */}
+            <AssistantChat />
         </div>
     );
 };

@@ -3,6 +3,7 @@
 import rawProductData from "@/lib/all-workwear.json";
 import { ProductCard } from "./ProductCard";
 import ChatBot from "./chatbot/ChatBot";
+import { AssistantChat } from "./chatbot/Assistant";
 
 
 type Variant = {
@@ -120,12 +121,12 @@ export const products: Product[] = rawProductData.flatMap((product) => {
 
 export default function AllWorkWear() {
     return (
-        <div className="flex min-h-screen flex-col">
+        <div className="flex min-h-screen flex-col relative">
             <main className="flex-1">
                 <div className="mx-auto max-w-6xl px-4 xl:px-12">
-                    <div className="space-y-5 my-6">
+                    <div className="space-y-5 my-4 max-md:sticky top-0 max-md:z-40 bg-white pb-1">
                         <h1 className="text-[30px] lg:text-[40px]">All Workwear</h1>
-                        <ChatBot />
+                        <div className="block md:hidden"><ChatBot /></div>
                         <p className="hidden md:block text-muted-foreground/75 max-w-md lg:max-w-3xl text-base lg:text-lg tracking-wide">
                             As seen on TV, functional workwear with POCKETS for women! Designer
                             corporate wear without the designer price. #pocketspledge
@@ -133,7 +134,7 @@ export default function AllWorkWear() {
                     </div>
 
                     {/* Filter and Sort */}
-                    <div className="mt-12 md:mt-14 mb-4 md:mb-6 flex flex-wrap items-center justify-between gap-4">
+                    <div className="-mt-4 md:mt-9 mb-4 md:mb-6 flex flex-wrap items-center justify-between gap-4">
                         {/* <div className="mt-12 md:mt-14 lg:mt-16 mb-4 md:mb-6 lg:mb-9 flex flex-wrap items-center justify-between gap-4"> */}
                         {/* <div className="flex items-center gap-4">
                             <span className="md:hidden flex items-center gap-2 text-muted-foreground text-sm">
@@ -168,6 +169,7 @@ export default function AllWorkWear() {
                         ))}
                     </div>
                 </div>
+                <AssistantChat />
             </main>
             <div className="h-60"></div>
         </div>

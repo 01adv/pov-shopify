@@ -1,17 +1,17 @@
 import AddToCartButton from "@/components/AddToCartButton";
 import { AssistantChat } from "@/components/chatbot/Assistant";
+import ChatBot from "@/components/chatbot/ChatBot";
 import CustomerReviews from "@/components/CustomerReviews";
 import ProductGallery from "@/components/Gallery";
-import StickyProductHeader from "@/components/StickyProductHeader";
 import { Badge } from "@/components/ui/badge";
 import rawProductData from "@/lib/all-workwear.json";
+import { getHexCode } from "@/lib/colorHexMap";
 import { ChevronDown, Circle, Star, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import AiCuratedStuff from "./AiCuratedStuff";
-import { getHexCode } from "@/lib/colorHexMap";
 
 interface Product {
     name: string;
@@ -109,14 +109,14 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
     };
 
     // Transform product for StickyProductHeader
-    const stickyProduct = {
-        name: product.name,
-        color: product.color,
-        size: product.size,
-        originalPrice: product.originalPrice,
-        salePrice: product.salePrice,
-        image: product.image,
-    };
+    // const stickyProduct = {
+    //     name: product.name,
+    //     color: product.color,
+    //     size: product.size,
+    //     originalPrice: product.originalPrice,
+    //     salePrice: product.salePrice,
+    //     image: product.image,
+    // };
 
 
     // Calculate discount percentage
@@ -130,10 +130,12 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <div className="mt-3 lg:mt-9 max-w-[1200px] mx-auto px-4 md:px-[50px] relative">
-                <StickyProductHeader product={stickyProduct} />
+            <div className="mt-3 md:mt-8 max-w-[1200px] mx-auto px-4 md:px-[50px] relative">
+                {/* <StickyProductHeader product={stickyProduct} /> */}
+                <div className="max-md:sticky top-0 max-md:z-40 bg-white py-2">
+                    <ChatBot />
+                </div>
 
-                {/* a hook will track to show ai curated or not */}
                 <AiCuratedStuff handle={handle} />
 
                 <div className="flex flex-col md:flex-row relative">

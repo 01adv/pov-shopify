@@ -322,14 +322,11 @@ export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void
     console.log('transcript', transcript);
 
     return (
-        <div className="w-full h-full rounded-md shadow-lg flex flex-col items-center z-50">
+        <div className=" w-full h-full rounded-md md:rounded-xl shadow-lg flex flex-col items-center z-50 relative bg-purple-200">
             {loading && (
-                // <div className="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-80 rounded-md z-10">
-                //     <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
-                //     <p className="text-sm text-gray-600 mt-4 px-4 text-center">{funMessages[loadingMsgIndex]}</p>
-                // </div>
-                <div className="bg-white h-full w-full rounded-xl z-20">
+                <div className="bg-orange-100 rounded-xl z-20 flex items-center justify-center absolute inset-0 h-full w-full">
                     <ProductLoader className="text-sm" title={funMessages[loadingMsgIndex]} description="" />
+                    {/* <p className='text-xs text-center    md:text-sm'>Summoning your virtual assistant...</p> */}
                 </div>
             )}
 

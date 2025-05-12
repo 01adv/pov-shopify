@@ -214,7 +214,7 @@ export function AssistantChat({ title }: { title?: string }) {
                 // className={`shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4 ${isDialogOpen ? "hidden" : ""}`}
                 style={{
                   maxHeight: `${MAX_CHAT_HEIGHT}px`,
-                  minHeight: `${MIN_CHAT_HEIGHT}px`,
+                  // minHeight: `${MIN_CHAT_HEIGHT}px`,
                 }}
               >
                 <div

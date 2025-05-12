@@ -186,7 +186,7 @@ export default function ProductGallery({ images, tags, selectedVariantId }: Prod
                         {galleryImages.map((image, index) => (
                             <div
                                 key={`mobile-${image.id}`}
-                                className="w-full flex-shrink-0 relative flex justify-center items-center p-1 pt-2"
+                                className="w-full flex-shrink-0 relative flex justify-center items-center p-1 pt-4"
                             >
                                 <div className="relative aspect-[255/380] w-[255px]">
                                     <Image

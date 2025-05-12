@@ -1,5 +1,3 @@
-
-
 'use client';
 import { Product } from '@/lib/extractedProductsForPopup';
 import { createContext, useContext, useState, ReactNode } from 'react';
@@ -16,6 +14,8 @@ interface ProductContextType {
   setItemCount: (count: number) => void;
   switchToTextAgent: boolean;
   setSwitchToTextAgent: (switchToTextAgent: boolean) => void;
+  personalizedNudge: string;
+  setPersonalizedNudge: (nudge: string) => void;
 }
 
 // Create the context with a default value
@@ -28,6 +28,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [text, setText] = useState<string>('');
   const [itemCount, setItemCount] = useState<number>(0);
   const [switchToTextAgent, setSwitchToTextAgent] = useState<boolean>(false);
+  const [personalizedNudge, setPersonalizedNudge] = useState<string>('');
 
   return (
     <ProductContext.Provider
@@ -41,7 +42,9 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         itemCount,
         setItemCount,
         switchToTextAgent,
-        setSwitchToTextAgent
+        setSwitchToTextAgent,
+        personalizedNudge,
+        setPersonalizedNudge,
       }}
     >
       {children}

@@ -21,7 +21,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 
 
 export function AssistantChat({ title }: { title?: string }) {
-  const { setMatchedProducts, setTitle, title: contextTitle, switchToTextAgent } = useProductContext();
+  const { setMatchedProducts, setTitle, title: contextTitle, switchToTextAgent, setPersonalizedNudge } = useProductContext();
   const products: Product[] = extractProducts()
   const isPhone = useIsPhone();
   const router = useRouter();
@@ -58,7 +58,10 @@ export function AssistantChat({ title }: { title?: string }) {
       try {
         const nudge = await getNudges({ productName: title, sessionId });
         console.log('nudge', nudge);
-        setNudge(nudge);
+        setNudge(nudge || "");
+        if (nudge && setPersonalizedNudge) {
+          setPersonalizedNudge(nudge);
+        }
       } catch (error) {
         console.error("Failed to fetch nudges", error);
       }
@@ -207,7 +210,7 @@ export function AssistantChat({ title }: { title?: string }) {
             {/* Chat Interface */}
             {isExpanded || nudge ? (
               <Card
-                className="shadow-lg flex flex-col transition-all duration-300 ease-in-out pt-1 pb-3 px-3 no-scrollbar gap-3 bg-pink-200"
+                className="shadow-lg flex flex-col transition-all duration-300 ease-in-out pt-1 pb-3 px-3 no-scrollbar gap-3"
                 // className={`shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4 ${isDialogOpen ? "hidden" : ""}`}
                 style={{
                   maxHeight: `${MAX_CHAT_HEIGHT}px`,
@@ -222,7 +225,7 @@ export function AssistantChat({ title }: { title?: string }) {
                   <div className="">
                     <span className=" flex justify-end w-full">
                       <button onClick={() => { setIsExpanded(false); setNudge(''); setLatestResponse('') }}>
-                        <X className=" text-muted-foreground/40" size={16} />
+                        <X className=" text-muted-foreground/40" size={12} />
                       </button>
                     </span>
                     <div className="flex justify-start">

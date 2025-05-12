@@ -44,10 +44,11 @@ const prompts = [
 ]
 
 const ChatBot = () => {
-    const { switchToTextAgent, setSwitchToTextAgent } = useProductContext()
+    const { switchToTextAgent, setSwitchToTextAgent, personalizedNudge } = useProductContext()
     const [promptIndex, setPromptIndex] = useState(0)
-    const [fade, setFade] = useState(true)
+    // const [fade, setFade] = useState(true)
     const [isMobile, setIsMobile] = useState(false)
+    console.log('personalized nudge in', personalizedNudge)
 
     useEffect(() => {
         // Initial check
@@ -60,18 +61,18 @@ const ChatBot = () => {
     }, [])
 
     useEffect(() => {
-        if (!isMobile) return
+        if (!isMobile || personalizedNudge) return
 
         const interval = setInterval(() => {
-            setFade(false)
+            // setFade(false)
             setTimeout(() => {
                 setPromptIndex((prev) => (prev + 1) % prompts.length)
-                setFade(true)
+                // setFade(true)
             }, 300)
         }, 3000)
 
         return () => clearInterval(interval)
-    }, [isMobile])
+    }, [isMobile, personalizedNudge])
 
     return (
         <>
@@ -82,11 +83,11 @@ const ChatBot = () => {
                     </div>
                     {isMobile && (
                         <span
-                            className={`tracking-wide text-wrap inline-block pr-4 gap-2 max-w-60 transition-opacity duration-300 ${fade ? 'opacity-100' : 'opacity-0'
-                                }`}
+                            // className={`tracking-wide text-wrap inline-block pr-4 gap-2 max-w-60 transition-opacity duration-300 ${fade ? 'opacity-100' : 'opacity-0'
+                            className={`tracking-wide text-wrap inline-block pr-4 gap-2 max-w-60 transition-opacity duration-300 `}
                         >
                             <Sparkles size={22} className="text-primary inline-block mr-1" />
-                            {prompts[promptIndex]}
+                            {personalizedNudge || prompts[promptIndex]}
                         </span>
                     )}
                 </div>

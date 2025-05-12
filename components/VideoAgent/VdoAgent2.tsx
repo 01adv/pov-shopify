@@ -19,6 +19,7 @@ export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void
     const [loading, setLoading] = useState(true);
     const [loadingMsgIndex, setLoadingMsgIndex] = useState(0);
     const [isMicOn, setIsMicOn] = useState(true);
+    const [transcript, setTranscript] = useState('');
 
     const videoRef = useRef<HTMLVideoElement>(null);
     const initialized = useRef(false);
@@ -57,21 +58,48 @@ export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void
             session_id: sessionId,
             session_token: session.current.token,
             silence_response: 'false',
-            opening_text: 'Welcome to Pure Skincare! I’m excited to help you shop. Can you tell me about your skincare or haircare needs?',
+            opening_text: 'Hello, how can I help you?',
             stt_language: 'en',
         });
 
         const wsUrl = `wss://${new URL(API_CONFIG.serverUrl).hostname}/v1/ws/streaming.chat?${params}`;
         webSocket.current = new WebSocket(wsUrl);
 
+        // webSocket.current.addEventListener('message', (event) => {
+        //     const eventData = JSON.parse(event.data);
+        //     console.log('WebSocket message:', eventData);
+        // });
         webSocket.current.addEventListener('message', (event) => {
-            const eventData = JSON.parse(event.data);
-            console.log('WebSocket message:', eventData);
+            console.log('[WebSocket Message]', event.data);
+            try {
+                const data = JSON.parse(event.data);
+
+                if (data.type === 'llm_response' && data.text) {
+                    console.log('[LLM Response Detected]', data.text);
+                    setTranscript((prev) => `${prev}\nLLM: ${data.text}`);
+                }
+                if (data.text) {
+                    console.log('[Transcript Detected]', data.text, 'Final:', data.is_final);
+                    setTranscript((prev) =>
+                        data.is_final ? `${data.text}\n` : `${data.text}...`
+                    );
+                }
+            } catch (err) {
+                console.error('Error parsing WebSocket message:', err);
+            }
         });
     };
 
     const createNewSession = async () => {
         if (!session.current.token) await getSessionToken();
+        console.log('Creating new session with payload:', {
+            quality: 'high',
+            avatar_name: avatarID,
+            voice: { voice_id: voiceID, rate: 1.0 },
+            version: 'v2',
+            video_encoding: 'H264',
+        });
+
 
         const res = await fetch(`${API_CONFIG.serverUrl}/v1/streaming.new`, {
             method: 'POST',
@@ -89,6 +117,10 @@ export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void
         });
 
         const data = await res.json();
+        if (!res.ok) {
+            console.error('streaming.new failed:', res.status, data);
+            throw new Error(data?.message || 'Failed to create streaming session');
+        }
         session.current.info = data.data;
         updateStatus('Session created');
 
@@ -152,6 +184,58 @@ export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void
             console.log('Audio WebSocket connection established');
             updateStatus('Audio stream started');
         });
+        const productList = [
+            "Hydration Serum",
+            "Glow Boost",
+            "Rejuvenating Eye Cream",
+            "Daily Moisturizer",
+            "Exfoliating Scrub",
+            "Refreshing Facial Toner",
+            "Nourishing Shampoo",
+            "Jade Roller",
+            "Clarifying Shampoo",
+            "Brightening Toner",
+            "Herbal Shampoo",
+            "Gentle Hair Mask",
+            "Herbal Body Wash",
+            "Repairing Night Cream",
+            "Vitamin C Serum"
+        ];
+
+        socket.addEventListener('message', (event) => {
+            console.log('[Audio WS Message]', event.data);
+
+            try {
+                const data = JSON.parse(event.data);
+
+                if (data.content) {
+                    console.log('[Transcript]', data.content);
+
+                    const cleanedText = data.content.trim().replace(/\s+/g, ' ').replace(/[^\w\s]/g, '');
+
+                    console.log('[Cleaned Transcript]', cleanedText);
+
+                    setTranscript((prev) =>
+                        data.is_final ? `${cleanedText}\n` : `${cleanedText}...`
+                    );
+
+                    productList.forEach(product => {
+                        const productRegex = new RegExp(`\\b${product}\\b`, 'i');
+
+                        if (productRegex.test(cleanedText)) {
+                            console.log(`[Product Detected]`, product);
+                            //   const productDetails = getProductDetails(product);
+                            //   setProductRecommendations((prev) => [...prev, productDetails]);
+                            //   setProductNotClicked(true); // Reset the flag for unclicked product
+                        }
+                    });
+                }
+            } catch (err) {
+                console.error('Error parsing audio WebSocket message:', err);
+            }
+        });
+
+        return socket;
     };
 
     const closeSession = async () => {
@@ -234,6 +318,8 @@ export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void
 
         return () => clearInterval(interval);
     }, []);
+
+    console.log('transcript', transcript);
 
     return (
         <div className="w-full h-full rounded-md shadow-lg flex flex-col items-center z-50">

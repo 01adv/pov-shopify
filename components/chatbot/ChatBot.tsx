@@ -48,7 +48,6 @@ const ChatBot = () => {
     const [promptIndex, setPromptIndex] = useState(0)
     // const [fade, setFade] = useState(true)
     const [isMobile, setIsMobile] = useState(false)
-    console.log('personalized nudge in', personalizedNudge)
 
     useEffect(() => {
         // Initial check

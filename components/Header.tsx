@@ -2,7 +2,7 @@
 
 'use client';
 import { useProductContext } from '@/hooks/useProduct';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Text } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -45,7 +45,7 @@ const Header = () => {
     const shopRef = useRef<HTMLButtonElement>(null);
     const aboutRef = useRef<HTMLButtonElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const { itemCount } = useProductContext();
+    const { itemCount, setSwitchToTextAgent } = useProductContext();
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -136,6 +136,7 @@ const Header = () => {
                                 {itemCount > 0 && itemCount || 0}
                             </span>
                         </div>
+                        <div className="text-white" onClick={() => setSwitchToTextAgent(true)}><Text /></div>
                     </div>
                 </div>
                 {(isShopOpen || isAboutOpen) && (

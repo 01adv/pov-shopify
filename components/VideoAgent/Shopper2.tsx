@@ -3,7 +3,6 @@ import { AudioLines } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useState } from 'react';
-import { ProductLoader } from '../loader';
 
 const VideoAgent = dynamic(() => import('@/components/VideoAgent/VdoAgent2'), { ssr: false });
 
@@ -12,7 +11,6 @@ type Shopper2Props = {
 };
 
 const Shopper2 = ({ onSwitchToText }: Shopper2Props) => {
-    const [loading, setLoading] = useState(false);
     const [showVideoAgent, setShowVideoAgent] = useState(false);
     const [showSwitchToText, setShowSwitchToText] = useState(false);
 
@@ -20,11 +18,7 @@ const Shopper2 = ({ onSwitchToText }: Shopper2Props) => {
         <div className="z-40 w-full flex items-center md:justify-end">
             <div className="flex flex-col items-center justify-center gap-1 md:gap-2">
                 <div className="h-full w-full max-h-[105px] md:max-h-[220px] max-w-[90px] md:max-w-[189px] aspect-[189/220] relative bg-primary rounded-md md:rounded-xl p-[1px] md:p-[2px]">
-                    {loading ? (
-                        <div className="bg-white h-full w-full rounded-xl">
-                            <ProductLoader className="text-sm" title="Preparing your assistant" description="" />
-                        </div>
-                    ) : showVideoAgent ? (
+                    {showVideoAgent ? (
                         <VideoAgent onClose={() => setShowVideoAgent(false)} onLoaded={() => setShowSwitchToText(true)} />
                     ) : (
                         <>
@@ -49,12 +43,12 @@ const Shopper2 = ({ onSwitchToText }: Shopper2Props) => {
                 </div>
 
                 {showSwitchToText ? (
-                    <span
+                    <button
                         onClick={onSwitchToText}
-                        className="cursor-pointer max-w-[90px] md:max-w-[190px] text-[7px] md:text-sm text-primary p-[2px] md:px-2 md:py-1.5 rounded-md md:rounded-full"
+                        className="max-w-[90px] md:max-w-[190px] bg-primary text-[7px] md:text-sm text-white p-[2px] md:px-2 md:py-1.5 rounded-md md:rounded-full"
                     >
                         Switch to text
-                    </span>
+                    </button>
                 ) : (
                     <span className="max-w-[90px] md:max-w-[190px] bg-primary text-[7px] md:text-sm text-white p-[2px] md:px-2 md:py-1.5 rounded-md md:rounded-full">
                         Voice Powered AI Shopper

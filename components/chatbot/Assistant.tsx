@@ -190,7 +190,7 @@ export function AssistantChat({ title }: { title?: string }) {
   return (
     <div>
       {switchToTextAgent && (
-        <div className=" z-40 fixed bottom-8 px-4 lg:px-0 w-full flex items-center justify-center">
+        <div className=" z-40 fixed bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center">
           <div className="relative w-full lg:max-w-md">
             {/* Product Popup */}
             {!isPhone && (

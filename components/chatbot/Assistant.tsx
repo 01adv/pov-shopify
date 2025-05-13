@@ -368,8 +368,12 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="absolute -left-4 top-1/2 -translate-y-1/2" />
-                <CarouselNext className="absolute -right-4 top-1/2 -translate-y-1/2" />
+                {products.length > 3 && (
+                  <>
+                    <CarouselPrevious className="absolute -left-4 top-1/2 -translate-y-1/2" />
+                    <CarouselNext className="absolute -right-4 top-1/2 -translate-y-1/2" />
+                  </>
+                )}
               </Carousel>
             </div>
             <div className="mt-3">

@@ -113,8 +113,12 @@ const Page = () => {
                             </CarouselItem>
                         ))}
                     </CarouselContent>
-                    <CarouselPrevious className="absolute -left-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-white/80 shadow-md" />
-                    <CarouselNext className="absolute -right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-white/80 shadow-md" />
+                    {matchedProducts.length > 2 &&
+                        <>
+                            <CarouselPrevious className="absolute -left-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-white/80 shadow-md" />
+                            <CarouselNext className="absolute -right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-white/80 shadow-md" />
+                        </>
+                    }
                 </Carousel>
             </div>
             {/* Fixed input bar */}

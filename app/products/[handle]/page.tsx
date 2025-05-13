@@ -132,7 +132,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <ClientBackHandler />
-            <div className="mt-3 md:mt-8 max-w-[1200px] mx-auto px-4 md:px-[50px] relative">
+            <div className="md:mt-3 max-w-[1200px] mx-auto px-4 md:px-[50px] relative">
                 {/* <StickyProductHeader product={stickyProduct} /> */}
                 <div className="max-md:sticky top-0 max-md:z-40 bg-white py-2">
                     <ChatBot />

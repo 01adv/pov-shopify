@@ -67,7 +67,7 @@ import { useProductContext } from '@/hooks/useProduct';
 import { useEffect, useState } from 'react';
 
 const Page = () => {
-    const { matchedProducts, title } = useProductContext();
+    const { matchedProducts, title, switchToTextAgent } = useProductContext();
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
@@ -86,10 +86,10 @@ const Page = () => {
     }
 
     return (
-        <div className="max-w-2xl mx-auto px-4 py-8 relative min-h-[calc(100vh-116px)] flex flex-col mb-16">
-            <div className="max-md:sticky top-0 max-md:z-40 bg-white py-4">
+        <div className="max-w-2xl mx-auto px-4 py-4 relative min-h-[calc(100vh-116px)] flex flex-col">
+            {!switchToTextAgent && <div className="max-md:sticky top-0 max-md:z-40 bg-white py-4">
                 <ChatBot />
-            </div>
+            </div>}
             <div>
                 <h2 aria-label="title" className="text-lg text-center font-semibold">
                     {title}

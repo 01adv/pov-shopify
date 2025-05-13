@@ -158,7 +158,7 @@ export const InputBar: React.FC<InputBarProps> = ({
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 placeholder={`"${currentPlaceholder}...`}
-                className="flex-1 border-none bg-transparent text-sm shadow-none outline-none placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:italic"
+                className="flex-1 border-none bg-transparent shadow-none outline-none placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:italic"
             />
             <Button
                 variant="ghost"

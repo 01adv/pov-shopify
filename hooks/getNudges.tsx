@@ -50,11 +50,12 @@ export const getNudges = async ({
         const data = await response.json();
         console.log('raw nudge data', data);
 
-        const rawNudge = data.nudge;
-        if (!rawNudge) return;
-        console.log('raw nudge', rawNudge);
-        console.log('cleaned nudge', getRandomNudgeCleaned(rawNudge));
-        return getRandomNudgeCleaned(rawNudge);
+        const nudge = data.nudge;
+        // if (!rawNudge) return;
+        // console.log('raw nudge', rawNudge);
+        // console.log('cleaned nudge', getRandomNudgeCleaned(rawNudge));
+        // return getRandomNudgeCleaned(rawNudge);
+        return nudge;
     } catch (error) {
         console.error(error);
     }

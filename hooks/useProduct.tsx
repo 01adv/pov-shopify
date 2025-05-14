@@ -27,8 +27,23 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [title, setTitle] = useState<string>('');
   const [text, setText] = useState<string>('');
   const [itemCount, setItemCount] = useState<number>(0);
-  const [switchToTextAgent, setSwitchToTextAgent] = useState<boolean>(false);
+  // const [switchToTextAgent, setSwitchToTextAgent] = useState<boolean>(false);
   const [personalizedNudge, setPersonalizedNudge] = useState<string>('');
+  const [switchToTextAgent, setSwitchToTextAgentState] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = sessionStorage.getItem('switchToTextAgent');
+      return stored === 'true';
+    }
+    return false;
+  });
+
+  const setSwitchToTextAgent = (value: boolean) => {
+    setSwitchToTextAgentState(value);
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('switchToTextAgent', value.toString());
+    }
+  };
+
 
   return (
     <ProductContext.Provider

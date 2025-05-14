@@ -2,7 +2,7 @@
 
 'use client';
 import { useProductContext } from '@/hooks/useProduct';
-import { ChevronDown, Text } from 'lucide-react';
+import { ChevronDown, Text, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -42,6 +42,7 @@ const aboutUsLinks = [
 const Header = () => {
     const [isShopOpen, setIsShopOpen] = useState(false);
     const [isAboutOpen, setIsAboutOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const shopRef = useRef<HTMLButtonElement>(null);
     const aboutRef = useRef<HTMLButtonElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -68,6 +69,26 @@ const Header = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
+    // New useEffect to handle body scroll locking
+    useEffect(() => {
+        if (isSidebarOpen) {
+            // Lock body scroll
+            document.body.style.overflow = 'hidden';
+            // Optionally, prevent touchmove on body (for iOS)
+            document.body.style.touchAction = 'none';
+        } else {
+            // Restore body scroll
+            document.body.style.overflow = '';
+            document.body.style.touchAction = '';
+        }
+
+        // Cleanup on unmount
+        return () => {
+            document.body.style.overflow = '';
+            document.body.style.touchAction = '';
+        };
+    }, [isSidebarOpen]);
 
     const toggleShopDropdown = () => {
         setIsShopOpen((prev) => !prev);
@@ -110,9 +131,17 @@ const Header = () => {
                         </div>
                     </nav>
                     <nav className="flex lg:hidden items-center">
-                        <button aria-label="Menu" className="h-5 w-5 text-white">
-                            <Image src="/menu.svg" alt="Menu" width={24} height={24} />
-                        </button>
+                        {isSidebarOpen ? <button
+                            className="self-end text-white"
+                            onClick={() => setIsSidebarOpen(false)}
+                        >
+                            <X className="" strokeWidth={1} size={32} />
+                        </button> :
+                            <button aria-label="Menu" className="h-5 w-5 text-white" onClick={() => setIsSidebarOpen(true)}>
+                                <Image src="/menu.svg" alt="Menu" width={24} height={24} />
+                            </button>
+                        }
+
                     </nav>
                     <Link
                         href="/"
@@ -179,6 +208,41 @@ const Header = () => {
                     </div>
                 )}
             </header>
+            {isSidebarOpen && (
+                <>
+                    <div className="absolute w-full h-full bg-secondary z-50 shadow-lg p-8 flex flex-col gap-4 md:hidden">
+
+
+                        <div className="flex flex-col gap-2">
+                            <span className="text-white uppercase text-lg">Shop</span>
+                            {shopLinks.map((link) => (
+                                <Link
+                                    key={link.name}
+                                    href={link.href}
+                                    className="text-muted/75 hover:text-white text-sm uppercase"
+                                    onClick={() => setIsSidebarOpen(false)}
+                                >
+                                    {link.name}
+                                </Link>
+                            ))}
+                        </div>
+
+                        <div className="flex flex-col gap-2 mt-4 ">
+                            <span className="text-white uppercase text-lg">About Us</span>
+                            {aboutUsLinks.map((link) => (
+                                <Link
+                                    key={link.name}
+                                    href={link.href}
+                                    className="text-muted/75 hover:text-white text-sm uppercase"
+                                    onClick={() => setIsSidebarOpen(false)}
+                                >
+                                    {link.name}
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 };

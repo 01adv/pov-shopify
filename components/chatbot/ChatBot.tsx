@@ -21,7 +21,7 @@
 
 'use client'
 import { useEffect, useState } from 'react'
-import { Sparkles } from 'lucide-react'
+import { Sparkles, X } from 'lucide-react'
 import Shopper2 from '../VideoAgent/Shopper2'
 import { useProductContext } from '@/hooks/useProduct'
 
@@ -44,7 +44,7 @@ const prompts = [
 ]
 
 const ChatBot = () => {
-    const { switchToTextAgent, setSwitchToTextAgent, personalizedNudge } = useProductContext()
+    const { switchToTextAgent, setSwitchToTextAgent, personalizedNudge, setHideVideoAgent, hideVideoAgent } = useProductContext()
     const [promptIndex, setPromptIndex] = useState(0)
     // const [fade, setFade] = useState(true)
     const [isMobile, setIsMobile] = useState(false)
@@ -75,19 +75,25 @@ const ChatBot = () => {
 
     return (
         <>
-            {!switchToTextAgent && (
-                <div className="md:fixed right-6 bottom-6 flex md:items-center md:justify-end gap-3">
+            {!switchToTextAgent && (!isMobile || !hideVideoAgent) && (
+                <div className="md:fixed right-6 bottom-6 flex md:items-center md:justify-end gap-3 max-md:p-4 z-50">
                     <div className="w-fit">
                         <Shopper2 onSwitchToText={() => setSwitchToTextAgent(true)} />
                     </div>
                     {isMobile && (
-                        <span
-                            // className={`tracking-wide text-wrap inline-block pr-4 gap-2 max-w-60 transition-opacity duration-300 ${fade ? 'opacity-100' : 'opacity-0'
-                            className={`tracking-wide text-wrap inline-block pr-4 gap-2 max-w-60 transition-opacity duration-300 `}
-                        >
-                            <Sparkles size={22} className="text-primary inline-block mr-1" />
-                            {personalizedNudge || prompts[promptIndex]}
-                        </span>
+                        <div className=' w-full flex justify-between'>
+                            <span
+                                // className={`tracking-wide text-wrap inline-block pr-4 gap-2 max-w-60 transition-opacity duration-300 ${fade ? 'opacity-100' : 'opacity-0'
+                                className={`tracking-wide text-wrap inline-block pr-4 gap-2 max-w-60 transition-opacity duration-300 `}
+                            >
+                                <Sparkles size={22} className="text-primary inline-block mr-1" />
+                                {personalizedNudge || prompts[promptIndex]}
+                            </span>
+                            <X
+                                onClick={() => setHideVideoAgent(true)}
+                                size={18}
+                                className="text-primary mr-1" />
+                        </div>
                     )}
                 </div>
             )}

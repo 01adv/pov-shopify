@@ -8,9 +8,9 @@ import { Badge } from "./ui/badge";
 import { getHexCode } from "@/lib/colorHexMap";
 import { Circle } from "lucide-react";
 
-export const ProductCardForPopup = ({ product }: { product: Product }) => {
+export const ProductCardForPopup = ({ product, onClick }: { product: Product, onClick?: () => void }) => {
   return (
-    <div>
+    <div onClick={onClick}>
       {/* static link for now */}
       <Link
         href={`/products/${product.handle}?variant=${product.id}`}

@@ -364,7 +364,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
                       key={product.id}
                       className="pl-2 basis-[calc(100%/3)]" // Show ~3 items per view
                     >
-                      <ProductCardForPopup product={product} />
+                      <ProductCardForPopup product={product} onClick={onClose} />
                     </CarouselItem>
                   ))}
                 </CarouselContent>

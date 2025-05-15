@@ -6,7 +6,7 @@ import useIsPhone from "@/hooks/usePhone";
 import { extractProducts, Product } from "@/lib/extractedProductsForPopup";
 import { matchProducts } from "@/lib/productMatcher";
 import { X } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { ProductLoader } from "../loader";
@@ -21,7 +21,10 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 
 
 export function AssistantChat() {
-  const { setMatchedProducts, setTitle, title: contextTitle, switchToTextAgent, setPersonalizedNudge, productName } = useProductContext();
+  const pathname = usePathname();
+  const isProductDetailsPage = pathname.startsWith('/products/') && pathname.split('/').length >= 3;
+  console.log('isProductDetailsPage', isProductDetailsPage);
+  const { setMatchedProducts, setTitle, title: contextTitle, switchToTextAgent, setPersonalizedNudge, productName, setProductName } = useProductContext();
   const products: Product[] = extractProducts()
   const isPhone = useIsPhone();
   const router = useRouter();
@@ -36,6 +39,8 @@ export function AssistantChat() {
   const [latestResponse, setLatestResponse] = useState("");
   const [isFetching, setIsFetching] = useState(false);
   const [nudge, setNudge] = useState("");
+  const [lastResponseTime, setLastResponseTime] = useState<number | null>(null);
+  const [showNudge, setShowNudge] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -50,10 +55,26 @@ export function AssistantChat() {
     const currentSessionId = getOrCreateSessionId();
     setSessionId(currentSessionId);
   }, []);
+
+  // Clear nudge when not on product details page or productName changes
+  useEffect(() => {
+    if (!isProductDetailsPage) {
+      setNudge(""); // Clear nudge if not on product details page
+      setShowNudge(false); // Ensure nudge is not shown
+      setProductName(""); // Clear product name
+      return;
+    }
+  }, [isProductDetailsPage, productName, setProductName]);
+
   useEffect(() => {
     const fetchNudges = async () => {
       console.log('title n nudgeess', productName, sessionId);
-      if (!productName || !sessionId) return;
+      // if (!productName || !sessionId) return;
+      if (!isProductDetailsPage || !productName || !sessionId) {
+        setNudge(""); // Clear nudge if no productName
+        setShowNudge(false); // Ensure nudge is not shown
+        return;
+      }
 
       try {
         const nudge = await getNudges({ productName, sessionId });
@@ -62,14 +83,36 @@ export function AssistantChat() {
         if (nudge && setPersonalizedNudge) {
           setPersonalizedNudge(nudge);
         }
+        // Show nudge immediately if on product details page and no chat interaction
+        if (isProductDetailsPage && !latestResponse) {
+          setShowNudge(true);
+        }
       } catch (error) {
         console.error("Failed to fetch nudges", error);
+        setNudge("");
+        setShowNudge(false);
       }
     };
 
     fetchNudges();
-  }, [productName, sessionId]);
+  }, [productName, sessionId, latestResponse, setPersonalizedNudge, isProductDetailsPage]);
 
+  useEffect(() => {
+    if (!lastResponseTime || !isProductDetailsPage) return;
+
+    const timer = setInterval(() => {
+      const currentTime = Date.now();
+      if (currentTime - lastResponseTime >= 15000) { // 15 seconds
+        setShowNudge(true); // Show nudge after 15 seconds
+        clearInterval(timer); // Stop checking once 15 seconds is reached
+      }
+    }, 1000); // Check every second
+
+    return () => clearInterval(timer); // Cleanup on unmount or when lastResponseTime changes
+  }, [lastResponseTime, isProductDetailsPage]);
+
+
+  // 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
 
@@ -110,6 +153,8 @@ export function AssistantChat() {
         setTitle(assistantTitle);
         setIsFetching(false);
         setIsTyping(true);
+        setLastResponseTime(Date.now());
+        setShowNudge(false); // Reset nudge visibility
       } else {
         setIsFetching(false); // Stop fetching but don't restart typing
       }
@@ -208,7 +253,7 @@ export function AssistantChat() {
             )}
 
             {/* Chat Interface */}
-            {isExpanded || nudge ? (
+            {isExpanded || (isProductDetailsPage && nudge) ? (
               <Card
                 className="shadow-lg flex flex-col transition-all duration-300 ease-in-out pt-1 pb-3 px-3 no-scrollbar gap-3"
                 // className={`shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4 ${isDialogOpen ? "hidden" : ""}`}
@@ -252,7 +297,7 @@ export function AssistantChat() {
                     )} */}
                         {isFetching ? (
                           <ChatLoader />
-                        ) : latestResponse.length > 0 ? (
+                        ) : latestResponse.length > 0 && (!isProductDetailsPage || !showNudge || !nudge) ? (
                           <p className="text-sm lg:text-base">
                             <span
                               dangerouslySetInnerHTML={{
@@ -260,7 +305,7 @@ export function AssistantChat() {
                               }}
                             />
                           </p>
-                        ) : nudge ? (
+                        ) : isProductDetailsPage && showNudge && nudge ? (
                           <p className="text-sm lg:text-base">{nudge}</p>
                         ) : null}
                       </div>

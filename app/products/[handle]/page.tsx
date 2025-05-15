@@ -1,5 +1,4 @@
 import AddToCartButton from "@/components/AddToCartButton";
-import { AssistantChat } from "@/components/chatbot/Assistant";
 import CustomerReviews from "@/components/CustomerReviews";
 import ProductGallery from "@/components/Gallery";
 import { Badge } from "@/components/ui/badge";

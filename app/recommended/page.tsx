@@ -53,8 +53,6 @@
 
 'use client';
 import { ProductCardForPopup } from '@/components/ProductCardForPopup';
-import { AssistantChat } from '@/components/chatbot/Assistant';
-import { ProductLoader } from '@/components/loader';
 import {
     Carousel,
     CarouselContent,
@@ -63,26 +61,25 @@ import {
     CarouselPrevious,
 } from '@/components/ui/carousel'; // Import Shadcn/UI carousel components
 import { useProductContext } from '@/hooks/useProduct';
-import { useEffect, useState } from 'react';
 
 const Page = () => {
     const { matchedProducts, title } = useProductContext();
-    const [loaded, setLoaded] = useState(false);
+    // const [loaded, setLoaded] = useState(false);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoaded(true);
-        }, 1000);
-        return () => clearTimeout(timer);
-    }, []);
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         setLoaded(true);
+    //     }, 1000);
+    //     return () => clearTimeout(timer);
+    // }, []);
 
-    if (!loaded) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <ProductLoader />
-            </div>
-        );
-    }
+    // if (!loaded) {
+    //     return (
+    //         <div className="flex items-center justify-center h-screen">
+    //             <ProductLoader />
+    //         </div>
+    //     );
+    // }
 
     return (
         <div className="max-w-2xl mx-auto px-4 py-4 relative min-h-[calc(100vh-116px)] flex flex-col">

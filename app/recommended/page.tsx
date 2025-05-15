@@ -52,6 +52,7 @@
 
 
 'use client';
+import { ProductLoader } from '@/components/loader';
 import { ProductCardForPopup } from '@/components/ProductCardForPopup';
 import {
     Carousel,
@@ -61,9 +62,12 @@ import {
     CarouselPrevious,
 } from '@/components/ui/carousel'; // Import Shadcn/UI carousel components
 import { useProductContext } from '@/hooks/useProduct';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const Page = () => {
     const { matchedProducts, title } = useProductContext();
+    const router = useRouter();
     // const [loaded, setLoaded] = useState(false);
 
     // useEffect(() => {
@@ -80,6 +84,21 @@ const Page = () => {
     //         </div>
     //     );
     // }
+
+    useEffect(() => {
+        // Redirect if matchedProducts is empty
+        if (!matchedProducts || matchedProducts.length === 0) {
+            router.push('/');
+        }
+    }, [matchedProducts, router]);
+
+    if (!matchedProducts || matchedProducts.length === 0) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <ProductLoader />
+            </div>
+        );
+    }
 
     return (
         <div className="max-w-2xl mx-auto px-4 py-4 relative min-h-[calc(100vh-116px)] flex flex-col">

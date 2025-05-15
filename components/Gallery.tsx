@@ -127,9 +127,9 @@
 
 "use client";
 
-import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 import SellingLabel from "./SellingLabel";
 
 interface Image {
@@ -186,9 +186,9 @@ export default function ProductGallery({ images, tags, selectedVariantId }: Prod
                         {galleryImages.map((image, index) => (
                             <div
                                 key={`mobile-${image.id}`}
-                                className="w-full flex-shrink-0 relative flex justify-center items-center"
+                                className="w-full flex-shrink-0 relative flex justify-center items-center p-1 pt-4"
                             >
-                                <div className="relative aspect-[208/308] sm:aspect-[250/375] w-[208px] sm:w-[250px]">
+                                <div className="relative aspect-[255/380] w-[255px]">
                                     <Image
                                         fill
                                         src={image.src}

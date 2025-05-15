@@ -1,11 +1,14 @@
 import AllWorkWear from "@/components/Allworkwear";
-import Chatbot from "@/components/chatbot/Chatbot";
 
 export default function Home() {
   return (
-    <main className="h-full w-full">
+    <main className="h-full w-full relative">
       <AllWorkWear />
-      <Chatbot />
+
+      {/* <div className="hidden md:block">
+        <ChatBot />
+      </div> */}
+
     </main>
   );
 }

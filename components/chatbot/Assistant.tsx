@@ -1,522 +1,394 @@
-// "use client"
+"use client";
 
-// import type React from "react"
-
-// import { useState, useRef, useEffect } from "react"
-// import { X, Mic, Send } from "lucide-react"
-// import { Button } from "@/components/ui/button"
-// import { Card } from "@/components/ui/card"
-// import { ProductCard } from "./ProductCard"
-// import { Input } from "@/components/ui/input"
-// import { InputBar } from "./InputBar"
-
-// type Message = {
-//     id: string
-//     content: string
-//     sender: "user" | "assistant"
-// }
-
-// export function AssistantChat() {
-//     const [messages, setMessages] = useState<Message[]>([])
-//     const [inputCount, setInputCount] = useState(0)
-//     const [isExpanded, setIsExpanded] = useState(false)
-//     const [isTyping, setIsTyping] = useState(false)
-//     const [showCards, setShowCards] = useState(false)
-//     const [input, setInput] = useState("")
-//     const [chatHeight, setChatHeight] = useState(0)
-
-//     const messagesEndRef = useRef<HTMLDivElement>(null)
-//     const chatContainerRef = useRef<HTMLDivElement>(null)
-//     const messagesContainerRef = useRef<HTMLDivElement>(null)
-
-//     const MIN_CHAT_HEIGHT = 64 // Just input bar
-//     const MAX_CHAT_HEIGHT = 500 // Maximum height
-//     const HEADER_HEIGHT = 65 // Header + border
-//     const INPUT_HEIGHT = 72 // Input bar + padding
-
-//     // Predefined responses based on input count
-//     const getResponse = (inputCount: number, userMessage: string): string => {
-//         switch (inputCount) {
-//             case 1:
-//                 return "Do you have any specifications, colour, outfit type?"
-//             case 2:
-//                 return "Based on your request, I've selected some elegant options for a chic dinner outfit. Here are my recommendations:"
-//             default:
-//                 return "Is there anything else you'd like to know about these outfits?"
-//         }
-//     }
-
-//     const handleSendMessage = () => {
-//         if (!input.trim()) return
-
-//         // Expand the chat if it's the first message
-//         if (!isExpanded) {
-//             setIsExpanded(true)
-//         }
-
-//         // Add user message
-//         const userMessage: Message = {
-//             id: Date.now().toString(),
-//             content: input,
-//             sender: "user",
-//         }
-
-//         setMessages((prev) => [...prev, userMessage])
-//         setInput("")
-
-//         // Increment input count
-//         const newInputCount = inputCount + 1
-//         setInputCount(newInputCount)
-
-//         // Show typing indicator
-//         setIsTyping(true)
-
-//         // For the second input, show typing for 2 seconds then show cards
-//         if (newInputCount === 2) {
-//             setTimeout(() => {
-//                 setIsTyping(false)
-
-//                 // Add assistant response
-//                 const assistantMessage: Message = {
-//                     id: (Date.now() + 1).toString(),
-//                     content: getResponse(newInputCount, input),
-//                     sender: "assistant",
-//                 }
-//                 setMessages((prev) => [...prev, assistantMessage])
-
-//                 // Show cards after a brief delay
-//                 setTimeout(() => {
-//                     setShowCards(true)
-//                 }, 300)
-//             }, 2000)
-//         } else {
-//             // For other inputs, show typing for a shorter time
-//             setTimeout(() => {
-//                 setIsTyping(false)
-
-//                 // Add assistant response
-//                 const assistantMessage: Message = {
-//                     id: (Date.now() + 1).toString(),
-//                     content: getResponse(newInputCount, input),
-//                     sender: "assistant",
-//                 }
-//                 setMessages((prev) => [...prev, assistantMessage])
-//             }, 800)
-//         }
-//     }
-
-//     const handleKeyDown = (e: React.KeyboardEvent) => {
-//         if (e.key === "Enter" && !e.shiftKey) {
-//             e.preventDefault()
-//             handleSendMessage()
-//         }
-//     }
-
-//     // Handle close button click
-//     const handleClose = () => {
-//         setIsExpanded(false)
-//     }
-
-//     // Update chat height based on content
-//     useEffect(() => {
-//         if (!isExpanded || !messagesContainerRef.current) return
-
-//         const updateHeight = () => {
-//             const messagesHeight = messagesContainerRef.current?.scrollHeight || 0
-//             const totalContentHeight = messagesHeight + HEADER_HEIGHT + INPUT_HEIGHT
-//             const newHeight = Math.min(Math.max(totalContentHeight, MIN_CHAT_HEIGHT), MAX_CHAT_HEIGHT)
-//             setChatHeight(newHeight)
-//         }
-
-//         // Use ResizeObserver to detect content changes
-//         const resizeObserver = new ResizeObserver(() => {
-//             updateHeight()
-//         })
-
-//         resizeObserver.observe(messagesContainerRef.current)
-//         updateHeight() // Initial calculation
-
-//         return () => {
-//             resizeObserver.disconnect()
-//         }
-//     }, [isExpanded, messages, isTyping, showCards])
-
-//     // Auto scroll to bottom when messages change
-//     useEffect(() => {
-//         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-//     }, [messages, isTyping, showCards])
-
-//     const shouldScroll = chatHeight === MAX_CHAT_HEIGHT
-
-//     return (
-//         <Card
-//             className={`fixed bottom-8 right-8 w-full max-w-md transition-all duration-300 ease-in-out ${isExpanded ? "" : "shadow-lg"
-//                 }`}
-//             style={{ height: isExpanded ? `${chatHeight}px` : "auto" }}
-//             ref={chatContainerRef}
-//         >
-//             {isExpanded && (
-//                 <div className="flex items-center justify-between border-b p-4">
-//                     <h2 className="text-lg font-medium">Style Assistant</h2>
-//                     <Button variant="ghost" size="icon" onClick={handleClose} className="h-8 w-8 rounded-full p-0">
-//                         <X size={18} />
-//                     </Button>
-//                 </div>
-//             )}
-
-//             {isExpanded && (
-//                 <div
-//                     className={`${shouldScroll ? "overflow-y-auto" : "overflow-visible"}`}
-//                     style={{ height: shouldScroll ? `${MAX_CHAT_HEIGHT - HEADER_HEIGHT - INPUT_HEIGHT}px` : "auto" }}
-//                     ref={messagesContainerRef}
-//                 >
-//                     <div className="space-y-4 p-4">
-//                         {messages.map((message) => (
-//                             <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}>
-//                                 <div
-//                                     className={`max-w-[80%] rounded-lg px-4 py-2 ${message.sender === "user" ? "bg-[#f2f2f2]" : "bg-white shadow-sm"
-//                                         }`}
-//                                 >
-//                                     <p>{message.content}</p>
-//                                 </div>
-//                             </div>
-//                         ))}
-
-//                         {/* Typing indicator */}
-//                         {isTyping && (
-//                             <div className="flex justify-start">
-//                                 <div className="flex max-w-[80%] items-center space-x-1 rounded-lg bg-white px-4 py-3 shadow-sm">
-//                                     <span className="animate-pulse">•</span>
-//                                     <span className="animate-pulse animation-delay-200">•</span>
-//                                     <span className="animate-pulse animation-delay-400">•</span>
-//                                 </div>
-//                             </div>
-//                         )}
-
-//                         {/* Show product cards after 2nd input */}
-//                         {showCards && (
-//                             <div className="mt-4 space-y-3">
-//                                 <ProductCard
-//                                     imageUrl="/relaxed-beige-set.png"
-//                                     title="Intention Vest & Pant Set for Women"
-//                                     rating={5}
-//                                     price={105.0}
-//                                 />
-//                                 <ProductCard
-//                                     imageUrl="/emerald-teal-gown.png"
-//                                     title="Emerald Teal Evening Gown"
-//                                     rating={5}
-//                                     price={129.0}
-//                                 />
-//                             </div>
-//                         )}
-//                         <div ref={messagesEndRef} />
-//                     </div>
-//                 </div>
-//             )}
-
-//             <div className="">
-//                 <div className="flex items-center rounded-full bg-[#f5f5f5] px-4 py-2">
-//                     <Button variant="ghost" size="icon" className="mr-2 h-8 w-8 rounded-full p-0">
-//                         <Mic size={24} className="text-black" />
-//                     </Button>
-
-//                     <Input
-//                         type="text"
-//                         value={input}
-//                         onChange={(e) => setInput(e.target.value)}
-//                         onKeyDown={handleKeyDown}
-//                         placeholder="Type anything you interested here..."
-//                         className="flex-1 border-none bg-transparent text-sm shadow-none outline-none placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0"
-//                     />
-
-//                     <Button variant="ghost" size="icon" onClick={handleSendMessage} className=" bg-gray-400 ml-2 h-13 w-13 rounded-full p-0">
-//                         <Send size={20} className="text-black rotate-45" />
-//                     </Button>
-//                 </div>
-//                 {/* <div className={`p-4 ${isExpanded ? "" : "w-full"}`}>
-//                     <InputBar onSend={handleSendMessage} placeholder="Type anything you interested here..." />
-//                 </div> */}
-//             </div>
-//         </Card>
-//     )
-// }
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import useIsPhone from "@/hooks/usePhone";
+import { extractProducts, Product } from "@/lib/extractedProductsForPopup";
+import { matchProducts } from "@/lib/productMatcher";
+import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+import { ProductLoader } from "../loader";
+import { ProductCardForPopup } from "../ProductCardForPopup";
+import ChatLoader from "./ChatLoader";
+import { InputBar } from "./InputBar2";
+import { useProductContext } from "@/hooks/useProduct";
+import { getOrCreateSessionId } from "@/lib/helpers";
+import { getNudges } from "@/hooks/getNudges";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 
 
-"use client"
-
-import type React from "react"
-import { useState, useRef, useEffect } from "react"
-import { X, Mic, Send } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { ProductCard } from "./ProductCard"
-import { Input } from "@/components/ui/input"
-
-type Message = {
-    id: string
-    content: string
-    sender: "user" | "assistant"
-}
 
 export function AssistantChat() {
-    const [messages, setMessages] = useState<Message[]>([])
-    const [inputCount, setInputCount] = useState(0)
-    const [isExpanded, setIsExpanded] = useState(false)
-    const [isTyping, setIsTyping] = useState(false)
-    const [showCards, setShowCards] = useState(false)
-    const [input, setInput] = useState("")
-    const [chatHeight, setChatHeight] = useState(0)
+  const { setMatchedProducts, setTitle, title: contextTitle, switchToTextAgent, setPersonalizedNudge, productName } = useProductContext();
+  const products: Product[] = extractProducts()
+  const isPhone = useIsPhone();
+  const router = useRouter();
+  const [input, setInput] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [loader, setLoader] = useState(false);
+  const [chatHeight, setChatHeight] = useState(0);
+  const [sessionId, setSessionId] = useState("");
+  const [recommendedProducts, setRecommendedProducts] = useState<Product[]>([]);
+  const [latestResponse, setLatestResponse] = useState("");
+  const [isFetching, setIsFetching] = useState(false);
+  const [nudge, setNudge] = useState("");
 
-    const messagesEndRef = useRef<HTMLDivElement>(null)
-    const messagesContainerRef = useRef<HTMLDivElement>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-    const MIN_CHAT_HEIGHT = 150 // Minimum height including input bar
-    const MAX_CHAT_HEIGHT = 560 // Maximum card height
-    const HEADER_HEIGHT = 65 // Header + border
-    const INPUT_HEIGHT = 72 // Input bar + padding
+  const MIN_CHAT_HEIGHT = 140; // Minimum height including input bar
+  const MAX_CHAT_HEIGHT = 560; // Maximum card height
+  const HEADER_HEIGHT = 65; // Header + border
+  const INPUT_HEIGHT = 72; // Input bar + padding
 
-    // Predefined responses based on input count
-    const getResponse = (inputCount: number, userMessage: string): string => {
-        switch (inputCount) {
-            case 1:
-                return "Do you have any specifications, colour, outfit type?"
-            case 2:
-                return "Based on your request, I've selected some elegant options for a chic dinner outfit. Here are my recommendations:"
-            default:
-                return "Is there anything else you'd like to know about these outfits?"
+  // Initialize session ID
+  useEffect(() => {
+    const currentSessionId = getOrCreateSessionId();
+    setSessionId(currentSessionId);
+  }, []);
+  useEffect(() => {
+    const fetchNudges = async () => {
+      console.log('title n nudgeess', productName, sessionId);
+      if (!productName || !sessionId) return;
+
+      try {
+        const nudge = await getNudges({ productName, sessionId });
+        console.log('nudge', nudge);
+        setNudge(nudge || "");
+        if (nudge && setPersonalizedNudge) {
+          setPersonalizedNudge(nudge);
         }
+      } catch (error) {
+        console.error("Failed to fetch nudges", error);
+      }
+    };
+
+    fetchNudges();
+  }, [productName, sessionId]);
+
+  const handleSendMessage = async () => {
+    if (!input.trim()) return;
+
+    // Expand the chat if it's the first message
+    if (!isExpanded) {
+      setIsExpanded(true);
     }
 
-    const handleSendMessage = () => {
-        if (!input.trim()) return
+    // setMessages((prev) => [...prev, userMessage])
+    const message = input;
+    setInput("");
+    // setIsTyping(true)
+    setIsFetching(true);
 
-        // Expand the chat if it's the first message
-        if (!isExpanded) {
-            setIsExpanded(true)
+    console.log("message", message);
+
+    try {
+      const response = await fetch(
+        `https://textagentpov.onrender.com/chat/${sessionId}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message, sessionId }),
         }
+      );
 
-        // Add user message
-        const userMessage: Message = {
-            id: Date.now().toString(),
-            content: input,
-            sender: "user",
-        }
+      const data = await response.json();
+      console.log("data", data);
+      const assistantResponse =
+        data.response.text || "Sorry, I couldn't process that.";
+      const assistantProducts = data?.response?.products;
+      const assistantTitle = data?.response?.title;
+      console.log('assistant ressss', assistantResponse);
 
-        setMessages((prev) => [...prev, userMessage])
-        setInput("")
+      // Only update if the response is different
+      if (assistantResponse !== latestResponse) {
+        setLatestResponse(assistantResponse);
+        setTitle(assistantTitle);
+        setIsFetching(false);
+        setIsTyping(true);
+      } else {
+        setIsFetching(false); // Stop fetching but don't restart typing
+      }
 
-        // Increment input count
-        const newInputCount = inputCount + 1
-        setInputCount(newInputCount)
+      console.log("products", products);
+      console.log("assistantResponse", assistantResponse);
+      // Normalize assistant products (convert to lowercase for case-insensitive match)
+      if (assistantProducts && assistantProducts?.length > 0) {
+        console.log("assistantProducts", assistantProducts);
+        const matchedProd = matchProducts(assistantProducts, products);
+        console.log("matched", matchedProd);
 
-        // Show typing indicator
-        setIsTyping(true)
-
-        // For the second input, show typing for 2 seconds then show cards
-        if (newInputCount === 2) {
+        if (matchProducts?.length > 0) {
+          setRecommendedProducts(matchedProd);
+          setMatchedProducts(matchedProd)
+          console.log("message and recommendations", recommendedProducts);
+          // setRecommendedProducts(mentionedProducts);
+          if (isPhone) {
+            router.push("/recommended");
+          } else {
             setTimeout(() => {
-                setIsTyping(false)
-
-                // Add assistant response
-                const assistantMessage: Message = {
-                    id: (Date.now() + 1).toString(),
-                    content: getResponse(newInputCount, input),
-                    sender: "assistant",
-                }
-                setMessages((prev) => [...prev, assistantMessage])
-
-                // Show cards after a brief delay
-                setTimeout(() => {
-                    setShowCards(true)
-                }, 300)
-            }, 2000)
-        } else {
-            // For other inputs, show typing for a shorter time
-            setTimeout(() => {
-                setIsTyping(false)
-
-                // Add assistant response
-                const assistantMessage: Message = {
-                    id: (Date.now() + 1).toString(),
-                    content: getResponse(newInputCount, input),
-                    sender: "assistant",
-                }
-                setMessages((prev) => [...prev, assistantMessage])
-            }, 800)
+              setIsDialogOpen(true);
+              setLoader(true);
+              setTimeout(() => {
+                setLoader(false);
+              }, 500);
+            }, 300);
+          }
         }
+      }
+    } catch (error) {
+      console.error(error);
+      setLatestResponse("Sorry, I'm having trouble connecting right now.");
+      setIsTyping(true);
     }
+  };
 
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault()
-            handleSendMessage()
-        }
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
     }
+  };
 
-    // Handle close button click
-    const handleClose = () => {
-        setIsExpanded(false)
-        setMessages([])
-        setInputCount(0)
-        setShowCards(false)
-    }
+  // Update chat height based on content
+  useEffect(() => {
+    if (!isExpanded || !messagesContainerRef.current) return;
 
-    // Update chat height based on content
-    useEffect(() => {
-        if (!isExpanded || !messagesContainerRef.current) return
+    const updateHeight = () => {
+      const messagesHeight = messagesContainerRef.current?.scrollHeight || 0;
+      const totalContentHeight = messagesHeight + HEADER_HEIGHT + INPUT_HEIGHT;
+      const newHeight = Math.min(
+        Math.max(totalContentHeight, MIN_CHAT_HEIGHT),
+        MAX_CHAT_HEIGHT
+      );
+      setChatHeight(newHeight);
+    };
 
-        const updateHeight = () => {
-            const messagesHeight = messagesContainerRef.current?.scrollHeight || 0
-            const totalContentHeight = messagesHeight + HEADER_HEIGHT + INPUT_HEIGHT
-            const newHeight = Math.min(Math.max(totalContentHeight, MIN_CHAT_HEIGHT), MAX_CHAT_HEIGHT)
-            setChatHeight(newHeight)
-        }
+    const resizeObserver = new ResizeObserver(() => {
+      updateHeight();
+    });
 
-        // Use ResizeObserver to detect content changes
-        const resizeObserver = new ResizeObserver(() => {
-            updateHeight()
-        })
+    resizeObserver.observe(messagesContainerRef.current);
+    updateHeight();
 
-        resizeObserver.observe(messagesContainerRef.current)
-        updateHeight() // Initial calculation
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [isExpanded, isTyping]);
 
-        return () => {
-            resizeObserver.disconnect()
-        }
-    }, [isExpanded, messages, isTyping, showCards])
+  // Auto scroll to bottom when messages change
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [isTyping]);
 
-    // Auto scroll to bottom when messages change
-    useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-    }, [messages, isTyping, showCards])
+  const shouldScroll = chatHeight === MAX_CHAT_HEIGHT;
 
-    const shouldScroll = chatHeight === MAX_CHAT_HEIGHT
+  return (
+    <div>
+      {switchToTextAgent && (
+        <div className=" z-40 fixed bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center">
+          <div className="relative w-full lg:max-w-md">
+            {/* Product Popup */}
+            {!isPhone && (
+              <ProductPopup
+                title={contextTitle}
+                isOpen={isDialogOpen}
+                onClose={() => setIsDialogOpen(false)}
+                products={recommendedProducts}
+                input={input}
+                setInput={setInput}
+                handleKeyDown={handleKeyDown}
+                handleSendMessage={handleSendMessage}
+                loader={loader}
+              />
+            )}
 
-
-    return (
-        <div className="fixed bottom-8 right-8 w-full max-w-xs sm:max-w-sm lg:max-w-md">
-            {isExpanded ? (
-                <Card
-                    className="shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar"
-                    style={{ maxHeight: `${MAX_CHAT_HEIGHT}px`, minHeight: `${MIN_CHAT_HEIGHT}px` }}
+            {/* Chat Interface */}
+            {isExpanded || nudge ? (
+              <Card
+                className="shadow-lg flex flex-col transition-all duration-300 ease-in-out pt-1 pb-3 px-3 no-scrollbar gap-3"
+                // className={`shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4 ${isDialogOpen ? "hidden" : ""}`}
+                style={{
+                  maxHeight: `${MAX_CHAT_HEIGHT}px`,
+                  // minHeight: `${MIN_CHAT_HEIGHT}px`,
+                }}
+              >
+                <div
+                  className={`flex-1 no-scrollbar ${shouldScroll ? "overflow-y-auto" : "overflow-visible"
+                    }`}
+                  ref={messagesContainerRef}
                 >
-
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-lg font-bold">Style Assistant</h2>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={handleClose}
-                            className="h-8 w-8 rounded-full p-0"
-                        >
-                            <X size={18} />
-                        </Button>
-                    </div>
-
-                    <div
-                        className={`flex-1 no-scrollbar ${shouldScroll ? "overflow-y-auto" : "overflow-visible"}`}
-                        ref={messagesContainerRef}
-                    >
-                        <div className="space-y-4 ">
-                            {messages.map((message) => (
-                                <div
-                                    key={message.id}
-                                    className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"
-                                        }`}
-                                >
-                                    <div
-                                        className={`max-w-[80%] rounded-lg px-4 py-2 ${message.sender === "user"
-                                            ? "bg-[#f2f2f2]"
-                                            : "bg-white shadow-sm"
-                                            }`}
-                                    >
-                                        <p>{message.content}</p>
-                                    </div>
-                                </div>
-                            ))}
-
-                            {isTyping && (
-                                <div className="flex justify-start">
-                                    <div className="flex max-w-[80%] items-center space-x-1 rounded-lg bg-white px-4 py-3 shadow-sm">
-                                        <span className="animate-pulse">•</span>
-                                        <span className="animate-pulse animation-delay-200">•</span>
-                                        <span className="animate-pulse animation-delay-400">•</span>
-                                    </div>
-                                </div>
-                            )}
-
-                            {showCards && (
-                                <div className="mt-4 space-y-3">
-                                    <ProductCard
-                                        imageUrl="/placeholder.png"
-                                        title="Intention Vest & Pant Set for Women"
-                                        rating={5}
-                                        price={105.0}
-                                    />
-                                    <ProductCard
-                                        imageUrl="/placeholder.png"
-                                        title="Emerald Teal Evening Gown"
-                                        rating={5}
-                                        price={129.0}
-                                    />
-                                </div>
-                            )}
-                            <div ref={messagesEndRef} />
-                        </div>
-                    </div>
-
-                    <div className="mt-auto ">
-                        <InputBar
-                            input={input}
-                            setInput={setInput}
-                            handleKeyDown={handleKeyDown}
-                            handleSendMessage={handleSendMessage}
+                  <div className="">
+                    <span className=" flex justify-end w-full">
+                      <button onClick={() => { setIsExpanded(false); setNudge(''); setLatestResponse('') }}>
+                        <X className=" text-muted-foreground/40" size={12} />
+                      </button>
+                    </span>
+                    <div className="flex justify-start">
+                      <div className="w-full rounded-xl p-2 bg-[#F9F9F9] border border-primary">
+                        {/* {isFetching ? (
+                      <>
+                        <ChatLoader />
+                      </>
+                    ) : (
+                      <p className="text-sm lg:text-base">
+                    
+                        <span
+                          className=""
+                          dangerouslySetInnerHTML={{
+                            __html: latestResponse,
+                          }}
                         />
+                      </p>
+                    )}
+                    {nudge && latestResponse.length < 1 && (
+                      isFetching ?
+                        <ChatLoader /> :
+                        <p className="text-sm lg:text-base">{nudge}</p>
+                    )} */}
+                        {isFetching ? (
+                          <ChatLoader />
+                        ) : latestResponse.length > 0 ? (
+                          <p className="text-sm lg:text-base">
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: latestResponse,
+                              }}
+                            />
+                          </p>
+                        ) : nudge ? (
+                          <p className="text-sm lg:text-base">{nudge}</p>
+                        ) : null}
+                      </div>
+
                     </div>
-                </Card>
-            ) : (
-                <InputBar
+                    {/* ) : null
+                                })()} */}
+                    <div ref={messagesEndRef} />
+                  </div>
+                </div>
+
+                <div className="">
+                  <InputBar
+                    className="border-muted-foreground/20"
                     input={input}
                     setInput={setInput}
                     handleKeyDown={handleKeyDown}
                     handleSendMessage={handleSendMessage}
-                />
+                  />
+                </div>
+              </Card>
+            ) : (
+              <InputBar
+                className="border-primary"
+                input={input}
+                setInput={setInput}
+                handleKeyDown={handleKeyDown}
+                handleSendMessage={handleSendMessage}
+              />
             )}
+          </div>
         </div>
-    )
-}
-
-
-// 🆕 Move InputBar outside of AssistantChat and update it to accept props
-
-type InputBarProps = {
-    input: string
-    setInput: (value: string) => void
-    handleKeyDown: (e: React.KeyboardEvent) => void
-    handleSendMessage: () => void
-}
-
-const InputBar: React.FC<InputBarProps> = ({ input, setInput, handleKeyDown, handleSendMessage }) => (
-    <div className="flex items-center rounded-full bg-white px-4 py-2 border border-muted-foreground/20">
-        <Button variant="ghost" size="icon" className="mr-2 h-8 w-8 rounded-full p-0">
-            <Mic size={24} className="text-black" />
-        </Button>
-        <Input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Type anything you interested here..."
-            className="flex-1 border-none bg-transparent text-sm shadow-none outline-none placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0"
-        />
-        <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleSendMessage}
-            className="bg-gray-200 ml-2 h-8 w-8 lg:h-11 lg:w-11 rounded-full p-0"
-        >
-            <Send size={20} className="text-black rotate-45" />
-        </Button>
+      )}
     </div>
-)
+  );
+}
+
+type ProductPopupProps = {
+  title: string;
+  isOpen: boolean;
+  onClose: () => void;
+  products: Product[];
+  input: string;
+  setInput: (value: string) => void;
+  handleKeyDown: (e: React.KeyboardEvent) => void;
+  handleSendMessage: () => void;
+  loader?: boolean;
+};
+
+const ProductPopup: React.FC<ProductPopupProps> = ({
+  isOpen,
+  onClose,
+  products,
+  input,
+  setInput,
+  handleKeyDown,
+  handleSendMessage,
+  loader,
+  title,
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center pt-[90px] bg-black/30"
+      onClick={onClose}
+    >
+      <div
+        className="relative bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-lg max-h-[82vh] overflow-y-auto px-4 py-2"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {loader ? (
+          <ProductLoader />
+        ) : (
+          <>
+            <div className="flex justify-between items-center mb-2">
+              <h2 className=" font-semibold">Recommended Outfits</h2>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={onClose}
+                className="h-8 w-8 rounded-full p-0"
+              >
+                <X size={18} />
+              </Button>
+            </div>
+            <div className="text-center flex flex-col mb-4 space-y-2">
+              <span className="font-semibold text-xl">{title}</span>
+            </div>
+            <div className="relative">
+              <Carousel
+                className="w-full"
+                opts={{
+                  align: 'start',
+                  loop: false, // Set to true if you want infinite looping
+                }}
+              >
+                <CarouselContent className="-ml-2">
+                  {products.map((product) => (
+                    <CarouselItem
+                      key={product.id}
+                      className="pl-2 basis-[calc(100%/3)]" // Show ~3 items per view
+                    >
+                      <ProductCardForPopup product={product} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                {products.length > 3 && (
+                  <>
+                    <CarouselPrevious className="absolute -left-4 top-1/2 -translate-y-1/2" />
+                    <CarouselNext className="absolute -right-4 top-1/2 -translate-y-1/2" />
+                  </>
+                )}
+              </Carousel>
+            </div>
+            <div className="mt-3">
+              <InputBar
+                className="border-primary w-full"
+                input={input}
+                setInput={setInput}
+                handleKeyDown={handleKeyDown}
+                handleSendMessage={handleSendMessage}
+              />
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+

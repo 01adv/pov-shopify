@@ -1,16 +1,17 @@
-import { ChevronDown, Settings2 } from "lucide-react";
 
-import rawProductData from "@/app/products.json";
+// import rawProductData from "@/app/products.json";
+import rawProductData from "@/lib/all-workwear.json";
 import { ProductCard } from "./ProductCard";
+import { AssistantChat } from "./chatbot/Assistant";
 
 
 type Variant = {
     id: number;
     title: string;
     option1: string;
-    option2: string;
-    option3: string | null;
-    sku: string;
+    // option2: string;
+    // option3: string;
+    // sku: string;
     requires_shipping: boolean;
     taxable: boolean;
     featured_image?: {
@@ -37,7 +38,7 @@ type Variant = {
 
 
 
-type Product = {
+export type Product = {
     id: string;
     title: string;
     handle: string; // Product handle (for /products/[handle])
@@ -54,62 +55,87 @@ type Product = {
     slug: string;
 };
 
-// Transform raw product data into Product type array (one product per color)
-const products: Product[] = rawProductData.flatMap((product) => {
+
+
+export const products: Product[] = rawProductData.flatMap((product) => {
     // Ensure variants and options exist
     if (!product.variants || !product.options || !product.handle) {
         console.warn(`Product ${product.id} missing variants or options`);
         return [];
     }
 
-    // Group variants by color (option1)
-    const variantsByColor = product?.variants?.reduce((acc, variant) => {
-        const color = variant?.option1;
-        if (!acc[color]) {
-            acc[color] = [];
-        }
-        acc[color].push(variant);
-        return acc;
-    }, {} as Record<string, Variant[]>);
+    // Check if the product has a color option
+    const hasColorOption = product.options.some(
+        (option) => option.name.toLowerCase() === "color"
+    );
 
+    if (hasColorOption) {
+        // Group variants by color (option1 is color)
+        const variantsByColor = product.variants.reduce((acc, variant) => {
+            const color = variant.option1;
+            if (!acc[color]) {
+                acc[color] = [];
+            }
+            acc[color].push(variant);
+            return acc;
+        }, {} as Record<string, Variant[]>);
 
-    // Create one product per color
-    return Object.keys(variantsByColor).map((color) => {
-        const firstVariant = variantsByColor[color][0]; // Use first variant for data
-        return {
-            id: firstVariant.id.toString(),
-            title: `${product.title} - ${color}`,
-            handle: product.handle, // Product handle for URL
-            price: parseFloat(firstVariant.price),
-            originalPrice: firstVariant.compare_at_price
-                ? parseFloat(firstVariant.compare_at_price)
-                : undefined,
-            rating: 5, // Placeholder (not in JSON)
-            reviewCount: 3, // Placeholder (not in JSON)
-
-            image: firstVariant.featured_image?.src || "/placeholder.png",
-            slug: `${product.handle}-${color.toLowerCase().replace(/\s+/g, "-")}`,
-        };
-    });
+        // Create one product per color
+        return Object.keys(variantsByColor).map((color) => {
+            const firstVariant = variantsByColor[color][0]; // Use first variant for data
+            return {
+                id: firstVariant.id.toString(),
+                title: `${product.title} - ${color}`,
+                handle: product.handle, // Product handle for URL
+                price: parseFloat(firstVariant.price),
+                originalPrice: firstVariant.compare_at_price
+                    ? parseFloat(firstVariant.compare_at_price)
+                    : undefined,
+                rating: 5, // Placeholder (not in JSON)
+                reviewCount: 3, // Placeholder (not in JSON)
+                image: firstVariant.featured_image?.src || "/placeholder.png",
+                slug: `${product.handle}-${color.toLowerCase().replace(/\s+/g, "-")}`,
+            };
+        });
+    } else {
+        // No color option: Treat as a single product (option1 is size)
+        const firstVariant = product.variants[0]; // Use the first variant for data
+        return [
+            {
+                id: firstVariant.id.toString(),
+                title: product.title, // No color suffix
+                handle: product.handle, // Product handle for URL
+                price: parseFloat(firstVariant.price),
+                originalPrice: firstVariant.compare_at_price
+                    ? parseFloat(firstVariant.compare_at_price)
+                    : undefined,
+                rating: 5, // Placeholder (not in JSON)
+                reviewCount: 3, // Placeholder (not in JSON)
+                image: firstVariant.featured_image?.src || "/placeholder.png",
+                slug: product.handle, // No color in slug
+            },
+        ];
+    }
 });
-
 
 export default function AllWorkWear() {
     return (
-        <div className="flex min-h-screen flex-col">
+        <div className="flex min-h-screen flex-col relative">
             <main className="flex-1">
-                <div className="mx-auto max-w-6xl px-4 xl:px-6">
-                    <div className="space-y-5 my-6">
+                <div className="mx-auto max-w-6xl px-4 xl:px-12">
+                    <div className="space-y-5 my-4 max-md:sticky top-0 max-md:z-40 bg-white pb-1">
                         <h1 className="text-[30px] lg:text-[40px]">All Workwear</h1>
-                        <p className="text-muted-foreground/75 max-w-3xl text-base lg:text-lg tracking-wide">
+                        {/* <div className="block md:hidden"><ChatBot /></div> */}
+                        <p className="hidden md:block text-muted-foreground/75 max-w-md lg:max-w-3xl text-base lg:text-lg tracking-wide">
                             As seen on TV, functional workwear with POCKETS for women! Designer
                             corporate wear without the designer price. #pocketspledge
                         </p>
                     </div>
 
                     {/* Filter and Sort */}
-                    <div className="mt-12 md:mt-14 lg:mt-16 mb-4 md:mb-6 lg:mb-9 flex flex-wrap items-center justify-between gap-4">
-                        <div className="flex items-center gap-4">
+                    <div className="-mt-4 md:mt-9 mb-4 md:mb-6 flex flex-wrap items-center justify-between gap-4">
+                        {/* <div className="mt-12 md:mt-14 lg:mt-16 mb-4 md:mb-6 lg:mb-9 flex flex-wrap items-center justify-between gap-4"> */}
+                        {/* <div className="flex items-center gap-4">
                             <span className="md:hidden flex items-center gap-2 text-muted-foreground text-sm">
                                 <Settings2 className="text-muted-foreground/95 h-4 w-4" /> Filter
                                 and sort
@@ -121,14 +147,14 @@ export default function AllWorkWear() {
                                 Availability{" "}
                                 <ChevronDown className="text-muted-foreground/95 h-4 w-4" />
                             </button>
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <span className="hidden md:block text-sm text-muted-foreground/85">
+                        </div> */}
+                        <div className="flex items-center justify-end w-full gap-4">
+                            {/* <span className="hidden md:block text-sm text-muted-foreground/85">
                                 Sort by:
                             </span>
                             <button className="hidden md:flex items-center gap-16 text-muted-foreground/75 text-sm">
                                 Featured <ChevronDown className="h-4 w-4" />
-                            </button>
+                            </button> */}
                             <span className="ml-4 text-sm text-muted-foreground">
                                 {products.length} products
                             </span>
@@ -142,8 +168,9 @@ export default function AllWorkWear() {
                         ))}
                     </div>
                 </div>
+                {/* <AssistantChat /> */}
             </main>
-            <div className="h-60"></div>
+            <div className="h-32 lg:h-60"></div>
         </div>
     );
 }

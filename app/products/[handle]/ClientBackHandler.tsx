@@ -2,9 +2,15 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useProductContext } from "@/hooks/useProduct";
 
-export default function ClientBackHandler() {
+export default function ClientBackHandler({ productName }: { productName: string }) {
     const router = useRouter();
+    const { setProductName } = useProductContext()
+
+    useEffect(() => {
+        setProductName(productName)
+    }, [productName])
 
     useEffect(() => {
         const handlePopState = () => {

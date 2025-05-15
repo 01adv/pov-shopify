@@ -168,9 +168,9 @@ export default function AllWorkWear() {
                         ))}
                     </div>
                 </div>
-                <AssistantChat />
+                {/* <AssistantChat /> */}
             </main>
-            <div className="h-60"></div>
+            <div className="h-32 lg:h-60"></div>
         </div>
     );
 }

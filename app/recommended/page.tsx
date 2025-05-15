@@ -124,7 +124,7 @@ const Page = () => {
             {/* <div className="fixed bottom-4 left-0 right-0 px-4 max-w-2xl mx-auto z-50">
                 <InputBar setInput={() => { }} />
             </div> */}
-            <AssistantChat />
+            {/* <AssistantChat /> */}
         </div>
     );
 };

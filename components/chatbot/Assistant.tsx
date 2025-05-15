@@ -20,8 +20,8 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 
 
 
-export function AssistantChat({ title }: { title?: string }) {
-  const { setMatchedProducts, setTitle, title: contextTitle, switchToTextAgent, setPersonalizedNudge } = useProductContext();
+export function AssistantChat() {
+  const { setMatchedProducts, setTitle, title: contextTitle, switchToTextAgent, setPersonalizedNudge, productName } = useProductContext();
   const products: Product[] = extractProducts()
   const isPhone = useIsPhone();
   const router = useRouter();
@@ -52,11 +52,11 @@ export function AssistantChat({ title }: { title?: string }) {
   }, []);
   useEffect(() => {
     const fetchNudges = async () => {
-      console.log('title n nudgeess', title, sessionId);
-      if (!title || !sessionId) return;
+      console.log('title n nudgeess', productName, sessionId);
+      if (!productName || !sessionId) return;
 
       try {
-        const nudge = await getNudges({ productName: title, sessionId });
+        const nudge = await getNudges({ productName, sessionId });
         console.log('nudge', nudge);
         setNudge(nudge || "");
         if (nudge && setPersonalizedNudge) {
@@ -68,7 +68,7 @@ export function AssistantChat({ title }: { title?: string }) {
     };
 
     fetchNudges();
-  }, [title, sessionId]);
+  }, [productName, sessionId]);
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;

@@ -1,10 +1,11 @@
+import Header from "@/components/Header";
+import { AssistantChat } from "@/components/chatbot/Assistant";
+import ChatBot from "@/components/chatbot/ChatBot";
 import { ProductProvider } from "@/hooks/useProduct";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import type React from "react";
 import "./globals.css";
-import Header from "@/components/Header";
-import ChatBot from "@/components/chatbot/ChatBot";
 // import { ThemeProvider } from "@/components/theme-provider"
 
 // Import Quicksand font from Google Fonts
@@ -31,6 +32,7 @@ export default function RootLayout({
         <ProductProvider>
           <Header />
           <ChatBot />
+          <AssistantChat />
           {/* <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange> */}
           {children}
           {/* </ThemeProvider> */}

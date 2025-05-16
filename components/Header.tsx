@@ -7,30 +7,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
-// const shopLinks = [
-//     { name: 'Dresses', href: 'https://pointofviewlabel.com/collections/work-dresses-for-women' },
-//     { name: 'Jackets', href: 'https://pointofviewlabel.com/collections/jackets' },
-//     { name: 'Pants & Skirts', href: 'https://pointofviewlabel.com/collections/pants-skirts' },
-//     { name: 'Power Suits', href: 'https://pointofviewlabel.com/collections/power-suits' },
-//     { name: 'Daily Dopamine Collection', href: 'https://pointofviewlabel.com/collections/daily-dopamine' },
-//     { name: 'Work to Wine Collection', href: 'https://pointofviewlabel.com/collections/work-to-wine' },
-//     { name: 'Power Presence Collection', href: 'https://pointofviewlabel.com/collections/power-presence' },
-//     { name: 'Shop All Workwear', href: 'https://pointofviewlabel.com/collections/all-workwear' },
-//     { name: 'Gift Cards', href: 'https://pointofviewlabel.com/products/gift-cards' },
-// ];
-
-// const aboutUsLinks = [
-//     { name: 'Our Story', href: 'https://pointofviewlabel.com/pages/our-story' },
-//     { name: 'POV IN THE NEWS', href: 'https://pointofviewlabel.com/pages/pov-in-the-media' },
-//     { name: 'FREQUENTLY ASKED QUESTIONS', href: 'https://pointofviewlabel.com/pages/faq' },
-//     { name: 'POV BLOG', href: 'https://pointofviewlabel.com/blogs/pov' },
-//     { name: 'Contact Us', href: 'https://pointofviewlabel.com/pages/contact' },
-// ];
 const shopLinks = [
-    { name: 'Dresses', href: '/' },
-    { name: 'Jackets', href: '/' },
-    { name: 'Pants & Skirts', href: '/' },
-    { name: 'Power Suits', href: '/' },
+    { name: 'Dresses', href: '/collections/dresses' },
+    { name: 'Jackets', href: '/collections/jackets' },
+    { name: 'Pants & Skirts', href: '/collections/pants' },
+    { name: 'Power Suits', href: '/collections/suits' },
     { name: 'Shop All Workwear', href: '/' },
 ];
 
@@ -102,12 +83,12 @@ const Header = () => {
 
     return (
         <div>
-            <div className="bg-primary py-2.5 text-center text-[13px] tracking-wider">
+            <div className="bg-primary py-3 text-center text-[13px] tracking-wider">
                 FREE SHIPPING ON ALL ORDERS
             </div>
 
             <header className="bg-secondary relative">
-                <div className="mx-auto flex max-w-6xl px-4 py-6 xl:px-7 items-center justify-between relative">
+                <div className="mx-auto flex max-w-6xl px-6 py-6 xl:px-7 items-center justify-between relative">
                     <nav className="hidden lg:flex items-center gap-8">
                         <div className="group relative">
                             <button

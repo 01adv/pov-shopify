@@ -2,8 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { getNudges } from "@/hooks/getNudges";
 import useIsPhone from "@/hooks/usePhone";
+import { useProductContext } from "@/hooks/useProduct";
 import { extractProducts, Product } from "@/lib/extractedProductsForPopup";
+import { getOrCreateSessionId } from "@/lib/helpers";
 import { matchProducts } from "@/lib/productMatcher";
 import { X } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -11,12 +14,9 @@ import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { ProductLoader } from "../loader";
 import { ProductCardForPopup } from "../ProductCardForPopup";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 import ChatLoader from "./ChatLoader";
 import { InputBar } from "./InputBar2";
-import { useProductContext } from "@/hooks/useProduct";
-import { getOrCreateSessionId } from "@/lib/helpers";
-import { getNudges } from "@/hooks/getNudges";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 
 
 
@@ -53,7 +53,7 @@ export function AssistantChat() {
   // Initialize session ID
   useEffect(() => {
     const currentSessionId = getOrCreateSessionId();
-    setSessionId(currentSessionId);
+    setSessionId(currentSessionId || "");
   }, []);
 
   // Clear nudge when not on product details page or productName changes
@@ -359,10 +359,6 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
   isOpen,
   onClose,
   products,
-  input,
-  setInput,
-  handleKeyDown,
-  handleSendMessage,
   loader,
   title,
 }) => {
@@ -420,15 +416,6 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
                   </>
                 )}
               </Carousel>
-            </div>
-            <div className="mt-3">
-              <InputBar
-                className="border-primary w-full"
-                input={input}
-                setInput={setInput}
-                handleKeyDown={handleKeyDown}
-                handleSendMessage={handleSendMessage}
-              />
             </div>
           </>
         )}

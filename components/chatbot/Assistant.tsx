@@ -24,7 +24,6 @@ import { logEvent } from "@/lib/logger";
 export function AssistantChat() {
   const pathname = usePathname();
   const isProductDetailsPage = pathname.startsWith('/products/') && pathname.split('/').length >= 3;
-  console.log('isProductDetailsPage', isProductDetailsPage);
   const { setMatchedProducts, setTitle, title: contextTitle, switchToTextAgent, setPersonalizedNudge, productName, setProductName } = useProductContext();
   const products: Product[] = extractProducts()
   const isPhone = useIsPhone();
@@ -116,6 +115,9 @@ export function AssistantChat() {
   const handleSendMessage = async () => {
     if (!input.trim()) return;
 
+    // Start measuring interaction time
+    const startTime = performance.now();
+
     // Log first query
     if (isFirstQuery) {
       await logEvent("user_query", {
@@ -201,10 +203,33 @@ export function AssistantChat() {
           }
         }
       }
+      // Log interaction time for successful response
+      const endTime = performance.now();
+      const interactionTime = endTime - startTime;
+      await logEvent("text_agent_interaction_time", {
+        event: "text_agent_response",
+        interaction_time_ms: interactionTime,
+        session_id: sessionId,
+        query: message,
+        response_length: assistantResponse.length,
+        has_products: !!assistantProducts?.length,
+        tags: ["text_agent", "performance"],
+      });
     } catch (error) {
       console.error(error);
       setLatestResponse("Sorry, I'm having trouble connecting right now.");
       setIsTyping(true);
+      // Log interaction time for error case
+      const endTime = performance.now();
+      const interactionTime = endTime - startTime;
+      await logEvent("text_agent_interaction_time", {
+        event: "text_agent_error",
+        interaction_time_ms: interactionTime,
+        session_id: sessionId,
+        query: message,
+        error: error || "Unknown error",
+        tags: ["text_agent", "error"],
+      });
     }
   };
 

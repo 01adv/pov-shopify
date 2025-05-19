@@ -42,6 +42,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Mic, Send } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { logEvent } from "@/lib/logger";
 
 type InputBarProps = {
     input?: string;
@@ -144,9 +145,22 @@ export const InputBar: React.FC<InputBarProps> = ({
             stopCycling();
         }
     };
+    // Handle click on the entire InputBar
+    const handleInputBarClick = async () => {
+        console.log("Input bar clicked");
+        try {
+            await logEvent("stats", {
+                event: "input_bar_click",
+                source: "chatbot.input",
+                tags: ["click", "input_bar"],
+            });
+        } catch (error) {
+            console.error("Error logging input bar click:", error);
+        }
+    };
 
     return (
-        <div className={cn("flex items-center rounded-full bg-white border-[1.5px] py-[2px]", className)}>
+        <div className={cn("flex items-center rounded-full bg-white border-[1.5px] py-[2px]", className)} onClick={handleInputBarClick}>
             <Button variant="ghost" size="icon" className="ml-2 h-9 w-9 rounded-full p-0">
                 <Mic size={20} className="text-black" />
             </Button>

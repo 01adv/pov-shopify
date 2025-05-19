@@ -7,13 +7,27 @@ import { Product } from "@/lib/extractedProductsForPopup";
 import { Badge } from "./ui/badge";
 import { getHexCode } from "@/lib/colorHexMap";
 import { Circle } from "lucide-react";
+import { logEvent } from "@/lib/logger";
 
 export const ProductCardForPopup = ({ product, onClick }: { product: Product, onClick?: () => void }) => {
+  const handleProductClick = async (product: Product) => {
+    await logEvent("clicks", {
+      event: "product_click",
+      product_id: product.id,
+      product_name: product.title,
+      // category: product.category,
+      tags: ["click", "product", "recommended"],
+      source: "chatbot.recommendation",
+    });
+    // Navigate to product page
+  };
   return (
-    <div onClick={onClick}>
+    <div onClick={() => handleProductClick(product)} >
       {/* static link for now */}
       <Link
         href={`/products/${product.handle}?variant=${product.id}`}
+        onClick={onClick}
+
       >
         <Card className="border-0 shadow-none  p-0 gap-2 rounded-none">
           <CardContent className="relative p-0 mb-auto">

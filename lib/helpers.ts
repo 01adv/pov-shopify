@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { v4 as uuidv4 } from "uuid";
 
 export const getOrCreateSessionId = (): string | null => {
@@ -45,7 +46,7 @@ export function extractProductNamesFromTranscript(
       const productArrayStr = `[${jsonLikeMatch[1]}]`.replace(/'/g, '"');
       const productArray = JSON.parse(productArrayStr);
 
-      productArray.forEach((item) => {
+      productArray.forEach((item: any) => {
         const name = item.split(" - $")[0].trim();
         if (name) productNames.push(name);
       });

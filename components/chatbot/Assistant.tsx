@@ -17,6 +17,7 @@ import { ProductCardForPopup } from "../ProductCardForPopup";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 import ChatLoader from "./ChatLoader";
 import { InputBar } from "./InputBar2";
+import { logEvent } from "@/lib/logger";
 
 
 
@@ -41,6 +42,7 @@ export function AssistantChat() {
   const [nudge, setNudge] = useState("");
   const [lastResponseTime, setLastResponseTime] = useState<number | null>(null);
   const [showNudge, setShowNudge] = useState(false);
+  const [isFirstQuery, setIsFirstQuery] = useState(true);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -68,8 +70,6 @@ export function AssistantChat() {
 
   useEffect(() => {
     const fetchNudges = async () => {
-      console.log('title n nudgeess', productName, sessionId);
-      // if (!productName || !sessionId) return;
       if (!isProductDetailsPage || !productName || !sessionId) {
         setNudge(""); // Clear nudge if no productName
         setShowNudge(false); // Ensure nudge is not shown
@@ -116,6 +116,18 @@ export function AssistantChat() {
   const handleSendMessage = async () => {
     if (!input.trim()) return;
 
+    // Log first query
+    if (isFirstQuery) {
+      await logEvent("user_query", {
+        event: "first_query",
+        query: input,
+        session_id: sessionId,
+        timestamp: new Date().toISOString(),
+        tags: ["user_query", "text_agent"],
+      });
+      setIsFirstQuery(false);
+    }
+
     // Expand the chat if it's the first message
     if (!isExpanded) {
       setIsExpanded(true);
@@ -158,18 +170,22 @@ export function AssistantChat() {
       } else {
         setIsFetching(false); // Stop fetching but don't restart typing
       }
-
-      console.log("products", products);
-      console.log("assistantResponse", assistantResponse);
       // Normalize assistant products (convert to lowercase for case-insensitive match)
       if (assistantProducts && assistantProducts?.length > 0) {
-        console.log("assistantProducts", assistantProducts);
         const matchedProd = matchProducts(assistantProducts, products);
         console.log("matched", matchedProd);
 
         if (matchProducts?.length > 0) {
           setRecommendedProducts(matchedProd);
           setMatchedProducts(matchedProd)
+          // log the recommendation event
+          await logEvent("recommendation_displayed", {
+            title: assistantTitle || "Recommended Products",
+            totalProducts: matchedProd.length,
+            products: matchedProd.map(p => ({ id: p.id, name: p.title, price: p.price, })),
+            source: "chatbot_interaction",
+            tags: ["chatbot", "recommendation"],
+          });
           console.log("message and recommendations", recommendedProducts);
           // setRecommendedProducts(mentionedProducts);
           if (isPhone) {

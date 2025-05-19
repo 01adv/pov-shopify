@@ -389,14 +389,14 @@ type ProductPopupProps = {
   isOpen: boolean;
   onClose: () => void;
   products: Product[];
-  input: string;
-  setInput: (value: string) => void;
-  handleKeyDown: (e: React.KeyboardEvent) => void;
-  handleSendMessage: () => void;
+  input?: string;
+  setInput?: (value: string) => void;
+  handleKeyDown?: (e: React.KeyboardEvent) => void;
+  handleSendMessage?: () => void;
   loader?: boolean;
 };
 
-const ProductPopup: React.FC<ProductPopupProps> = ({
+export const ProductPopup: React.FC<ProductPopupProps> = ({
   isOpen,
   onClose,
   products,

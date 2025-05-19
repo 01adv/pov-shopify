@@ -55,12 +55,19 @@ export function extractProductNamesFromTranscript(
     }
   }
 
-  // Case 2: Handle numbered list format (e.g., "1. Product A 2. Product B")
-  const numberedRegex = /\d+\.\s*([A-Z][^0-9]+)/g;
+  // Case 2: Handle bolded product names (e.g., "**Aspire Flounce Dress with Piping Detail**")
+  const boldRegex = /\*\*(.*?)\*\*/g;
   let match;
+  while ((match = boldRegex.exec(transcript)) !== null) {
+    const name = match[1].trim();
+    if (name) productNames.push(name);
+  }
+
+  // Case 3: Handle numbered list format (e.g., "1. Product A 2. Product B")
+  const numberedRegex = /\d+\.\s*([A-Z][^0-9]+)/g;
   while ((match = numberedRegex.exec(transcript)) !== null) {
     const name = match[1].trim().replace(/\s+/g, " ");
-    if (name) productNames.push(name);
+    if (name && !productNames.includes(name)) productNames.push(name);
   }
 
   return productNames;

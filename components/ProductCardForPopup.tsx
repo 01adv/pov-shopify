@@ -83,11 +83,11 @@ export const ProductCardForPopup = ({ product, onClick }: { product: Product, on
               50% OFF
             </Badge>
             <div className="flex flex-col mt-2">
-              {product?.originalPrice && (
+              {/* {product?.originalPrice && (
                 <span className="text-muted-foreground/85 text-xs line-through">
                   ${product.originalPrice.toFixed(2)} USD
                 </span>
-              )}
+              )} */}
               <span className="text-muted-foreground">
                 ${product?.price.toFixed(2)} USD
               </span>

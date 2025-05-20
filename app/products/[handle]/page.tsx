@@ -168,11 +168,11 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                                 )} */}
                                 {/* Price */}
                                 <div className="gap-5 flex items-center">
-                                    {product.originalPrice && (product?.originalPrice > product.salePrice) && product.originalPrice > 0 && (
+                                    {/* {product.originalPrice && (product?.originalPrice > product.salePrice) && product.originalPrice > 0 && (
                                         <span className="text-lg text-muted-foreground/75 line-through">
-                                            $ {product.originalPrice?.toFixed(2)} hh
+                                            $ {product.originalPrice?.toFixed(2)}
                                         </span>
-                                    )}
+                                    )} */}
                                     <span className="text-lg text-muted-foreground">
                                         $ {product.salePrice.toFixed(2)}
                                     </span>

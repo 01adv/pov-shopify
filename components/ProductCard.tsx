@@ -70,11 +70,11 @@ export const ProductCard = ({ product }: { product: Product }) => {
                         </span>
                     </div>
                     <div className="mt-auto flex flex-col md:flex-row items-baseline gap-2 lg:gap-3">
-                        {product.originalPrice && (product?.originalPrice > product.price) && (
+                        {/* {product.originalPrice && product.originalPrice > 0 && product.originalPrice > product.price && (
                             <span className="text-sm text-slate-500 line-through">
                                 $ {product.originalPrice?.toFixed(2)}
                             </span>
-                        )}
+                        )} */}
                         <span className="text-lg text-muted-foreground">
                             $ {product.price?.toFixed(2)}
                         </span>

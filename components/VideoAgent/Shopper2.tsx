@@ -12,14 +12,18 @@ type Shopper2Props = {
 const Shopper2 = ({ onSwitchToText }: Shopper2Props) => {
     const [showVideoAgent, setShowVideoAgent] = useState(false);
     const [showSwitchToText, setShowSwitchToText] = useState(false);
+    const handleCloseVdo = () => {
+        setShowVideoAgent(false);
+        setShowSwitchToText(false);
+    }
 
     return (
         <div className="z-40 w-full flex items-center md:justify-end">
             <div className="flex flex-col items-center justify-center gap-1 md:gap-2">
                 {/* <div className="h-full w-full max-h-[105px] md:max-h-44 max-w-[90px] md:max-w-32 aspect-[128/176] relative border-2 border-primary rounded-md md:rounded-xl"> */}
-                <div className="h-full w-full max-h-32 md:max-h-44 max-w-32 aspect-[128/176] relative border-2 border-primary rounded-md min-h-[128px] md:min-h-[176px] bg-white">
+                <div className="h-full w-full max-h-32 md:max-h-44 max-w-32 aspect-[128/176] relative rounded-md min-h-[128px] md:min-h-[176px] bg-white">
                     {showVideoAgent ? (
-                        <VideoAgent onClose={() => setShowVideoAgent(false)} onLoaded={() => setShowSwitchToText(true)} />
+                        <VideoAgent onClose={handleCloseVdo} onLoaded={() => setShowSwitchToText(true)} />
                     ) : (
                         <>
                             <video
@@ -53,9 +57,9 @@ const Shopper2 = ({ onSwitchToText }: Shopper2Props) => {
                         Switch to text
                     </button>
                 ) : (
-                    <span className="max-w-[90px] md:max-w-32 bg-primary text-[7px] md:text-xs  text-center text-white p-[2px] md:px-2 md:py-1.5 rounded-md md:rounded-full">
+                    <button onClick={() => setShowVideoAgent(true)} className="max-w-[90px] md:max-w-32 bg-primary text-[7px] md:text-xs  text-center text-white p-[2px] md:px-2 md:py-1.5 rounded-md md:rounded-full">
                         Voice Powered AI Shopper
-                    </span>
+                    </button>
                 )}
             </div>
         </div>

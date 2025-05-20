@@ -76,7 +76,7 @@ const ChatBot = () => {
     return (
         <>
             {!switchToTextAgent && (!isMobile || !hideVideoAgent) && (
-                <div className="md:fixed right-6 bottom-6 flex md:items-center md:justify-end gap-3 max-md:p-4 z-50 max-md:bg-white max-md:px-4 sm:px-8 max-md:sticky max-md:top-0">
+                <div className="md:fixed right-6 md:bottom-6 flex md:items-center md:justify-end gap-3 max-md:p-4 z-50 max-md:bg-white max-md:px-8  max-md:sticky max-md:top-0">
                     <div className="w-fit">
                         <Shopper2 onSwitchToText={() => setSwitchToTextAgent(true)} />
                     </div>

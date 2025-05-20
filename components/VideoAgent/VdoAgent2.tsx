@@ -382,6 +382,14 @@ const funMessages = [
     'Assembling the digital charisma...',
 ];
 
+const avatarIntros = [
+    "Welcome to the Point of View Label. I'm excited to help you shop. What occasion or vibe do you have in mind?",
+    "Hi! I'm your AI personal shopper for the Point of View Label. Scrolling can be tiring! So tell me what are you looking for and I'll do the digging.",
+    "Hey! I'm your AI personal shopper for the Point of View Label. Are you here to shop casual workwear or an evening outfit or maybe both?",
+    "Welcome to the Point of View Label. Are you shopping for a specific occasion like a work event or just refreshing your wardrobe?",
+
+]
+
 export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void, onLoaded?: () => void }) {
     const products: Product[] = extractProducts()
     const { setMatchedProducts, setTitle, title } = useProductContext()
@@ -434,7 +442,7 @@ export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void
             session_id: sessionId,
             session_token: session.current.token,
             silence_response: 'false',
-            opening_text: 'Hello, how can I help you?',
+            opening_text: avatarIntros[Math.floor(Math.random() * avatarIntros.length)],
             stt_language: 'en',
         });
 

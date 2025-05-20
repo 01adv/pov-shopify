@@ -1,41 +1,3 @@
-// import { cn } from "@/lib/utils"
-// import { Button } from "../ui/button"
-// import { Input } from "../ui/input"
-// import { Mic, Send } from "lucide-react"
-
-// type InputBarProps = {
-//     input?: string
-//     setInput: (value: string) => void
-//     handleKeyDown?: (e: React.KeyboardEvent) => void
-//     handleSendMessage?: () => void
-//     className?: string
-// }
-
-// export const InputBar: React.FC<InputBarProps> = ({ input, setInput, handleKeyDown, handleSendMessage, className }) => (
-//     <div className={cn("flex items-center rounded-full bg-white py-1.5 border-[1.5px]", className)}>
-//         <Button variant="ghost" size="icon" className="ml-2 h-12 w-12 rounded-full p-0">
-//             <Mic size={24} className="text-black" />
-//         </Button>
-//         <Input
-//             type="text"
-//             value={input}
-//             onChange={(e) => setInput(e.target.value)}
-//             onKeyDown={handleKeyDown}
-//             placeholder="Type anything you interested here..."
-//             className="flex-1 border-none bg-transparent text-sm shadow-none outline-none placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0"
-//         />
-//         <Button
-//             variant="ghost"
-//             size="icon"
-//             onClick={handleSendMessage}
-//             className="bg-gray-200 mr-2 h-12 w-12 lg:h-11 lg:w-11 rounded-full p-0"
-//         >
-//             <Send size={24} className="text-black rotate-45" />
-//         </Button>
-//     </div>
-// )
-
-
 'use client'
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -50,6 +12,7 @@ type InputBarProps = {
     handleKeyDown?: (e: React.KeyboardEvent) => void;
     handleSendMessage?: () => void;
     className?: string;
+    isProductDetailsPage?: boolean;
 };
 
 // Array of placeholder texts
@@ -63,12 +26,20 @@ const placeholderTexts = [
     "Work outfit that makes a statement",
 ];
 
+const productPagePlaceholderTexts = [
+    "How can I make it more casual?",
+    "What color earrings would go with this?",
+    "How to style it more professionally?",
+    "Style it for an evening glam outing!!",
+]
+
 export const InputBar: React.FC<InputBarProps> = ({
     input,
     setInput,
     handleKeyDown,
     handleSendMessage,
     className,
+    isProductDetailsPage,
 }) => {
     const [currentPlaceholder, setCurrentPlaceholder] = useState("");
     const [isInteracting, setIsInteracting] = useState(false);
@@ -77,8 +48,9 @@ export const InputBar: React.FC<InputBarProps> = ({
 
     // Function to get a random placeholder
     const getRandomPlaceholder = () => {
-        const randomIndex = Math.floor(Math.random() * placeholderTexts.length);
-        return placeholderTexts[randomIndex];
+        const texts = isProductDetailsPage ? productPagePlaceholderTexts : placeholderTexts;
+        const randomIndex = Math.floor(Math.random() * texts.length);
+        return texts[randomIndex];
     };
 
     // Function to start cycling placeholders
@@ -105,7 +77,7 @@ export const InputBar: React.FC<InputBarProps> = ({
         startCycling();
 
         return () => stopCycling(); // Cleanup on unmount
-    }, []);
+    }, [isProductDetailsPage, getRandomPlaceholder, startCycling]); // Add isProductDetailsPage, getRandomPlaceholder, and startCycling to dependency array
 
     // Handle user interaction (focus, typing, or blur)
     useEffect(() => {
@@ -120,7 +92,7 @@ export const InputBar: React.FC<InputBarProps> = ({
         const inactivityInterval = setInterval(checkInactivity, 1000); // Check every second
 
         return () => clearInterval(inactivityInterval); // Cleanup on unmount
-    }, [isInteracting]);
+    }, [isInteracting, startCycling]); // Add startCycling to dependency array
 
     // Handle focus event
     const handleFocus = () => {

@@ -365,6 +365,7 @@ export function AssistantChat() {
                     setInput={setInput}
                     handleKeyDown={handleKeyDown}
                     handleSendMessage={handleSendMessage}
+                    isProductDetailsPage={isProductDetailsPage}
                   />
                 </div>
               </Card>
@@ -375,6 +376,7 @@ export function AssistantChat() {
                 setInput={setInput}
                 handleKeyDown={handleKeyDown}
                 handleSendMessage={handleSendMessage}
+                isProductDetailsPage={isProductDetailsPage}
               />
             )}
           </div>

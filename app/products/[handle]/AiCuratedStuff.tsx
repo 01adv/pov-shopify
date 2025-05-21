@@ -1,5 +1,6 @@
 'use client'
 import { useProductContext } from '@/hooks/useProduct'
+import { logEvent } from '@/lib/logger'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -14,6 +15,17 @@ const AiCuratedStuff = ({ handle }: { handle: string }) => {
     if (!matchedProducts.some(product => product.handle === handle))
         return null
 
+    const handleOnclick = async ({ product }: any) => {
+        await logEvent("clicks", {
+            event: "product_click",
+            product_id: product.id,
+            product_name: product.title,
+            // category: product.category,
+            tags: ["click", "product", "recommended"],
+            source: "chatbot.recommendation",
+        });
+    }
+
     return (
         <div className=" w-full lg:ml-36">
             <div className=" max-w-sm lg:w-[412px] py-2 px-4 bg-primary  lg:ml-2">
@@ -25,7 +37,7 @@ const AiCuratedStuff = ({ handle }: { handle: string }) => {
                     {matchedProducts.filter(aiProduct => aiProduct.handle !== handle).map((product, index) => (
                         <Link
                             key={index}
-                            href={`/products/${product.handle}?variant=${product.id}`}>
+                            href={`/products/${product.handle}?variant=${product.id}`} onClick={() => handleOnclick({ product })}>
                             <div className="w-[88px] lg:w-[100px] flex flex-col items-center shrink-0">
                                 <div className="w-full aspect-square relative rounded-xl">
                                     <Image

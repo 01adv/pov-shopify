@@ -106,7 +106,7 @@ const ChatBot = () => {
                             <X
                                 onClick={() => setHideVideoAgent(true)}
                                 size={18}
-                                className="text-primary mr-1" />
+                                className="text-primary ml-1 shrink-0" />
                         </div>
                     )}
                 </div>

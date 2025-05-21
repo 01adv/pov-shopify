@@ -112,7 +112,7 @@ export function AssistantChat() {
 
     const timer = setInterval(() => {
       const currentTime = Date.now();
-      if (currentTime - lastResponseTime >= 15000) { // 15 seconds
+      if (currentTime - lastResponseTime >= 40000) { // 15 seconds
         setShowNudge(true); // Show nudge after 15 seconds
         clearInterval(timer); // Stop checking once 15 seconds is reached
       }

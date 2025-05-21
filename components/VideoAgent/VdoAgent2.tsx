@@ -571,8 +571,8 @@ export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void
             });
 
             // const socket = new WebSocket(`wss://videoagentbaseline-t3jk.onrender.com/user-audio-input?${pipecatParams}`);
-            // const socket = new WebSocket(`wss://videoagent-y24z.onrender.com/user-audio-input?${pipecatParams}`);
-            const socket = new WebSocket(`wss://videoagentbaseline-t3jk.onrender.com/user-audio-input?${pipecatParams}`);
+            const socket = new WebSocket(`wss://videoagent-y24z.onrender.com/user-audio-input?${pipecatParams}`);
+            // const socket = new WebSocket(`wss://videoagentbaseline-t3jk.onrender.com/user-audio-input?${pipecatParams}`);
 
             socket.addEventListener('open', () => {
                 console.log('Audio WebSocket connection established');

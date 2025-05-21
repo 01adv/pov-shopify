@@ -24,6 +24,7 @@ import { useEffect, useState } from 'react'
 import { Sparkles, X } from 'lucide-react'
 import Shopper2 from '../VideoAgent/Shopper2'
 import { useProductContext } from '@/hooks/useProduct'
+import { logEvent } from '@/lib/logger' // Import logEvent
 
 const prompts = [
     "Something work-ish but not boring!",
@@ -48,6 +49,19 @@ const ChatBot = () => {
     const [promptIndex, setPromptIndex] = useState(0)
     // const [fade, setFade] = useState(true)
     const [isMobile, setIsMobile] = useState(false)
+
+    const handleSwitchToText = async () => {
+        setSwitchToTextAgent(true);
+        try {
+            await logEvent("text_agent_interaction", {
+                switch_to_text_agent: true,
+                action: "click_switch_to_text",
+                tags: ["text_agent", "user_initiated"],
+            });
+        } catch (error) {
+            console.error("Error logging switch_to_text_agent event:", error);
+        }
+    };
 
     useEffect(() => {
         // Initial check
@@ -78,7 +92,7 @@ const ChatBot = () => {
             {!switchToTextAgent && (!isMobile || !hideVideoAgent) && (
                 <div className="md:fixed right-6 md:bottom-6 flex md:items-center md:justify-end gap-3 max-md:p-4 z-50 max-md:bg-white max-md:px-8  max-md:sticky max-md:top-0">
                     <div className="w-fit">
-                        <Shopper2 onSwitchToText={() => setSwitchToTextAgent(true)} />
+                        <Shopper2 onSwitchToText={handleSwitchToText} />
                     </div>
                     {isMobile && (
                         <div className=' w-full flex justify-between'>

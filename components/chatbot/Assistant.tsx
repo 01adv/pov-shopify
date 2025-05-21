@@ -41,7 +41,6 @@ export function AssistantChat() {
   const [nudge, setNudge] = useState("");
   const [lastResponseTime, setLastResponseTime] = useState<number | null>(null);
   const [showNudge, setShowNudge] = useState(false);
-  const [isFirstQuery, setIsFirstQuery] = useState(true);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -128,18 +127,6 @@ export function AssistantChat() {
 
     // Start measuring interaction time
     const startTime = performance.now();
-
-    // Log first query
-    if (isFirstQuery) {
-      await logEvent("user_query", {
-        event: "first_query",
-        query: input,
-        session_id: sessionId,
-        timestamp: new Date().toISOString(),
-        tags: ["user_query", "text_agent"],
-      });
-      setIsFirstQuery(false);
-    }
 
     // Expand the chat if it's the first message
     if (!isExpanded) {

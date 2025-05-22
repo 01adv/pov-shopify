@@ -90,7 +90,7 @@ const Header = () => {
             <header className="bg-secondary relative">
                 <div className="mx-auto flex max-w-6xl px-6 py-6 xl:px-7 items-center justify-between relative">
                     <nav className="hidden lg:flex items-center gap-8">
-                        <div className="group relative">
+                        {/* <div className="group relative">
                             <button
                                 ref={shopRef}
                                 className="flex items-center gap-1 text-sm text-white"
@@ -99,6 +99,14 @@ const Header = () => {
                                 <span className="border-b hover:underline underline-offset-2">SHOP</span>
                                 <ChevronDown className="h-4 w-4" />
                             </button>
+                        </div> */}
+                        <div className="">
+                            <Link
+                                href="/"
+                                className="text-sm text-white uppercase pointer-events-auto"
+                            >
+                                All Workwear
+                            </Link>
                         </div>
                         <div className="group relative">
                             <button

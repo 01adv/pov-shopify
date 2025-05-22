@@ -82,7 +82,7 @@ export function AssistantChat() {
           setPersonalizedNudge(nudge);
         }
         // Log the nudge to the conversation document
-        await logEvent("append_conversation", {
+        logEvent("append_conversation", {
           event: "chat_message",
           session_id: sessionId,
           message: {
@@ -141,7 +141,7 @@ export function AssistantChat() {
 
     console.log("message", message);
     // Log the user query to the conversation document
-    await logEvent("append_conversation", {
+    logEvent("append_conversation", {
       event: "chat_message",
       session_id: sessionId,
       message: {
@@ -180,7 +180,7 @@ export function AssistantChat() {
         setShowNudge(false); // Reset nudge visibility
 
         // Log the assistant response to the conversation document
-        await logEvent("append_conversation", {
+        logEvent("append_conversation", {
           event: "chat_message",
           session_id: sessionId,
           message: {
@@ -196,7 +196,7 @@ export function AssistantChat() {
 
       // Log nudge if present and on product details page
       if (isProductDetailsPage && nudge && showNudge) {
-        await logEvent("append_conversation", {
+        logEvent("append_conversation", {
           event: "chat_message",
           session_id: sessionId,
           message: {
@@ -217,7 +217,7 @@ export function AssistantChat() {
           setRecommendedProducts(matchedProd);
           setMatchedProducts(matchedProd)
           // log the recommendation event
-          await logEvent("recommendation_displayed", {
+          logEvent("recommendation_displayed", {
             title: assistantTitle || "Recommended Products",
             totalProducts: matchedProd.length,
             products: matchedProd.map(p => ({ id: p.id, name: p.title, price: p.price, })),
@@ -242,7 +242,7 @@ export function AssistantChat() {
       // Log interaction time for successful response
       const endTime = performance.now();
       const interactionTime = endTime - startTime;
-      await logEvent("text_agent_interaction_time", {
+      logEvent("text_agent_interaction_time", {
         event: "text_agent_response",
         interaction_time_ms: interactionTime,
         session_id: sessionId,
@@ -257,7 +257,7 @@ export function AssistantChat() {
       setIsTyping(true);
 
       // Log the error response to the conversation document
-      await logEvent("append_conversation", {
+      logEvent("append_conversation", {
         event: "chat_message",
         session_id: sessionId,
         message: {
@@ -271,7 +271,7 @@ export function AssistantChat() {
       // Log interaction time for error case
       const endTime = performance.now();
       const interactionTime = endTime - startTime;
-      await logEvent("text_agent_interaction_time", {
+      logEvent("text_agent_interaction_time", {
         event: "text_agent_error",
         interaction_time_ms: interactionTime,
         session_id: sessionId,

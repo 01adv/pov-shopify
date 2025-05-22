@@ -10,8 +10,8 @@ import { Circle } from "lucide-react";
 import { logEvent } from "@/lib/logger";
 
 export const ProductCardForPopup = ({ product, onClick }: { product: Product, onClick?: () => void }) => {
-  const handleProductClick = async (product: Product) => {
-    await logEvent("clicks", {
+  const handleProductClick = (product: Product) => {
+    logEvent("clicks", {
       event: "product_click",
       product_id: product.id,
       product_name: product.title,

@@ -15,8 +15,8 @@ const AiCuratedStuff = ({ handle }: { handle: string }) => {
     if (!matchedProducts.some(product => product.handle === handle))
         return null
 
-    const handleOnclick = async ({ product }: any) => {
-        await logEvent("clicks", {
+    const handleOnclick = ({ product }: any) => {
+        logEvent("clicks", {
             event: "product_click",
             product_id: product.id,
             product_name: product.title,

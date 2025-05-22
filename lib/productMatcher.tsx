@@ -15,7 +15,7 @@ export const matchProducts = (
   // Initialize Fuse.js with products and search options
   const fuse = new Fuse(products, {
     keys: ['title'], // Adjust if your product property is different (e.g., 'name')
-    threshold: 0.28, // Fuzziness threshold (0.0 = exact match, 1.0 = very loose)
+    threshold: 0.1, // Fuzziness threshold (0.0 = exact match, 1.0 = very loose)
     includeScore: true, // Optional: include score for debugging
     isCaseSensitive: false, // Optional: case sensitivity
   });

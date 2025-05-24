@@ -1,5 +1,4 @@
 'use client'
-import Shopper from '@/components/VideoAgent/Shopper'
 import Shopper2 from '@/components/VideoAgent/Shopper2'
 import { Sparkles } from 'lucide-react'
 

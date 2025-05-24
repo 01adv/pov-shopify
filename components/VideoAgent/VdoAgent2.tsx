@@ -362,7 +362,7 @@
 
 
 'use client';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import Daily from '@daily-co/daily-js';
 import { Room } from 'livekit-client';
 import { ProductLoader } from '../loader';
@@ -390,7 +390,10 @@ const avatarIntros = [
 
 ]
 
-export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void, onLoaded?: () => void }) {
+const VideoAgent = forwardRef(function VideoAgent(
+    { onClose, onLoaded }: { onClose?: () => void; onLoaded?: () => void },
+    ref
+) {
     const products: Product[] = extractProducts()
     const { setMatchedProducts, setTitle, title } = useProductContext()
     const isPhone = useIsPhone();
@@ -412,6 +415,14 @@ export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void
         apiKey: process.env.NEXT_PUBLIC_API_KEY || '',
         serverUrl: process.env.NEXT_PUBLIC_SERVER_URL || '',
     };
+
+    // expose closeSession method to parent component
+    useImperativeHandle(ref, () => ({
+        closeSession: async () => {
+            await closeSession();
+            if (onClose) onClose();
+        }
+    }));
 
     const session = useRef<any>({});
     const mediaStream = useRef(new MediaStream());
@@ -657,6 +668,7 @@ export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void
             });
 
             updateStatus('Streaming stopped');
+            console.log('Streaming stopped');
         } catch (err) {
             console.error('Failed to stop streaming:', err);
         }
@@ -669,6 +681,7 @@ export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void
                 dailyCall.current = null;
                 updateStatus('Daily audio session ended');
             }
+            console.log('Daily audio session ended');
         } catch (err) {
             console.error('Error cleaning up Daily call:', err);
         }
@@ -680,6 +693,7 @@ export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void
                 audioWebSocket.current = null;
                 updateStatus('Audio WebSocket closed');
             }
+            console.log('Audio WebSocket closed');
         } catch (err) {
             console.error('Error closing audio WebSocket:', err);
             updateStatus(`Audio WebSocket cleanup error: ${err}`);
@@ -697,6 +711,7 @@ export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void
         session.current = {};
         setLoading(true);
         updateStatus('Session fully closed');
+        console.log('Session fully closed');
     };
 
     const toggleMic = async () => {
@@ -775,4 +790,6 @@ export default function VideoAgent({ onClose, onLoaded }: { onClose?: () => void
     );
 
 }
+)
+export default VideoAgent;
 

@@ -1,7 +1,7 @@
 'use client';
 import { AudioLines } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { logEvent } from '@/lib/logger'; // Import logEvent
 
 const VideoAgent = dynamic(() => import('@/components/VideoAgent/VdoAgent2'), { ssr: false });
@@ -11,6 +11,7 @@ type Shopper2Props = {
 };
 
 const Shopper2 = ({ onSwitchToText }: Shopper2Props) => {
+    const videoAgentRef = useRef<any>(null);
     const [showVideoAgent, setShowVideoAgent] = useState(false);
     const [showSwitchToText, setShowSwitchToText] = useState(false);
     const handleCloseVdo = () => {
@@ -31,13 +32,21 @@ const Shopper2 = ({ onSwitchToText }: Shopper2Props) => {
         }
     };
 
+    const handleSwitchToText = async () => {
+        if (videoAgentRef.current?.closeSession) {
+            await videoAgentRef.current.closeSession(); // Call internal clean-up
+        }
+        onSwitchToText(); // Continue with text switching
+    };
+
+
     return (
         <div className="z-40 w-full flex items-center md:justify-end">
             <div className="flex flex-col items-center justify-center gap-1 md:gap-2">
                 {/* <div className="h-full w-full max-h-[105px] md:max-h-44 max-w-[90px] md:max-w-32 aspect-[128/176] relative border-2 border-primary rounded-md md:rounded-xl"> */}
                 <div className="h-full w-full max-h-32 md:max-h-44 max-w-32 aspect-[128/176] relative rounded-md min-h-[128px] md:min-h-[176px] bg-white">
                     {showVideoAgent ? (
-                        <VideoAgent onClose={handleCloseVdo} onLoaded={() => setShowSwitchToText(true)} />
+                        <VideoAgent ref={videoAgentRef} onClose={handleCloseVdo} onLoaded={() => setShowSwitchToText(true)} />
                     ) : (
                         <>
                             <video
@@ -65,7 +74,7 @@ const Shopper2 = ({ onSwitchToText }: Shopper2Props) => {
 
                 {showSwitchToText ? (
                     <button
-                        onClick={onSwitchToText}
+                        onClick={handleSwitchToText}
                         className="max-w-[90px] md:max-w-32 bg-primary text-[7px] md:text-sm text-white p-[2px] md:px-2 md:py-1.5 rounded-md md:rounded-full"
                     >
                         Switch to text

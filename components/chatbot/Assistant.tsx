@@ -154,7 +154,7 @@ export function AssistantChat() {
 
     try {
       const response = await fetch(
-        `https://textagentpov.onrender.com/chat/${sessionId}`,
+        `${process.env.NEXT_PUBLIC_CHAT_SERVER_URL}/chat/${sessionId}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

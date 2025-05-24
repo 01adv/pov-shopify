@@ -39,7 +39,7 @@ export const getNudges = async ({
 
     try {
         const response = await fetch(
-            `https://textagentpov.onrender.com/nudge/${sessionId}`,
+            `${process.env.NEXT_PUBLIC_CHAT_SERVER_URL}/nudge/${sessionId}`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

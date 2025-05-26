@@ -29,7 +29,7 @@
 'use client';
 
 import { useProductContext } from '@/hooks/useProduct';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type AddToCartButtonProps = {
     variantId: number;
@@ -37,40 +37,51 @@ type AddToCartButtonProps = {
 };
 
 const AddToCartButton = ({ variantId, quantity = 1 }: AddToCartButtonProps) => {
-    // const [cartCount, setCartCount] = useState<number | null>(null);
-    const { setItemCount } = useProductContext()
+    const { setItemCount } = useProductContext();
+    const [error, setError] = useState<string | null>(null);
+
+    const parentOrigin = 'https://testing-pov.myshopify.com/'; // Replace with your Shopify store's domain (e.g., 'https://your-store.myshopify.com')
 
     const handleAddToCart = () => {
-        console.log('Add to Cart clicked', variantId);
+        console.log('Add to Cart clicked', { variantId, quantity });
+        setError(null); // Clear any previous errors
         window.parent.postMessage(
             {
-                type: "ADD_TO_CART",
+                type: 'ADD_TO_CART',
                 payload: {
                     variantId,
                     quantity,
                 },
             },
-            "*"
+            parentOrigin
         );
     };
 
     useEffect(() => {
         const handleMessage = (event: MessageEvent) => {
-            if (event.data?.type === "CART_INFO") {
-                const { itemCount } = event.data.payload;
-                // setCartCount(itemCount);
-                setItemCount(itemCount)
-                console.log("Updated cart count:", itemCount);
+            // Verify the message origin
+            if (event.origin !== parentOrigin) return;
+
+            const { type, payload } = event.data;
+
+            if (type === 'CART_INFO') {
+                const { itemCount } = payload;
+                setItemCount(itemCount);
+                console.log('Updated cart count:', itemCount);
+            } else if (type === 'CART_ERROR') {
+                const { error } = payload;
+                setError(error);
+                console.error('Cart error:', error);
             }
         };
 
-        window.addEventListener("message", handleMessage);
+        window.addEventListener('message', handleMessage);
 
-        // Request cart on load (optional)
-        window.parent.postMessage({ type: "GET_CART" }, "*");
+        // Request initial cart count on load
+        window.parent.postMessage({ type: 'GET_CART' }, parentOrigin);
 
-        return () => window.removeEventListener("message", handleMessage);
-    }, []);
+        return () => window.removeEventListener('message', handleMessage);
+    }, [setItemCount, parentOrigin]);
 
     return (
         <div className="flex items-center gap-4">
@@ -80,6 +91,11 @@ const AddToCartButton = ({ variantId, quantity = 1 }: AddToCartButtonProps) => {
             >
                 Add to Cart
             </button>
+            {error && (
+                <div className="text-red-500 text-sm">
+                    {error}
+                </div>
+            )}
         </div>
     );
 };

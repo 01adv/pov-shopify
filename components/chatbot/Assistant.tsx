@@ -82,16 +82,16 @@ export function AssistantChat() {
           setPersonalizedNudge(nudge);
         }
         // Log the nudge to the conversation document
-        // logEvent("append_conversation", {
-        //   event: "chat_message",
-        //   session_id: sessionId,
-        //   message: {
-        //     role: "nudge",
-        //     content: nudge,
-        //     timestamp: new Date().toISOString(),
-        //   },
-        //   tags: ["chatbot", "nudge", "conversation"],
-        // });
+        logEvent("append_conversation", {
+          event: "chat_message",
+          session_id: sessionId,
+          message: {
+            role: "nudge",
+            content: nudge,
+            timestamp: new Date().toISOString(),
+          },
+          tags: ["chatbot", "nudge", "conversation"],
+        });
         // Show nudge immediately if on product details page and no chat interaction
         if (isProductDetailsPage && !latestResponse) {
           setShowNudge(true);
@@ -141,16 +141,16 @@ export function AssistantChat() {
 
     console.log("message", message);
     // Log the user query to the conversation document
-    // logEvent("append_conversation", {
-    //   event: "chat_message",
-    //   session_id: sessionId,
-    //   message: {
-    //     role: "user",
-    //     content: message,
-    //     timestamp: new Date().toISOString(),
-    //   },
-    //   tags: ["chatbot", "conversation"],
-    // });
+    logEvent("append_conversation", {
+      event: "chat_message",
+      session_id: sessionId,
+      message: {
+        role: "user",
+        content: message,
+        timestamp: new Date().toISOString(),
+      },
+      tags: ["chatbot", "conversation"],
+    });
 
     try {
       const response = await fetch(
@@ -180,33 +180,33 @@ export function AssistantChat() {
         setShowNudge(false); // Reset nudge visibility
 
         // Log the assistant response to the conversation document
-        // logEvent("append_conversation", {
-        //   event: "chat_message",
-        //   session_id: sessionId,
-        //   message: {
-        //     role: "assistant",
-        //     content: assistantResponse,
-        //     timestamp: new Date().toISOString(),
-        //   },
-        //   tags: ["chatbot", "conversation"],
-        // });
+        logEvent("append_conversation", {
+          event: "chat_message",
+          session_id: sessionId,
+          message: {
+            role: "assistant",
+            content: assistantResponse,
+            timestamp: new Date().toISOString(),
+          },
+          tags: ["chatbot", "conversation"],
+        });
       } else {
         setIsFetching(false); // Stop fetching but don't restart typing
       }
 
       // Log nudge if present and on product details page
-      // if (isProductDetailsPage && nudge && showNudge) {
-      //   logEvent("append_conversation", {
-      //     event: "chat_message",
-      //     session_id: sessionId,
-      //     message: {
-      //       role: "nudge",
-      //       content: nudge,
-      //       timestamp: new Date().toISOString(),
-      //     },
-      //     tags: ["chatbot", "nudge", "conversation"],
-      //   });
-      // }
+      if (isProductDetailsPage && nudge && showNudge) {
+        logEvent("append_conversation", {
+          event: "chat_message",
+          session_id: sessionId,
+          message: {
+            role: "nudge",
+            content: nudge,
+            timestamp: new Date().toISOString(),
+          },
+          tags: ["chatbot", "nudge", "conversation"],
+        });
+      }
 
       // Normalize assistant products (convert to lowercase for case-insensitive match)
       if (assistantProducts && assistantProducts?.length > 0) {
@@ -217,13 +217,13 @@ export function AssistantChat() {
           setRecommendedProducts(matchedProd);
           setMatchedProducts(matchedProd)
           // log the recommendation event
-          // logEvent("recommendation_displayed", {
-          //   title: assistantTitle || "Recommended Products",
-          //   totalProducts: matchedProd.length,
-          //   products: matchedProd.map(p => ({ id: p.id, name: p.title, price: p.price, })),
-          //   source: "chatbot_interaction",
-          //   tags: ["chatbot", "recommendation"],
-          // });
+          logEvent("recommendation_displayed", {
+            title: assistantTitle || "Recommended Products",
+            totalProducts: matchedProd.length,
+            products: matchedProd.map(p => ({ id: p.id, name: p.title, price: p.price, })),
+            source: "chatbot_interaction",
+            tags: ["chatbot", "recommendation"],
+          });
           console.log("message and recommendations", recommendedProducts);
           // setRecommendedProducts(mentionedProducts);
           if (isPhone) {
@@ -257,16 +257,16 @@ export function AssistantChat() {
       setIsTyping(true);
 
       // Log the error response to the conversation document
-      // logEvent("append_conversation", {
-      //   event: "chat_message",
-      //   session_id: sessionId,
-      //   message: {
-      //     role: "assistant",
-      //     content: "Sorry, I'm having trouble connecting right now.",
-      //     timestamp: new Date().toISOString(),
-      //   },
-      //   tags: ["chatbot", "conversation", "error"],
-      // });
+      logEvent("append_conversation", {
+        event: "chat_message",
+        session_id: sessionId,
+        message: {
+          role: "assistant",
+          content: "Sorry, I'm having trouble connecting right now.",
+          timestamp: new Date().toISOString(),
+        },
+        tags: ["chatbot", "conversation", "error"],
+      });
 
       // Log interaction time for error case
       // const endTime = performance.now();

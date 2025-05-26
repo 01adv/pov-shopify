@@ -253,7 +253,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                                 >
                                     {selectedVariant.available ? "Add to Cart" : "Out of Stock"}
                                 </Button> */}
-                                <AddToCartButton variantId={44482757066805} />
+                                <AddToCartButton title={product.name} color={product.color} size={product.size} imageUrl={product.image} variantId={8839600603348} />
                             </div>
                             <span
                                 id="product-details"

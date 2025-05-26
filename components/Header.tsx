@@ -2,6 +2,7 @@
 
 'use client';
 import { useProductContext } from '@/hooks/useProduct';
+import { logEvent } from '@/lib/logger';
 import { ChevronDown, Text, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -28,6 +29,17 @@ const Header = () => {
     const aboutRef = useRef<HTMLButtonElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const { itemCount, setSwitchToTextAgent } = useProductContext();
+
+    const handleSwitchToText = async () => {
+        await logEvent("video_agent_session", {
+            video_agent_interaction: false,
+            duration_seconds: 0,
+            end_reason: "switch_to_text",
+            text_agent_switch: true,
+            tags: ["video_agent", "session_ended", "switch_to_text"]
+        });
+        setSwitchToTextAgent(true);
+    }
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -154,7 +166,7 @@ const Header = () => {
                                 {itemCount > 0 && itemCount || 0}
                             </span>
                         </div>
-                        <div className="text-white" onClick={() => setSwitchToTextAgent(true)}><Text /></div>
+                        <div className="text-white" onClick={handleSwitchToText}><Text /></div>
                     </div>
                 </div>
                 {(isShopOpen || isAboutOpen) && (

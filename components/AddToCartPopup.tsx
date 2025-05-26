@@ -20,14 +20,14 @@ export function CartPopup({ isOpen, onClose, title = "Innovation Zipper Slit Cre
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent
                 className="
-         p-0 gap-0 w-xs
+         p-0 gap-0 w-full sm:w-xs
         bg-secondary text-white border-none
         data-[state=open]:animate-in data-[state=open]:slide-in-from-right-4
         data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right-4
         data-[state=open]:duration-300 data-[state=closed]:duration-200
         top-28 translate-y-0
         sm:left-auto sm:right-4 md:right-8 lg:right-16
-        border-t-2 border-t-primary
+        border-t-2 border-t-primary rounded-none 
       "
             >
                 <DialogHeader className="p-4  pb-3">

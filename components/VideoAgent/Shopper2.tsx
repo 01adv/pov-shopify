@@ -3,40 +3,68 @@ import { AudioLines } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { logEvent } from '@/lib/logger'; // Import logEvent
+import { useProductContext } from '@/hooks/useProduct';
 
 const VideoAgent = dynamic(() => import('@/components/VideoAgent/VdoAgent2'), { ssr: false });
 
-type Shopper2Props = {
-    onSwitchToText: () => void;
-};
 
-const Shopper2 = ({ onSwitchToText }: Shopper2Props) => {
+const Shopper2 = () => {
+    const { setSwitchToTextAgent } = useProductContext()
     const videoAgentRef = useRef<any>(null);
     const [showVideoAgent, setShowVideoAgent] = useState(false);
     const [showSwitchToText, setShowSwitchToText] = useState(false);
+    const [videoAgentStartTime, setVideoAgentStartTime] = useState<number | null>(null);
+
     const handleCloseVdo = () => {
         setShowVideoAgent(false);
         setShowSwitchToText(false);
+        if (videoAgentStartTime) {
+            const durationSeconds = Math.floor((Date.now() - videoAgentStartTime) / 1000);
+            logEvent("video_agent_session", {
+                video_agent_interaction: true,
+                duration_seconds: durationSeconds,
+                end_reason: "closed",
+                tags: ["video_agent", "session_ended"]
+            }).catch(console.error);
+            setVideoAgentStartTime(null);
+        }
     }
 
     const handleStartVideoAgent = async () => {
+        setVideoAgentStartTime(Date.now());
         setShowVideoAgent(true);
-        try {
-            await logEvent("video_agent_interaction", {
-                video_agent_clicked: true,
-                action: "click_to_talk",
-                tags: ["video_agent", "user_initiated"],
-            });
-        } catch (error) {
-            console.error("Error logging start_video_conversation event:", error);
-        }
+        // try {
+        //     await logEvent("video_agent_interaction", {
+        //         video_agent_clicked: true,
+        //         action: "click_to_talk",
+        //         event: "start_video_conversation",
+        //         tags: ["video_agent", "user_initiated"],
+        //     });
+        // } catch (error) {
+        //     console.error("Error logging start_video_conversation event:", error);
+        // }
     };
 
     const handleSwitchToText = async () => {
         if (videoAgentRef.current?.closeSession) {
             await videoAgentRef.current.closeSession(); // Call internal clean-up
         }
-        onSwitchToText(); // Continue with text switching
+        if (videoAgentStartTime) {
+            const durationSeconds = Math.floor((Date.now() - videoAgentStartTime) / 1000);
+            try {
+                await logEvent("video_agent_session", {
+                    video_agent_interaction: true,
+                    duration_seconds: durationSeconds,
+                    end_reason: "switch_to_text",
+                    text_agent_switch: true,
+                    tags: ["video_agent", "session_ended", "switch_to_text"]
+                });
+            } catch (error) {
+                console.error("Error logging session end:", error);
+            }
+            setVideoAgentStartTime(null);
+        }
+        setSwitchToTextAgent(true); // Update context state
     };
 
 

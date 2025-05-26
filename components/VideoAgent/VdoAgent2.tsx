@@ -395,7 +395,7 @@ const VideoAgent = forwardRef(function VideoAgent(
     ref
 ) {
     const products: Product[] = extractProducts()
-    const { setMatchedProducts, setTitle, title } = useProductContext()
+    const { setMatchedProducts, setTitle, title, setTranscriptOnMobile } = useProductContext()
     const isPhone = useIsPhone();
     const router = useRouter()
     const [avatarID] = useState('June_HR_public');
@@ -420,7 +420,6 @@ const VideoAgent = forwardRef(function VideoAgent(
     useImperativeHandle(ref, () => ({
         closeSession: async () => {
             await closeSession();
-            if (onClose) onClose();
         }
     }));
 
@@ -604,11 +603,16 @@ const VideoAgent = forwardRef(function VideoAgent(
             socket.addEventListener('message', (event) => {
                 console.log('[Audio WS Message]', event.data);
 
+
                 try {
                     const data = JSON.parse(event.data);
 
+                    setTranscriptOnMobile(
+                        data.role === "assistant" ? data.content : "123-loading")
+
                     if (data.content) {
                         console.log('[Transcript]', data.content);
+                        // setTranscriptOnMobile(data.content)
                         const match = data.content.match(/^(.*?)\s*1\./);
                         const title = match?.[1]?.trim();
                         const productNames =
@@ -639,6 +643,7 @@ const VideoAgent = forwardRef(function VideoAgent(
                         setTranscript((prev) =>
                             data.is_final ? `${cleanedText}\n` : `${cleanedText}...`
                         );
+                        // setTranscriptOnMobile((prev) => `niche wala ${prev}\n${cleanedText}`);
                     }
                 } catch (err) {
                     console.error('Error parsing audio WebSocket message:', err);

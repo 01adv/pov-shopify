@@ -1,9 +1,8 @@
 'use client';
+import { useProductContext } from '@/hooks/useProduct';
 import { AudioLines } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
-import { logEvent } from '@/lib/logger'; // Import logEvent
-import { useProductContext } from '@/hooks/useProduct';
 
 const VideoAgent = dynamic(() => import('@/components/VideoAgent/VdoAgent2'), { ssr: false });
 
@@ -19,13 +18,13 @@ const Shopper2 = () => {
         setShowVideoAgent(false);
         setShowSwitchToText(false);
         if (videoAgentStartTime) {
-            const durationSeconds = Math.floor((Date.now() - videoAgentStartTime) / 1000);
-            logEvent("video_agent_session", {
-                video_agent_interaction: true,
-                duration_seconds: durationSeconds,
-                end_reason: "closed",
-                tags: ["video_agent", "session_ended"]
-            }).catch(console.error);
+            // const durationSeconds = Math.floor((Date.now() - videoAgentStartTime) / 1000);
+            // logEvent("video_agent_session", {
+            //     video_agent_interaction: true,
+            //     duration_seconds: durationSeconds,
+            //     end_reason: "closed",
+            //     tags: ["video_agent", "session_ended"]
+            // }).catch(console.error);
             setVideoAgentStartTime(null);
         }
     }
@@ -50,18 +49,18 @@ const Shopper2 = () => {
             await videoAgentRef.current.closeSession(); // Call internal clean-up
         }
         if (videoAgentStartTime) {
-            const durationSeconds = Math.floor((Date.now() - videoAgentStartTime) / 1000);
-            try {
-                await logEvent("video_agent_session", {
-                    video_agent_interaction: true,
-                    duration_seconds: durationSeconds,
-                    end_reason: "switch_to_text",
-                    text_agent_switch: true,
-                    tags: ["video_agent", "session_ended", "switch_to_text"]
-                });
-            } catch (error) {
-                console.error("Error logging session end:", error);
-            }
+            // const durationSeconds = Math.floor((Date.now() - videoAgentStartTime) / 1000);
+            // try {
+            //     await logEvent("video_agent_session", {
+            //         video_agent_interaction: true,
+            //         duration_seconds: durationSeconds,
+            //         end_reason: "switch_to_text",
+            //         text_agent_switch: true,
+            //         tags: ["video_agent", "session_ended", "switch_to_text"]
+            //     });
+            // } catch (error) {
+            //     console.error("Error logging session end:", error);
+            // }
             setVideoAgentStartTime(null);
         }
         setSwitchToTextAgent(true); // Update context state

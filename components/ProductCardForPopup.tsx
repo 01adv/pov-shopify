@@ -3,22 +3,22 @@ import { Card, CardContent, CardFooter } from "./ui/card";
 import Image from "next/image";
 import Link from "next/link";
 // import { Product } from "./Allworkwear";
-import { Product } from "@/lib/extractedProductsForPopup";
-import { Badge } from "./ui/badge";
 import { getHexCode } from "@/lib/colorHexMap";
+import { Product } from "@/lib/extractedProductsForPopup";
 import { Circle } from "lucide-react";
-import { logEvent } from "@/lib/logger";
+import { Badge } from "./ui/badge";
 
 export const ProductCardForPopup = ({ product, onClick }: { product: Product, onClick?: () => void }) => {
   const handleProductClick = (product: Product) => {
-    logEvent("clicks", {
-      event: "product_click",
-      product_id: product.id,
-      product_name: product.title,
-      // category: product.category,
-      tags: ["click", "product", "recommended"],
-      source: "chatbot.recommendation",
-    });
+    // logEvent("clicks", {
+    //   event: "product_click",
+    //   product_id: product.id,
+    //   product_name: product.title,
+    //   // category: product.category,
+    //   tags: ["click", "product", "recommended"],
+    //   source: "chatbot.recommendation",
+    // });
+    console.log("Product clicked:", product.title);
     // Navigate to product page
   };
   return (

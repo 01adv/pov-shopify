@@ -1,30 +1,10 @@
-// 'use client'
-// import { Sparkles } from 'lucide-react';
-// import Shopper2 from '../VideoAgent/Shopper2';
-// import { useProductContext } from '@/hooks/useProduct';
-
-// const ChatBot = () => {
-//     const { switchToTextAgent, setSwitchToTextAgent } = useProductContext()
-//     return (
-//         <>
-//             {!switchToTextAgent && (
-//                 <div className={`md:fixed right-6 bottom-6  flex md:items-center md:justify-end gap-3 `}>
-//                     <div className=" w-fit"><Shopper2 onSwitchToText={() => { setSwitchToTextAgent(true) }} /></div>
-//                     <span className='md:hidden tracking-wide text-wrap inline-block pr-4 gap-2 max-w-60'><Sparkles size={22} className='text-primary inline-block mr-1' />Too much to scroll... just  say, black, non-boring outfit</span>
-//                 </div>)}
-//         </>
-//     )
-// }
-
-// export default ChatBot
-
 
 'use client'
-import { useEffect, useState } from 'react'
-import { Sparkles, X } from 'lucide-react'
-import Shopper2 from '../VideoAgent/Shopper2'
 import { useProductContext } from '@/hooks/useProduct'
-import { logEvent } from '@/lib/logger' // Import logEvent
+import { Sparkles, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import Shopper2 from '../VideoAgent/Shopper2'
+import ChatLoader from './ChatLoader'
 
 const prompts = [
     "Something work-ish but not boring!",
@@ -45,23 +25,13 @@ const prompts = [
 ]
 
 const ChatBot = () => {
-    const { switchToTextAgent, setSwitchToTextAgent, personalizedNudge, setHideVideoAgent, hideVideoAgent } = useProductContext()
+    const { switchToTextAgent, personalizedNudge, setHideVideoAgent, hideVideoAgent, transcriptOnMobile } = useProductContext()
     const [promptIndex, setPromptIndex] = useState(0)
     // const [fade, setFade] = useState(true)
     const [isMobile, setIsMobile] = useState(false)
+    console.log("Transcript on mobile:", transcriptOnMobile)
 
-    const handleSwitchToText = async () => {
-        setSwitchToTextAgent(true);
-        try {
-            await logEvent("text_agent_interaction", {
-                switch_to_text_agent: true,
-                action: "click_switch_to_text",
-                tags: ["text_agent", "user_initiated"],
-            });
-        } catch (error) {
-            console.error("Error logging switch_to_text_agent event:", error);
-        }
-    };
+
 
     useEffect(() => {
         // Initial check
@@ -92,7 +62,7 @@ const ChatBot = () => {
             {!switchToTextAgent && (!isMobile || !hideVideoAgent) && (
                 <div className="md:fixed right-6 md:bottom-6 flex md:items-center md:justify-end gap-3 max-md:p-4 z-50 max-md:bg-white max-md:px-8  max-md:sticky max-md:top-0">
                     <div className="w-fit">
-                        <Shopper2 onSwitchToText={handleSwitchToText} />
+                        <Shopper2 />
                     </div>
                     {isMobile && (
                         <div className=' w-full flex justify-between'>
@@ -100,8 +70,8 @@ const ChatBot = () => {
                                 // className={`tracking-wide text-wrap inline-block pr-4 gap-2 max-w-60 transition-opacity duration-300 ${fade ? 'opacity-100' : 'opacity-0'
                                 className={`tracking-wide text-wrap inline-block pr-4 gap-2 max-w-60 transition-opacity duration-300 `}
                             >
-                                <Sparkles size={22} className="text-primary inline-block mr-1" />
-                                {personalizedNudge || prompts[promptIndex]}
+                                {!transcriptOnMobile || transcriptOnMobile === '' && <Sparkles size={22} className="text-primary inline-block mr-1" />}
+                                {transcriptOnMobile ? (transcriptOnMobile === "123-loading" ? <ChatLoader showText={false} /> : transcriptOnMobile) : (personalizedNudge || prompts[promptIndex])}
                             </span>
                             <X
                                 onClick={() => setHideVideoAgent(true)}

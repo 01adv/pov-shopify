@@ -20,6 +20,8 @@ interface ProductContextType {
   setHideVideoAgent: (hideVideoAgent: boolean) => void;
   productName: string;
   setProductName: (productName: string) => void;
+  transcriptOnMobile: string;
+  setTranscriptOnMobile: (transcript: string) => void;
 }
 
 // Create the context with a default value
@@ -34,6 +36,8 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [hideVideoAgent, setHideVideoAgent] = useState<boolean>(false);
   const [personalizedNudge, setPersonalizedNudge] = useState<string>('');
   const [productName, setProductName] = useState<string>('');
+  const [transcriptOnMobile, setTranscriptOnMobile] = useState<string>('');
+  // Initialize switchToTextAgent state from sessionStorage
   const [switchToTextAgent, setSwitchToTextAgentState] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       const stored = sessionStorage.getItem('switchToTextAgent');
@@ -68,7 +72,9 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         hideVideoAgent,
         setHideVideoAgent,
         productName,
-        setProductName
+        setProductName,
+        transcriptOnMobile,
+        setTranscriptOnMobile
       }}
     >
       {children}

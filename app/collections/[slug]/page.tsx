@@ -33,8 +33,12 @@ const collectionsData: Record<string, CollectionMetadata> = {
     },
 };
 
-export default function CollectionPage({ params }: { params: { slug: string } }) { // Changed to inline prop type
-    const { slug } = params;
+interface PageProps {
+    params: Promise<{ slug: string }>;
+}
+
+export default async function CollectionPage({ params }: PageProps) { // Changed to inline prop type
+    const { slug } = await params;
     const collectionInfo = collectionsData[slug];
 
     if (!collectionInfo) {
@@ -83,21 +87,3 @@ export default function CollectionPage({ params }: { params: { slug: string } })
         </div>
     );
 }
-
-// Optional: Generate static paths if you know all your slugs beforehand
-// export async function generateStaticParams() {
-//   return Object.keys(collectionsData).map((slug) => ({
-//     slug,
-//   }));
-// }
-
-
-// import React from 'react'
-
-// const page = () => {
-//     return (
-//         <div>page hello</div>
-//     )
-// }
-
-// export default page

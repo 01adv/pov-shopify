@@ -1,4 +1,3 @@
-
 import { ProductCard } from '@/components/ProductCard';
 import { notFound } from 'next/navigation';
 import { getProductsByTags } from './collectionProductExtract';
@@ -34,14 +33,12 @@ const collectionsData: Record<string, CollectionMetadata> = {
     },
 };
 
-type CollectionPageProps = {
-    params: {
-        slug: string;
-    };
-};
+interface PageProps {
+    params: Promise<{ slug: string }>;
+}
 
-export default function CollectionPage({ params }: CollectionPageProps) {
-    const { slug } = params;
+export default async function CollectionPage({ params }: PageProps) { // Changed to inline prop type
+    const { slug } = await params;
     const collectionInfo = collectionsData[slug];
 
     if (!collectionInfo) {
@@ -90,10 +87,3 @@ export default function CollectionPage({ params }: CollectionPageProps) {
         </div>
     );
 }
-
-// Optional: Generate static paths if you know all your slugs beforehand
-// export async function generateStaticParams() {
-//   return Object.keys(collectionsData).map((slug) => ({
-//     slug,
-//   }));
-// }

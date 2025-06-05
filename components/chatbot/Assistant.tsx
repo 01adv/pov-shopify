@@ -385,7 +385,7 @@ export function AssistantChat() {
                         <p className="text-sm lg:text-base">{nudge}</p>
                     )} */}
                         {isFetching ? (
-                          <ChatLoader />
+                          <ChatLoader showText={true} />
                         ) : latestResponse.length > 0 && (!isProductDetailsPage || !showNudge || !nudge) ? (
                           <p className="text-sm lg:text-base">
                             <span

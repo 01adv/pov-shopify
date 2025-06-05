@@ -1,6 +1,6 @@
 
 // import rawProductData from "@/app/products.json";
-import rawProductData from "@/lib/all-workwear.json";
+import rawProductData from "@/lib/all_products.json";
 import { ProductCard } from "./ProductCard";
 
 
@@ -52,6 +52,8 @@ export type Product = {
     };
     image: string;
     slug: string;
+    created_at?: string; // Optional for sorting
+    variants?: Variant[]; // Variants for the product
 };
 
 
@@ -94,6 +96,7 @@ export const products: Product[] = rawProductData.flatMap((product) => {
                 reviewCount: 3, // Placeholder (not in JSON)
                 image: firstVariant.featured_image?.src || "/placeholder.png",
                 slug: `${product.handle}-${color.toLowerCase().replace(/\s+/g, "-")}`,
+                created_at: product.created_at, // Optional for sorting
             };
         });
     } else {
@@ -112,9 +115,13 @@ export const products: Product[] = rawProductData.flatMap((product) => {
                 reviewCount: 3, // Placeholder (not in JSON)
                 image: firstVariant.featured_image?.src || "/placeholder.png",
                 slug: product.handle, // No color in slug
+                created_at: product.created_at, // Optional for sorting
             },
         ];
     }
+}).sort((a, b) => {
+    // Assuming you have `updated_at` or `timestamp` in each product's data
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
 });
 
 export default function AllWorkWear() {

@@ -2,7 +2,6 @@ import AddToCartButton from "@/components/AddToCartButton";
 import CustomerReviews from "@/components/CustomerReviews";
 import ProductGallery from "@/components/Gallery";
 import { Badge } from "@/components/ui/badge";
-// import rawProductData from "@/lib/all-workwear.json";
 import rawProductData from "@/lib/all_products.json";
 import { getHexCode } from "@/lib/colorHexMap";
 import { ChevronDown, Circle, Star, Truck } from "lucide-react";

@@ -31,6 +31,11 @@ const collectionsData: Record<string, CollectionMetadata> = {
         description: 'Discover Point of View Label’s curated womens power suit combining chic style with unbeatable value. These versatile combos are perfect for effortless outfits and smart savings. Refresh your wardrobe while staying on budget!',
         tags: ['bundles'],
     },
+    'resilience-tailored': {
+        title: 'Resilience, Tailored',
+        description: 'We dress not just to show up. but to take up space. We rise, in pressed suits and steady shoes, not despite the storm, but through it. This is for the women who don’t flinch. Who tighten their belts, square their shoulders, and walk on. Resilient.',
+        tags: ['wbs2025'],
+    },
 };
 
 interface PageProps {

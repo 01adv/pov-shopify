@@ -1,5 +1,5 @@
 import { Product, Variant } from "@/components/Allworkwear";
-import rawProductData from "@/lib/all-workwear.json";
+import rawProductData from "@/lib/all_products.json";
 
 
 export function getProductsByTags(tagsToFilter: string[]): Product[] {

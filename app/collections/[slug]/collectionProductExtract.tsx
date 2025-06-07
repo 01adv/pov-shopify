@@ -5,7 +5,7 @@ import rawProductData from "@/lib/all_products.json";
 export function getProductsByTags(tagsToFilter: string[]): Product[] {
     const lowerCaseTagsToFilter = tagsToFilter.map(tag => tag.toLowerCase());
 
-    return rawProductData.flatMap((product) => {
+    const products = rawProductData.flatMap((product) => {
         // Ensure variants and options exist
         if (!product.variants || !product.options || !product.handle || !product.tags ||
             !product.tags.some((productTag) => lowerCaseTagsToFilter.includes(productTag.toLowerCase()))
@@ -45,6 +45,7 @@ export function getProductsByTags(tagsToFilter: string[]): Product[] {
                     reviewCount: 3, // Placeholder (not in JSON)
                     image: firstVariant.featured_image?.src || "/placeholder.png",
                     slug: `${product.handle}-${color.toLowerCase().replace(/\s+/g, "-")}`,
+                    created_at: product.created_at, // Optional for sorting
                 };
             });
         } else {
@@ -63,8 +64,15 @@ export function getProductsByTags(tagsToFilter: string[]): Product[] {
                     reviewCount: 3, // Placeholder (not in JSON)
                     image: firstVariant.featured_image?.src || "/placeholder.png",
                     slug: product.handle, // No color in slug
+                    created_at: product.created_at, // Optional for sorting
                 },
             ];
         }
+    });
+
+    // Sort products by created_at (descending)
+    return products.sort((a, b) => {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        // return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
     });
 }

@@ -331,7 +331,12 @@ export function AssistantChat() {
             <ProductPopup
               title={contextTitle}
               isOpen={isDialogOpen}
-              onClose={() => setIsDialogOpen(false)}
+              onClose={() => {
+                setIsDialogOpen(false);
+                setIsExpanded(false);
+                setNudge('');
+                setLatestResponse('')
+              }}
               products={recommendedProducts}
               input={input}
               setInput={setInput}

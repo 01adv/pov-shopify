@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import { AssistantChat } from "@/components/chatbot/Assistant";
-import ChatBot from "@/components/chatbot/ChatBot";
 import { ProductProvider } from "@/hooks/useProduct";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
@@ -31,7 +30,7 @@ export default function RootLayout({
       <body className={`${quicksand.variable} font-sans`}>
         <ProductProvider>
           <Header />
-          <ChatBot />
+          {/* <ChatBot /> */}
           <AssistantChat />
           {/* <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange> */}
           {children}

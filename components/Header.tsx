@@ -13,7 +13,7 @@ const shopLinks = [
     { name: 'Jackets', href: '/collections/jackets' },
     { name: 'Pants & Skirts', href: '/collections/pants' },
     { name: 'Power Suits', href: '/collections/suits' },
-    { name: 'Shop All Workwear', href: '/' },
+    // { name: 'Shop All Workwear', href: '/' },
 ];
 
 const aboutUsLinks = [
@@ -103,12 +103,23 @@ const Header = () => {
                 <div className="mx-auto flex max-w-6xl px-6 py-6 xl:px-7 items-center justify-between relative">
                     <nav className="hidden lg:flex items-center gap-8">
                         <div className="group relative">
+                            <Link
+                                href="/"
+                            >
+                                <button
+                                    className="flex items-center gap-1 text-sm text-white"
+                                >
+                                    <span className="uppercase underline underline-offset-4">All WorkWear</span>
+                                </button>
+                            </Link>
+                        </div>
+                        <div className="group relative">
                             <button
                                 ref={shopRef}
                                 className="flex items-center gap-1 text-sm text-white"
                                 onClick={toggleShopDropdown}
                             >
-                                <span className="border-b hover:underline underline-offset-2">SHOP</span>
+                                <span className=" group-hover:underline group-hover:underline-offset-4">SHOP</span>
                                 <ChevronDown className="h-4 w-4" />
                             </button>
                         </div>

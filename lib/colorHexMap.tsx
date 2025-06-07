@@ -25,6 +25,13 @@ export const colorHexMap: Record<string, string> = {
     "Dusty Pink": "#DCAE96",
     "White": "#FFFFFF",
     "Black": "#000000",
+    "Rosy Mauve": "#a57d85",
+    "Butter Yellow": "#f7e08e",
+    "Camel Brown": "#ae856c",
+    "Lavender Mist": "#9ba6c9",
+    "Electric Blue": "#375998",
+    "Pink Jacquard": "#f5d3d4",
+    "Mint Green": "#bed390",
 };
 
 export const getHexCode = (color: string): string | null => {

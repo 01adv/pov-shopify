@@ -7,17 +7,18 @@ import { getHexCode } from "@/lib/colorHexMap";
 import { Product } from "@/lib/extractedProductsForPopup";
 import { Circle } from "lucide-react";
 import { Badge } from "./ui/badge";
+import { logEvent } from "@/lib/logger";
 
 export const ProductCardForPopup = ({ product, onClick }: { product: Product, onClick?: () => void }) => {
   const handleProductClick = (product: Product) => {
-    // logEvent("clicks", {
-    //   event: "product_click",
-    //   product_id: product.id,
-    //   product_name: product.title,
-    //   // category: product.category,
-    //   tags: ["click", "product", "recommended"],
-    //   source: "chatbot.recommendation",
-    // });
+    logEvent("clicks", {
+      event: "product_click",
+      product_id: product.id,
+      product_name: product.title,
+      // category: product.category,
+      tags: ["click", "product", "recommended"],
+      source: "chatbot.recommendation",
+    });
     console.log("Product clicked:", product.title);
     // Navigate to product page
   };

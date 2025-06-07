@@ -1,5 +1,6 @@
 'use client'
 import { useProductContext } from '@/hooks/useProduct'
+import { logEvent } from '@/lib/logger'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -15,14 +16,14 @@ const AiCuratedStuff = ({ handle }: { handle: string }) => {
         return null
 
     const handleOnclick = ({ product }: any) => {
-        // logEvent("clicks", {
-        //     event: "product_click",
-        //     product_id: product.id,
-        //     product_name: product.title,
-        //     // category: product.category,
-        //     tags: ["click", "product", "recommended"],
-        //     source: "chatbot.recommendation",
-        // });
+        logEvent("clicks", {
+            event: "product_click",
+            product_id: product.id,
+            product_name: product.title,
+            // category: product.category,
+            tags: ["click", "product", "recommended"],
+            source: "chatbot.recommendation",
+        });
         console.log("Product clicked:", product.title);
     }
 

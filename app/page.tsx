@@ -31,11 +31,10 @@
 
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
-export default function ChatbotIframe() {
+const Page = () => {
     const [pageName, setPageName] = useState('unknown-page');
-    const router = useRouter();
+    // const router = useRouter();
 
     useEffect(() => {
         // Get the parent page URL using document.referrer
@@ -62,7 +61,7 @@ export default function ChatbotIframe() {
         } else {
             console.warn('No referrer found. Unable to determine parent URL.');
         }
-    }, [router]);
+    }, []);
 
     return (
         <div>
@@ -72,3 +71,5 @@ export default function ChatbotIframe() {
         </div>
     );
 }
+
+export default Page

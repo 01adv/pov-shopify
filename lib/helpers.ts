@@ -1,36 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { v4 as uuidv4 } from "uuid";
 
-export const getOrCreateSessionId = (): string | null => {
-  // Check if localStorage is available (e.g., not in SSR or if disabled)
-  if (
-    typeof window === "undefined" ||
-    typeof window.localStorage === "undefined"
-  ) {
-    console.warn(
-      "localStorage is not available. Session ID cannot be retrieved or persisted."
-    );
-    // Return null to indicate that the session ID could not be managed via localStorage.
-    // Consumers of this function should handle the null case.
-    return null;
-  }
+export const getOrCreateSessionId = () => {
+  const storedSessionId = sessionStorage.getItem("chatSessionId"); // Changed to sessionStorage
+  if (storedSessionId) return storedSessionId;
 
-  const sessionIdKey = "chatSessionId";
-
-  try {
-    const storedSessionId = localStorage.getItem(sessionIdKey);
-    if (storedSessionId) {
-      return storedSessionId;
-    }
-
-    const newSessionId = uuidv4(); // ← industry-standard UUIDv4
-    localStorage.setItem(sessionIdKey, newSessionId);
-    return newSessionId;
-  } catch (error) {
-    console.error("Error accessing localStorage for session ID:", error);
-    // Return null if any error occurs during localStorage access (e.g., QuotaExceededError)
-    return null;
-  }
+  const newSessionId = uuidv4(); // ← industry-standard UUIDv4
+  sessionStorage.setItem("chatSessionId", newSessionId); // Changed to sessionStorage
+  return newSessionId;
 };
 
 export function extractProductNamesFromTranscript(

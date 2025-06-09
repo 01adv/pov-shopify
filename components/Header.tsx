@@ -178,7 +178,19 @@ const Header = () => {
                             </span>
                         </div>
                         {/* <div className="text-white" onClick={handleSwitchToText}><Text /></div> */}
+                        <div className="group relative">
+                            <Link
+                                href="/ai-curation"
+                            >
+                                <button
+                                    className="flex items-center gap-1 text-sm text-white"
+                                >
+                                    <span className="uppercase hover:underline hover:underline-offset-4 flex items-center">Ai gen</span>
+                                </button>
+                            </Link>
+                        </div>
                     </div>
+
                 </div>
                 {(isShopOpen || isAboutOpen) && (
                     <div

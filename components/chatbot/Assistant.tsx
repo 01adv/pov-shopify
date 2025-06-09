@@ -214,6 +214,8 @@ export function AssistantChat() {
         console.log("matched", matchedProd);
 
         if (matchProducts?.length > 0) {
+          // Store in session storage
+          sessionStorage.setItem("aiRecommendedProducts", JSON.stringify(matchedProd));
           setRecommendedProducts(matchedProd);
           setMatchedProducts(matchedProd)
           // log the recommendation event
@@ -325,8 +327,8 @@ export function AssistantChat() {
   return (
     <div>
       {/* {switchToTextAgent && ( */}
-      <div className=" z-40 fixed bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center">
-        <div className="relative w-full lg:max-w-md">
+      <div className=" z-40 fixed bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center  pointer-events-none">
+        <div className="relative w-full lg:max-w-md pointer-events-auto">
           {/* Product Popup */}
           {!isPhone && (
             <ProductPopup

@@ -39,6 +39,7 @@ const Page = () => {
     useEffect(() => {
         // Get the parent page URL using document.referrer
         const parentUrl = document.referrer;
+        console.log('parentUrl', parentUrl);
 
         if (parentUrl) {
             try {

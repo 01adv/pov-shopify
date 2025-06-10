@@ -9,8 +9,8 @@ import { useEffect, useRef, useState } from 'react';
 
 const shopLinks = [
     { name: 'New Collections', href: '/collections/resilience-tailored' },
-    { name: 'Dresses', href: '/collections/dresses' },
-    { name: 'Jackets', href: '/collections/jackets' },
+    { name: 'Summer Dresses', href: '/collections/dresses' },
+    { name: 'Blazers', href: '/collections/jackets' },
     { name: 'Pants & Skirts', href: '/collections/pants' },
     { name: 'Power Suits', href: '/collections/suits' },
     // { name: 'Shop All Workwear', href: '/' },

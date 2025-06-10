@@ -18,7 +18,6 @@ import { ProductCardForPopup } from "../ProductCardForPopup";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 import ChatLoader from "./ChatLoader";
 import { InputBar } from "./InputBar2";
-import { usePageInfoListener } from "./usePageInfoListener";
 
 
 
@@ -53,12 +52,12 @@ export function AssistantChat() {
   console.log('pathname assistant', pathname);
   // useLogPageLoad(pathname);
 
-  const [pageInfo, setPageInfo] = useState({ pageName: 'unknown-page', fullPath: '' });
+  // const [pageInfo, setPageInfo] = useState({ pageName: 'unknown-page', fullPath: '' });
 
-  usePageInfoListener((data: any) => {
-    setPageInfo(data);
-  });
-  console.log('page info', pageInfo);
+  // usePageInfoListener((data: any) => {
+  //   setPageInfo(data);
+  // });
+  // console.log('page info', pageInfo);
 
 
   // Initialize session ID

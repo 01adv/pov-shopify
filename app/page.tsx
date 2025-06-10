@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 
 const Page = () => {
     const [pageName, setPageName] = useState('unknown-page');
+    const [fullPath, setFullPath] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
@@ -16,8 +17,10 @@ const Page = () => {
 
             if (event.data?.type === "PAGE_INFO") {
                 const pageName = event.data.payload?.pageName ?? "unknown-page";
+                const fullPath = event.data.payload?.fullPath ?? "unknown-path";
                 console.log("Received from Shopify:", pageName, event.data.payload?.fullPath);
                 setPageName(pageName);
+                setFullPath(fullPath);
                 setIsLoading(false);
             }
         };
@@ -30,7 +33,7 @@ const Page = () => {
     useEffect(() => {
         if (isLoading) return;
 
-        if (pageName === '/') {
+        if (fullPath === '/') {
             logEvent("agent_loaded", {
                 event: "page_load",
                 page_path: "all-workwear",
@@ -47,7 +50,7 @@ const Page = () => {
             });
             router.push('/collections/resilience-tailored');
         }
-    }, [isLoading, pageName, router]);
+    }, [isLoading, fullPath, pageName, router]);
 
     // Optional loading state
     if (isLoading) {

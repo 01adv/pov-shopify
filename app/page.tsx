@@ -45,7 +45,7 @@ const Page = () => {
         if (fullPath === '/') {
             router.push('/all-workwear');
         } else if (pageName === 'new-collection') {
-            router.push('/new-collection');
+            router.push('/collections/resilience-tailored');
         }
     }, [isLoading, fullPath, pageName, router]);
 

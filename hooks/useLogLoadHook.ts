@@ -5,6 +5,7 @@ import { useEffect } from "react";
 
 export const useLogPageLoad = (pageName?: string) => {
   const pathname = usePathname();
+  console.log("logging pathname", pathname);
 
   useEffect(() => {
     const hasLogged = sessionStorage.getItem("entry_logged");

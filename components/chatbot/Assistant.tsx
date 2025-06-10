@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { getNudges } from "@/hooks/getNudges";
-import { useLogPageLoad } from "@/hooks/useLogLoadHook";
 import useIsPhone from "@/hooks/usePhone";
 import { useProductContext } from "@/hooks/useProduct";
 import { extractProducts, Product } from "@/lib/extractedProductsForPopup";
@@ -51,8 +50,8 @@ export function AssistantChat() {
   const MAX_CHAT_HEIGHT = 560; // Maximum card height
   const HEADER_HEIGHT = 65; // Header + border
   const INPUT_HEIGHT = 72; // Input bar + padding
-  console.log('pathname', pathname);
-  useLogPageLoad(pathname);
+  console.log('pathname assistant', pathname);
+  // useLogPageLoad(pathname);
 
   const [pageInfo, setPageInfo] = useState({ pageName: 'unknown-page', fullPath: '' });
 

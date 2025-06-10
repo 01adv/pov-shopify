@@ -104,7 +104,7 @@ const Header = () => {
                     <nav className="hidden lg:flex items-center gap-8">
                         <div className="group relative">
                             <Link
-                                href="/"
+                                href="/all-workwear"
                             >
                                 <button
                                     className="flex items-center gap-1 text-sm text-white"

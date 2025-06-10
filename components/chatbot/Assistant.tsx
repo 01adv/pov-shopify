@@ -227,7 +227,14 @@ export function AssistantChat() {
 
         if (matchProducts?.length > 0) {
           // Store in session storage
-          sessionStorage.setItem("aiRecommendedProducts", JSON.stringify(matchedProd));
+          const existing = JSON.parse(sessionStorage.getItem("aiRecommendedProducts") || "[]");
+
+          const combined = [
+            ...existing,
+            ...matchedProd.filter(p => !existing.some(e => e.id === p.id))
+          ];
+
+          sessionStorage.setItem("aiRecommendedProducts", JSON.stringify(combined));
           setRecommendedProducts(matchedProd);
           setMatchedProducts(matchedProd)
           // log the recommendation event

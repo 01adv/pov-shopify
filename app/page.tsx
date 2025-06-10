@@ -1,59 +1,55 @@
-// 'use client'
-// import { usePageInfoListener } from '@/components/chatbot/usePageInfoListener';
-// import { useState } from 'react';
-
-// const Page = () => {
-//     const [pageName, setPageName] = useState('unknown-page');
-
-//     usePageInfoListener((data) => setPageName(data.pageName));
-
-
-//     return (
-//         <div>
-//             <h1>Chatbot Iframe</h1>
-//             <p>Current Page: {pageName}</p>
-//             {/* Render content based on pageName */}
-//         </div>
-//     );
-// }
-
-// export default Page
-
-
 'use client';
-import { usePageInfoListener } from '@/components/chatbot/usePageInfoListener';
-import { useState, useEffect } from 'react';
+
+import { logEvent } from '@/lib/logger';
 import { useRouter } from 'next/navigation';
-import { useLogPageLoad } from '@/hooks/useLogLoadHook';
+import { useEffect, useState } from 'react';
 
 const Page = () => {
     const [pageName, setPageName] = useState('unknown-page');
-    // const [fullPath, setFullPath] = useState('');
-    const [isLoading, setIsLoading] = useState(true); // Loading state
+    const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
-    // Use the page info listener to get the page name and full path
-    usePageInfoListener((data) => {
-        setPageName(data.pageName);
-        // setFullPath(data.fullPath || ''); // Ensure fullPath is set
-        setIsLoading(false); // Stop loading once data is received
-    });
-
-
-    useLogPageLoad(pageName)
-    // Redirect based on the fullPath after loading
+    // Embedded hook logic to listen for messages
     useEffect(() => {
-        if (isLoading) return; // Wait until loading is complete
+        const handleMessage = (event: MessageEvent) => {
+            if (event.origin !== "https://testing-pov.myshopify.com") return;
+
+            if (event.data?.type === "PAGE_INFO") {
+                const pageName = event.data.payload?.pageName ?? "unknown-page";
+                console.log("Received from Shopify:", pageName, event.data.payload?.fullPath);
+                setPageName(pageName);
+                setIsLoading(false);
+            }
+        };
+
+        window.addEventListener("message", handleMessage);
+        return () => window.removeEventListener("message", handleMessage);
+    }, []);
+
+    // Redirect logic after message is received
+    useEffect(() => {
+        if (isLoading) return;
 
         if (pageName === '/') {
-            ;
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: "all-workwear",
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
             router.push('/all-workwear');
         } else if (pageName === 'new-collection') {
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: "new-collection",
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
             router.push('/collections/resilience-tailored');
         }
     }, [isLoading, pageName, router]);
 
-    // Show a loading state while processing
+    // Optional loading state
     if (isLoading) {
         return (
             <div>
@@ -63,12 +59,11 @@ const Page = () => {
         );
     }
 
-    // Render the page if no redirect is needed (fallback)
+    // Fallback content
     return (
         <div>
             <h1>Chatbot Iframe</h1>
             <p>Current Page: {pageName}</p>
-            {/* Render content based on pageName */}
         </div>
     );
 };

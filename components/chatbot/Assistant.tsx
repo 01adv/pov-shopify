@@ -3,10 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { getNudges } from "@/hooks/getNudges";
+import { useLogPageLoad } from "@/hooks/useLogLoadHook";
 import useIsPhone from "@/hooks/usePhone";
 import { useProductContext } from "@/hooks/useProduct";
 import { extractProducts, Product } from "@/lib/extractedProductsForPopup";
 import { getOrCreateSessionId } from "@/lib/helpers";
+import { logEvent } from "@/lib/logger";
 import { matchProducts } from "@/lib/productMatcher";
 import { X } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -17,7 +19,6 @@ import { ProductCardForPopup } from "../ProductCardForPopup";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 import ChatLoader from "./ChatLoader";
 import { InputBar } from "./InputBar2";
-import { logEvent } from "@/lib/logger";
 
 
 
@@ -49,6 +50,9 @@ export function AssistantChat() {
   const MAX_CHAT_HEIGHT = 560; // Maximum card height
   const HEADER_HEIGHT = 65; // Header + border
   const INPUT_HEIGHT = 72; // Input bar + padding
+  console.log('pathname', pathname);
+  useLogPageLoad(pathname);
+
 
   // Initialize session ID
   useEffect(() => {

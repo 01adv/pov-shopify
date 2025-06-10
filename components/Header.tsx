@@ -156,7 +156,7 @@ const Header = () => {
 
                     </nav>
                     <Link
-                        href="/"
+                        href="/all-workwear"
                         className="text-2xl font-bold absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto"
                     >
                         <Image src="/logo.png" alt="Logo" width={90} height={60} />

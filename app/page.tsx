@@ -1,73 +1,56 @@
-'use client'
-// import React, { useEffect } from 'react'
+// 'use client'
+// import { usePageInfoListener } from '@/components/chatbot/usePageInfoListener';
+// import { useState } from 'react';
 
 // const Page = () => {
-//     const [pageName, setPageName] = React.useState<string | null>(null);
-//     // In your Next.js app (e.g., a component loaded in the iframe)
-//     useEffect(() => {
-//         const handleMessage = (event: MessageEvent) => {
-//             if (event.origin !== window.location.origin) return; // Verify the origin (Shopify store)
+//     const [pageName, setPageName] = useState('unknown-page');
 
-//             const { type, payload } = event.data;
-//             if (type === 'PAGE_INFO' && payload?.pageName) {
-//                 console.log('Received page name:', payload.pageName);
-//                 setPageName(payload.pageName);
-//                 // Use the pageName to update the UI or navigate
-//                 // For example, if using Next.js router:
-//                 // router.push(`/chatbot/${payload.pageName}`);
-//                 // Or update state to render content specific to "new-collection"
-//             }
-//         };
+//     usePageInfoListener((data) => setPageName(data.pageName));
 
-//         window.addEventListener('message', handleMessage);
-//         return () => window.removeEventListener('message', handleMessage);
-//     }, []);
+
 //     return (
-//         <div>page name: {pageName}</div>
-//     )
+//         <div>
+//             <h1>Chatbot Iframe</h1>
+//             <p>Current Page: {pageName}</p>
+//             {/* Render content based on pageName */}
+//         </div>
+//     );
 // }
 
 // export default Page
 
 
+'use client';
+
+import { usePageInfoListener } from '@/components/chatbot/usePageInfoListener';
 import { useEffect, useState } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 
 const Page = () => {
     const [pageName, setPageName] = useState('unknown-page');
-    // const router = useRouter();
-    // const parentUrl = typeof document !== 'undefined' ? document.referrer : '';
-    // console.log('parentUrl outside useEffect', parentUrl);
-    // const windowObj = typeof window !== 'undefined' ? window : null;
-    // console.log('window.location', windowObj?.parent?.location?.href);
-    console.log('page loaded')
+    const [loading, setLoading] = useState(true);
+
+    const router = useRouter();
+    const pathname = usePathname();
+
+    usePageInfoListener((data) => setPageName(data.pageName));
 
     useEffect(() => {
-        // Get the parent page URL using document.referrer
-        const parentUrl = typeof document !== 'undefined' ? document.referrer : '';
-        console.log('parentUrl', parentUrl);
-
-        if (parentUrl) {
-            try {
-                // Parse the URL and extract the page name
-                const url = new URL(parentUrl);
-                const pathSegments = url.pathname.split('/').filter(segment => segment); // Split and remove empty segments
-                const lastSegment = pathSegments[pathSegments.length - 1]; // Get the last segment (e.g., "new-collection")
-                const currentPage = lastSegment || 'unknown-page'; // Fallback if no segment is found
-
-                setPageName(currentPage);
-                console.log('Extracted page name:', currentPage);
-
-                // Optionally, navigate or update the iframe content based on the page name
-                // For example, redirect to a specific route in the iframe:
-                // router.push(`/chatbot/${currentPage}`);
-            } catch (error) {
-                console.error('Error parsing parent URL:', error);
-                setPageName('unknown-page');
+        // Add redirect logic only while loading
+        if (loading) {
+            if (pathname === '/') {
+                router.replace('/all-workwear');
+            } else if (pathname.includes('new-collection')) {
+                router.replace('/new-collection');
+            } else {
+                setLoading(false); // no redirect needed
             }
-        } else {
-            console.warn('No referrer found. Unable to determine parent URL.');
         }
-    }, []);
+    }, [pathname, loading, router]);
+
+    if (loading) {
+        return <p>Loading...</p>; // or a spinner if you prefer
+    }
 
     return (
         <div>
@@ -76,6 +59,6 @@ const Page = () => {
             {/* Render content based on pageName */}
         </div>
     );
-}
+};
 
-export default Page
+export default Page;

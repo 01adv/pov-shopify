@@ -35,15 +35,15 @@ import { useEffect, useState } from 'react';
 const Page = () => {
     const [pageName, setPageName] = useState('unknown-page');
     // const router = useRouter();
-    const parentUrl = typeof document !== 'undefined' ? document.referrer : '';
-    console.log('parentUrl outside useEffect', parentUrl);
-    const windowObj = typeof window !== 'undefined' ? window : null;
-    console.log('window.location', windowObj?.parent?.location?.href);
-
+    // const parentUrl = typeof document !== 'undefined' ? document.referrer : '';
+    // console.log('parentUrl outside useEffect', parentUrl);
+    // const windowObj = typeof window !== 'undefined' ? window : null;
+    // console.log('window.location', windowObj?.parent?.location?.href);
+    console.log('page loaded')
 
     useEffect(() => {
         // Get the parent page URL using document.referrer
-        const parentUrl = document?.referrer;
+        const parentUrl = typeof document !== 'undefined' ? document.referrer : '';
         console.log('parentUrl', parentUrl);
 
         if (parentUrl) {

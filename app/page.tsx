@@ -35,6 +35,8 @@ import { useEffect, useState } from 'react';
 const Page = () => {
     const [pageName, setPageName] = useState('unknown-page');
     // const router = useRouter();
+    const parentUrl = document.referrer;
+    console.log('parentUrl outside useEffect', parentUrl);
 
     useEffect(() => {
         // Get the parent page URL using document.referrer

@@ -17,7 +17,7 @@ const shopLinks = [
 ];
 
 const aboutUsLinks = [
-    { name: 'Our Story', href: '/' },
+    { name: 'Our Story', href: '/about-us' },
     { name: 'Contact Us', href: '/contact-us' },
 ];
 

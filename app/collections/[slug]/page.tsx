@@ -50,7 +50,18 @@ export default async function CollectionPage({ params }: PageProps) { // Changed
         notFound(); // Or redirect to a generic collections page or 404
     }
 
-    const products = getProductsByTags(collectionInfo.tags);
+    // Determine sorting key based on slug
+    let orderByField: string | undefined;
+    if (slug === 'resilience-tailored') {
+        orderByField = 'new';
+    } else if (slug === 'dresses') {
+        orderByField = 'dress';
+    } else if (slug === 'suits') {
+        orderByField = 'suit';
+    }
+    const products = getProductsByTags(collectionInfo.tags, orderByField);
+
+    // const products = getProductsByTags(collectionInfo.tags);
     // const products = productsByTags
 
     return (

@@ -1,16 +1,18 @@
 import { Product, Variant } from "@/components/Allworkwear";
 import rawProductData from "@/lib/all_products.json";
 
-
-export function getProductsByTags(tagsToFilter: string[]): Product[] {
+export type OrderField = {
+    [key: string]: number | undefined;
+}
+export function getProductsByTags(tagsToFilter: string[], orderByField?: string): Product[] {
     const lowerCaseTagsToFilter = tagsToFilter.map(tag => tag.toLowerCase());
 
     const products = rawProductData.flatMap((product) => {
-        // Ensure variants and options exist
+        // Ensure variants, options, and required fields exist, and check tag match
         if (!product.variants || !product.options || !product.handle || !product.tags ||
             !product.tags.some((productTag) => lowerCaseTagsToFilter.includes(productTag.toLowerCase()))
         ) {
-            console.warn(`Product ${product.id} (handle: ${product.handle}) missing variants, options, or does not match any of the provided tags (case-insensitive). Tags: ${product.tags?.join(', ')}`);
+            // console.warn(`Product ${product.id} (handle: ${product.handle}) missing variants, options, or does not match any of the provided tags (case-insensitive). Tags: ${product.tags?.join(', ')}`);
             return [];
         }
 
@@ -46,6 +48,7 @@ export function getProductsByTags(tagsToFilter: string[]): Product[] {
                     image: firstVariant.featured_image?.src || "/placeholder.png",
                     slug: `${product.handle}-${color.toLowerCase().replace(/\s+/g, "-")}`,
                     created_at: product.created_at, // Optional for sorting
+                    order: product.order, // Include order field for sorting
                 };
             });
         } else {
@@ -65,14 +68,26 @@ export function getProductsByTags(tagsToFilter: string[]): Product[] {
                     image: firstVariant.featured_image?.src || "/placeholder.png",
                     slug: product.handle, // No color in slug
                     created_at: product.created_at, // Optional for sorting
+                    order: product.order, // Include order field for sorting
                 },
             ];
         }
     });
 
-    // Sort products by created_at (descending)
-    return products.sort((a, b) => {
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-        // return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
-    });
+    // Sort products based on orderByField
+    if (orderByField) {
+        return products.sort((a, b) => {
+            // const aOrder = a.order?.[orderByField] ?? Number.MAX_SAFE_INTEGER; // Default to large number if no order field
+            // const bOrder = b.order?.[orderByField] ?? Number.MAX_SAFE_INTEGER; // Default to large number if no order field
+            const aOrder = a.order?.[orderByField as keyof typeof a.order] ?? Number.MAX_SAFE_INTEGER;
+            const bOrder = b.order?.[orderByField as keyof typeof b.order] ?? Number.MAX_SAFE_INTEGER;
+
+            return aOrder - bOrder; // Ascending order by specified field
+        });
+    } else {
+        // Default sort by created_at (descending)
+        return products.sort((a, b) => {
+            return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        });
+    }
 }

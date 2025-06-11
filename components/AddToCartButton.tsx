@@ -167,7 +167,7 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
     return (
         <div className="flex items-center gap-4">
             <button
-                className="max-w-md my-5 h-11 w-full text-black text-sm rounded-none border border-black bg-white hover:border-2 transition-colors duration-200 px-4 py-2"
+                className="max-w-md mt-5 h-11 w-full text-black text-sm rounded-none border border-black bg-white hover:border-2 transition-colors duration-200 px-4 py-2"
                 onClick={handleAddToCart}
             >
                 Add to Cart

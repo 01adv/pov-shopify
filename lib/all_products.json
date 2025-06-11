@@ -1190,7 +1190,7 @@
             "dresses"
         ],
         "order": {
-            "dress": 2
+            "dress": 7
         },
         "variants": [
             {
@@ -2691,7 +2691,7 @@
             "Jan2023"
         ],
         "order": {
-            "dress": 7
+            "dress": 4
         },
         "variants": [
             {
@@ -4566,7 +4566,7 @@
             "dresses"
         ],
         "order": {
-            "dress": 0
+            "dress": 3
         },
         "variants": [
             {
@@ -6591,9 +6591,6 @@
             "dress",
             "dresses"
         ],
-        "order": {
-            "dress": 3
-        },
         "variants": [
             {
                 "id": 50308474503471,
@@ -7107,9 +7104,6 @@
             "dresses",
             "Jan2023"
         ],
-        "order": {
-            "dress": 11
-        },
         "variants": [
             {
                 "id": 50751126438191,
@@ -7903,7 +7897,7 @@
             "Jan2023"
         ],
         "order": {
-            "dress": 9
+            "dress": 8
         },
         "variants": [
             {
@@ -8395,9 +8389,6 @@
             "dresses",
             "Jan2023"
         ],
-        "order": {
-            "dress": 10
-        },
         "variants": [
             {
                 "id": 48167156023599,
@@ -9476,9 +9467,6 @@
             "dresses",
             "Jan2023"
         ],
-        "order": {
-            "dress": 12
-        },
         "variants": [
             {
                 "id": 48167106150703,
@@ -10224,7 +10212,7 @@
             "dresses"
         ],
         "order": {
-            "dress": 1
+            "dress": 2
         },
         "variants": [
             {
@@ -10706,7 +10694,7 @@
             "dresses"
         ],
         "order": {
-            "dress": 8
+            "dress": 0
         },
         "variants": [
             {
@@ -12372,7 +12360,7 @@
             "dresses"
         ],
         "order": {
-            "dress": 4
+            "dress": 1
         },
         "variants": [
             {

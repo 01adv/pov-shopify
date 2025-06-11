@@ -239,6 +239,9 @@ const Header = () => {
 
                         <div className="flex flex-col gap-2">
                             <span className="text-white uppercase text-lg">Shop</span>
+                            <Link href="/all-workwear" onClick={() => setIsSidebarOpen(false)} >
+                                <span className="text-muted/75 text-sm uppercase">All workwear</span>
+                            </Link>
                             {shopLinks.map((link) => (
                                 <Link
                                     key={link.name}
@@ -249,6 +252,7 @@ const Header = () => {
                                     {link.name}
                                 </Link>
                             ))}
+
                         </div>
 
                         <div className="flex flex-col gap-2 mt-4 ">

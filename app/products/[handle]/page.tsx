@@ -176,7 +176,11 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                                     <span className="text-lg text-muted-foreground">
                                         $ {product.salePrice.toFixed(2)}
                                     </span>
-                                    {productData.tags.includes("Bestseller") ? (
+                                    {product.availableSizes.some(size => !size.available) ? (
+                                        <Badge className="text-white text-xs px-3 py-0.5 bg-secondary outline rounded-full">
+                                            Sold Out
+                                        </Badge>
+                                    ) : productData.tags.includes("Bestseller") ? (
                                         <Badge className="text-black text-xs px-3 py-0.5 bg-white outline rounded-full">
                                             Bestseller
                                         </Badge>
@@ -268,6 +272,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                                         </span>
                                     </Link>
                                 }
+                                <br />
                                 {/* <p className="py-5 underline underline-offset-2"></p> */}
                             </div>
                             <span

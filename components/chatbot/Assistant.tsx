@@ -41,6 +41,7 @@ export function AssistantChat() {
   const [nudge, setNudge] = useState("");
   const [lastResponseTime, setLastResponseTime] = useState<number | null>(null);
   const [showNudge, setShowNudge] = useState(false);
+  const [nudgeTimeout, setNudgeTimeout] = useState<number>(40000);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -49,15 +50,6 @@ export function AssistantChat() {
   const MAX_CHAT_HEIGHT = 560; // Maximum card height
   const HEADER_HEIGHT = 65; // Header + border
   const INPUT_HEIGHT = 72; // Input bar + padding
-  console.log('pathname assistant', pathname);
-  // useLogPageLoad(pathname);
-
-  // const [pageInfo, setPageInfo] = useState({ pageName: 'unknown-page', fullPath: '' });
-
-  // usePageInfoListener((data: any) => {
-  //   setPageInfo(data);
-  // });
-  // console.log('page info', pageInfo);
 
 
   // Initialize session ID
@@ -121,24 +113,20 @@ export function AssistantChat() {
 
     const timer = setInterval(() => {
       const currentTime = Date.now();
-      if (currentTime - lastResponseTime >= 40000) { // 15 seconds
+      if (currentTime - lastResponseTime >= nudgeTimeout) { // 15 seconds
         setShowNudge(true); // Show nudge after 15 seconds
         clearInterval(timer); // Stop checking once 15 seconds is reached
       }
     }, 1000); // Check every second
 
     return () => clearInterval(timer); // Cleanup on unmount or when lastResponseTime changes
-  }, [lastResponseTime, isProductDetailsPage]);
+  }, [lastResponseTime, isProductDetailsPage, nudgeTimeout]);
 
 
   // 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
 
-    // Start measuring interaction time
-    // const startTime = performance.now();
-
-    // Expand the chat if it's the first message
     if (!isExpanded) {
       setIsExpanded(true);
     }
@@ -246,6 +234,7 @@ export function AssistantChat() {
           console.log("message and recommendations", recommendedProducts);
           // setRecommendedProducts(mentionedProducts);
           if (isPhone) {
+            setNudgeTimeout(50);
             router.push("/recommended");
           } else {
             setTimeout(() => {
@@ -258,46 +247,11 @@ export function AssistantChat() {
           }
         }
       }
-      // Log interaction time for successful response
-      // const endTime = performance.now();
-      // const interactionTime = endTime - startTime;
-      // logEvent("text_agent_interaction_time", {
-      //   event: "text_agent_response",
-      //   interaction_time_ms: interactionTime,
-      //   session_id: sessionId,
-      //   query: message,
-      //   response_length: assistantResponse.length,
-      //   has_products: !!assistantProducts?.length,
-      //   tags: ["text_agent", "performance"],
-      // });
     } catch (error) {
       console.error(error);
       setLatestResponse("Sorry, I'm having trouble connecting right now.");
       setIsTyping(true);
 
-      // Log the error response to the conversation document
-      // logEvent("append_conversation", {
-      //   event: "chat_message",
-      //   session_id: sessionId,
-      //   message: {
-      //     role: "assistant",
-      //     content: "Sorry, I'm having trouble connecting right now.",
-      //     timestamp: new Date().toISOString(),
-      //   },
-      //   tags: ["chatbot", "conversation", "error"],
-      // });
-
-      // Log interaction time for error case
-      // const endTime = performance.now();
-      // const interactionTime = endTime - startTime;
-      // logEvent("text_agent_interaction_time", {
-      //   event: "text_agent_error",
-      //   interaction_time_ms: interactionTime,
-      //   session_id: sessionId,
-      //   query: message,
-      //   error: error || "Unknown error",
-      //   tags: ["text_agent", "error"],
-      // });
     }
   };
 

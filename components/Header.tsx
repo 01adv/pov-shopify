@@ -1,7 +1,6 @@
 
 
 'use client';
-import { useProductContext } from '@/hooks/useProduct';
 import { ChevronDown, Sparkles, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -29,7 +28,7 @@ const Header = () => {
     const shopRef = useRef<HTMLButtonElement>(null);
     const aboutRef = useRef<HTMLButtonElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const { itemCount } = useProductContext();
+    // const { itemCount } = useProductContext();
 
     // const handleSwitchToText = async () => {
     // await logEvent("video_agent_session", {

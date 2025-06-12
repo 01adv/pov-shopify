@@ -1,6 +1,6 @@
 'use client'
 import { cn } from "@/lib/utils";
-import { Mic, Send } from "lucide-react";
+import { Send, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -67,7 +67,7 @@ export const InputBar: React.FC<InputBarProps> = ({
             clearInterval(intervalRef.current);
             intervalRef.current = null;
         }
-        setCurrentPlaceholder('Type anything you interested here...');
+        setCurrentPlaceholder("Say a vibe or mood, and I'll pick");
     };
 
     // Initialize placeholder and start cycling on mount
@@ -121,7 +121,7 @@ export const InputBar: React.FC<InputBarProps> = ({
     return (
         <div className={cn("flex items-center rounded-full bg-white border-[1.5px] py-[2px]", className)}>
             <Button variant="ghost" size="icon" className="ml-2 h-9 w-9 rounded-full p-0">
-                <Mic size={20} className="text-black" />
+                <Sparkles size={20} className="text-black" />
             </Button>
             <Input
                 type="text"

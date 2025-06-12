@@ -18,7 +18,7 @@ interface CartPopupProps {
 export function CartPopup({ isOpen, onClose, title = "Innovation Zipper Slit Crepe Sheath Dress", color = "Iris Black", size = "XS", imageUrl }: CartPopupProps) {
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent
+            <DialogContent title="Cart Popup"
                 className="
          p-0 gap-0 w-full sm:w-xs
         bg-secondary text-white border-none

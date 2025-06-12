@@ -92,6 +92,9 @@
 import { useProductContext } from '@/hooks/useProduct';
 import { useEffect, useState } from 'react';
 import { CartPopup } from './AddToCartPopup';
+import { logEvent } from '@/lib/logger';
+import Link from 'next/link';
+import Image from 'next/image';
 
 type AddToCartButtonProps = {
     variantId: number;
@@ -100,12 +103,10 @@ type AddToCartButtonProps = {
     color: string;
     size: string;
     imageUrl: string;
-
-
-
+    variantAvailable: boolean
 };
 
-const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl }: AddToCartButtonProps) => {
+const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl, variantAvailable }: AddToCartButtonProps) => {
     const [isCartOpen, setIsCartOpen] = useState(false)
     const { setItemCount } = useProductContext();
     const [error, setError] = useState<string | null>(null);
@@ -127,6 +128,16 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
         );
         setIsCartOpen(true);
     };
+
+    const logAddToCartEvent = () => {
+        logEvent("clicks", {
+            event: "add_to_cart_btn_click",
+            product_name: title,
+            product_Id: variantId,
+            tags: ["click", "product", "recommended"],
+            source: "chatbot.recommendation",
+        });
+    }
 
     useEffect(() => {
         const handleMessage = (event: MessageEvent) => {
@@ -165,13 +176,36 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
 
 
     return (
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center gap-2">
             <button
                 className="max-w-md mt-5 h-11 w-full text-black text-sm rounded-none border border-black bg-white hover:border-2 transition-colors duration-200 px-4 py-2"
-                onClick={handleAddToCart}
+                onClick={() => {
+                    handleAddToCart();
+                    logAddToCartEvent();
+                }}
             >
                 Add to Cart
             </button>
+            {
+
+                variantAvailable &&
+                <Link
+                    href="https://pointofviewlabel.com/cart?50006520922415"
+                    className="bg-[#5433eb] mb-5 max-w-md h-11 w-full text-white text-sm rounded-none flex items-center justify-center gap-2 disabled:opacity-50"
+                    onClick={logAddToCartEvent}
+                >
+                    <span className="flex items-center gap-0.5">
+                        Buy with
+                        <Image
+                            src="/shop-pay.svg"
+                            alt="ShopPay"
+                            width={60}
+                            height={20}
+                            className="h-5 w-auto"
+                        />
+                    </span>
+                </Link>
+            }
             {error && (
                 <div className="text-red-500 text-sm">
                     {error}

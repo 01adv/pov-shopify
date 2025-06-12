@@ -262,26 +262,8 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                                 {/* Add to Cart Button */}
 
 
-                                <AddToCartButton title={product.name} color={product.color} size={product.size} imageUrl={product.image} variantId={8839600603348} />
-                                {
+                                <AddToCartButton title={product.name} color={product.color} size={product.size} imageUrl={product.image} variantId={8839600603348} variantAvailable={selectedVariant.available} />
 
-                                    selectedVariant.available &&
-                                    <Link
-                                        href="https://pointofviewlabel.com/cart?50006520922415"
-                                        className="bg-[#5433eb] mb-5 md:mb-8 max-w-md h-11 w-full text-white text-sm rounded-none flex items-center justify-center gap-2 disabled:opacity-50"
-                                    >
-                                        <span className="flex items-center gap-0.5">
-                                            Buy with
-                                            <Image
-                                                src="/shop-pay.svg"
-                                                alt="ShopPay"
-                                                width={60}
-                                                height={20}
-                                                className="h-5 w-auto"
-                                            />
-                                        </span>
-                                    </Link>
-                                }
                                 <br />
                                 {/* <p className="py-5 underline underline-offset-2"></p> */}
                             </div>

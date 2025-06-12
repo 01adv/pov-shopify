@@ -177,27 +177,20 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                                         $ {product.salePrice.toFixed(2)}
                                     </span>
                                     {
-                                        // product.availableSizes
-                                        //     .filter((size) => {
-                                        //         const variant = productData.variants.find(
-                                        //             (v) => v.option1 === product.color && v.option2 === size.size
-                                        //         );
-                                        //         return variant !== undefined; // Only consider sizes relevant to the selected color
-                                        //     })
-                                        //     .every((size) => !size.available) ? (
-                                        //     <Badge className="text-white text-xs px-3 py-0.5 bg-secondary outline rounded-full">
-                                        //         Sold Out
-                                        //     </Badge>
-                                        // ) : 
-                                        productData.tags.includes("Bestseller") ? (
-                                            <Badge className="text-black text-xs px-3 py-0.5 bg-white outline rounded-full">
-                                                Bestseller
+                                        !selectedVariant.available ? (
+                                            <Badge className="text-white text-xs px-3 py-0.5 bg-secondary outline rounded-full">
+                                                Sold Out
                                             </Badge>
-                                        ) : product.originalPrice ? (
-                                            <Badge className="text-black text-xs px-3 py-0.5 bg-white outline rounded-full">
-                                                Sale
-                                            </Badge>
-                                        ) : null
+                                        ) :
+                                            productData.tags.includes("Bestseller") ? (
+                                                <Badge className="text-black text-xs px-3 py-0.5 bg-white outline rounded-full">
+                                                    Bestseller
+                                                </Badge>
+                                            ) : product.originalPrice ? (
+                                                <Badge className="text-black text-xs px-3 py-0.5 bg-white outline rounded-full">
+                                                    Sale
+                                                </Badge>
+                                            ) : null
                                     }
                                 </div>
                                 {/* Color */}

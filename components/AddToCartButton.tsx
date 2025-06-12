@@ -177,15 +177,24 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
 
     return (
         <div className="flex flex-col items-center gap-2">
-            <button
-                className="max-w-md mt-5 h-11 w-full text-black text-sm rounded-none border border-black bg-white hover:border-2 transition-colors duration-200 px-4 py-2"
-                onClick={() => {
-                    handleAddToCart();
-                    logAddToCartEvent();
-                }}
-            >
-                Add to Cart
-            </button>
+            {variantAvailable ? (
+                <button
+                    className="max-w-md mt-5 h-11 w-full text-black text-sm rounded-none border border-black bg-white hover:border-2 transition-colors duration-200 px-4 py-2"
+                    onClick={() => {
+                        handleAddToCart();
+                        logAddToCartEvent();
+                    }}
+                >
+                    Add to Cart
+                </button>
+            ) : (
+                <button
+                    className="max-w-md mt-5 h-11 w-full text-black text-sm rounded-none px-4 py-2 border border-black bg-gray-200/30"
+                    disabled
+                >
+                    Sold Out
+                </button>
+            )}
             {
 
                 variantAvailable &&

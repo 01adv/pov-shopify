@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from './ui/button';
+import { logEvent } from '@/lib/logger';
 
 const shopLinks = [
     { name: 'New Collections', href: '/collections/resilience-tailored' },
@@ -30,16 +31,13 @@ const Header = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);
     // const { itemCount } = useProductContext();
 
-    // const handleSwitchToText = async () => {
-    // await logEvent("video_agent_session", {
-    //     video_agent_interaction: false,
-    //     duration_seconds: 0,
-    //     end_reason: "switch_to_text",
-    //     text_agent_switch: true,
-    //     tags: ["video_agent", "session_ended", "switch_to_text"]
-    // });
-    // setSwitchToTextAgent(true);
-    // }
+    const handleAIGenClicked = () => {
+        logEvent("clicks", {
+            event: "ai_gen_btn_click",
+            tags: ["click", "product", "recommended"],
+            source: "chatbot.recommendation",
+        });
+    }
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -178,7 +176,7 @@ const Header = () => {
                             </span>
                         </div> */}
                         {/* <div className="text-white" onClick={handleSwitchToText}><Text /></div> */}
-                        <div className="group relative">
+                        <div className="group relative" onClick={handleAIGenClicked}>
                             <Link href="/ai-curation">
                                 <Button
                                     variant={"outline"}

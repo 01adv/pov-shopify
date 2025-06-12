@@ -2,10 +2,11 @@
 
 'use client';
 import { useProductContext } from '@/hooks/useProduct';
-import { ChevronDown, X } from 'lucide-react';
+import { ChevronDown, Sparkles, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { Button } from './ui/button';
 
 const shopLinks = [
     { name: 'New Collections', href: '/collections/resilience-tailored' },
@@ -163,7 +164,7 @@ const Header = () => {
                     </Link>
 
                     <div className="flex items-center gap-4">
-                        <div className="relative">
+                        {/* <div className="relative">
                             <a
                                 href="https://pointofviewlabel.com/cart"
                                 aria-label="Cart"
@@ -176,17 +177,21 @@ const Header = () => {
                             <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-white bg-primary rounded-full">
                                 {itemCount > 0 && itemCount || 0}
                             </span>
-                        </div>
+                        </div> */}
                         {/* <div className="text-white" onClick={handleSwitchToText}><Text /></div> */}
                         <div className="group relative">
-                            <Link
-                                href="/ai-curation"
-                            >
-                                <button
-                                    className="flex items-center gap-1 text-sm text-white"
+                            <Link href="/ai-curation">
+                                <Button
+                                    variant={"outline"}
+                                    className="flex items-center gap-1 text-sm bg-[#FEE6EA1A] text-primary border border-[rgba(251,144,162,1)] rounded-full hover:bg-primary/20 hover:text-primary/80 hover:border-[rgba(251,144,162,0.8)] transition-all duration-300"
+                                    style={{
+                                        boxShadow: "0px 0px 4px 4px rgba(251, 144, 162, 0.3)", // Updated to match Figma
+                                    }}
                                 >
-                                    <span className="uppercase hover:underline hover:underline-offset-4 flex items-center">Ai gen</span>
-                                </button>
+                                    <Sparkles className="h-6 w-6" />
+                                    <span className="hidden md:flex uppercase items-center">Your AI Curated Picks</span>
+                                    <span className="flex md:hidden uppercase items-center text-xs"> AI Picks</span>
+                                </Button>
                             </Link>
                         </div>
                     </div>

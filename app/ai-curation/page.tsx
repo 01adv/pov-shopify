@@ -28,7 +28,7 @@ export default function AIRecommendedProductsPage() {
             <main className="flex-1">
                 <div className="mx-auto max-w-6xl px-4 sm:px-12 xl:px-12">
                     <div className="space-y-5 md:mt-4 pb-6 md:pb-8 xl:pb-10 ">
-                        <h1 className="text-[30px] md:text-[40px]">AI Recommendations</h1>
+                        <h1 className="text-[30px] md:text-[40px]">Handpicked for You by Your AI Shopper</h1>
                     </div>
 
                     {isLoading ? (

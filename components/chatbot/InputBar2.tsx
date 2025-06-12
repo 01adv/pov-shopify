@@ -121,7 +121,7 @@ export const InputBar: React.FC<InputBarProps> = ({
     return (
         <div className={cn("flex items-center rounded-full bg-white border-[1.5px] py-[2px]", className)}>
             <Button variant="ghost" size="icon" className="ml-2 h-9 w-9 rounded-full p-0">
-                <Sparkles size={20} className="text-black" />
+                <Sparkles size={20} className="text-primary" />
             </Button>
             <Input
                 type="text"

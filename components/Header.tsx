@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from './ui/button';
 import { logEvent } from '@/lib/logger';
+import { useProductContext } from '@/hooks/useProduct';
 
 const shopLinks = [
     { name: 'New Collections', href: '/collections/resilience-tailored' },
@@ -20,6 +21,7 @@ const shopLinks = [
 const aboutUsLinks = [
     { name: 'Our Story', href: '/about-us' },
     { name: 'Contact Us', href: '/contact-us' },
+    { name: 'Test', href: '/test' },
 ];
 
 const Header = () => {
@@ -29,7 +31,7 @@ const Header = () => {
     const shopRef = useRef<HTMLButtonElement>(null);
     const aboutRef = useRef<HTMLButtonElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    // const { itemCount } = useProductContext();
+    const { itemCount } = useProductContext();
 
     const handleAIGenClicked = () => {
         logEvent("clicks", {
@@ -161,7 +163,7 @@ const Header = () => {
                     </Link>
 
                     <div className="flex items-center gap-4">
-                        {/* <div className="relative">
+                        <div className="relative">
                             <a
                                 href="https://pointofviewlabel.com/cart"
                                 aria-label="Cart"
@@ -174,7 +176,7 @@ const Header = () => {
                             <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-white bg-primary rounded-full">
                                 {itemCount > 0 && itemCount || 0}
                             </span>
-                        </div> */}
+                        </div>
                         {/* <div className="text-white" onClick={handleSwitchToText}><Text /></div> */}
                         <div className="group relative" onClick={handleAIGenClicked}>
                             <Link href="/ai-curation">

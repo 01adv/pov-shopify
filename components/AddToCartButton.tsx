@@ -111,7 +111,7 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
     const { setItemCount } = useProductContext();
     const [error, setError] = useState<string | null>(null);
 
-    const parentOrigin = 'https://testing-pov.myshopify.com/'; // Replace with your Shopify store's domain (e.g., 'https://your-store.myshopify.com')
+    const parentOrigin = `${process.env.NEXT_PUBLIC_SHOPIFY_URL}/`; // Replace with your Shopify store's domain (e.g., 'https://your-store.myshopify.com')
 
     const handleAddToCart = () => {
         console.log('Add to Cart clicked', { variantId, quantity });

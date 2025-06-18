@@ -55,8 +55,8 @@ const Page = () => {
     useEffect(() => {
         const handleMessage = (event: MessageEvent) => {
             console.log('Message received from origin:', event.origin);
-            if (event.origin !== 'https://testing-pov.myshopify.com') {
-                console.log('Invalid origin, expected https://testing-pov.myshopify.com, got:', event.origin);
+            if (event.origin !== `${process.env.NEXT_PUBLIC_SHOPIFY_URL}`) {
+                console.log(`Invalid origin, expected ${process.env.NEXT_PUBLIC_SHOPIFY_URL}`, event.origin);
                 return;
             }
 

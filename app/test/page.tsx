@@ -18,20 +18,19 @@
 
 
 "use client";
-import ShopifyInfoListener from "@/components/shopify/ShopifyListener";
-import { type ShopifyInfo } from "@/components/shopify/ShopifyListener"; // Assuming ShopifyInfo is exported or defined in a way that can be imported
+import ShopifyInfoListener, { CustomerInfo } from "@/components/shopify/ShopifyListener";// Assuming ShopifyInfo is exported or defined in a way that can be imported
 
 export default function TestPage() { // This is the actual Page Component
-    const handleShopifyData = (data: ShopifyInfo) => {
-        console.log('Received from Shopify on Test Page:', data);
-        // Save to state, session, context, etc.
+    // Handle customer info and update loading state
+    const handleCustomerInfo = (data: CustomerInfo) => {
+        console.log('Customer Info received in Page:', data);
     };
 
     return (
         <main style={{ padding: '20px' }}>
             <h1>Test Page for Shopify Info Listener</h1>
             <p>This page uses the ShopifyInfoListener component to listen for messages from Shopify.</p>
-            <ShopifyInfoListener onData={handleShopifyData} /> {/* Use the component here */}
+            <ShopifyInfoListener onData={handleCustomerInfo} /> {/* Use the component here */}
             {/* You can add more UI elements to this test page */}
         </main>
     );

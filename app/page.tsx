@@ -17,7 +17,6 @@ const Page = () => {
     const [fullPath, setFullPath] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [currentHeading, setCurrentHeading] = useState(Headings[0]);
-    const [customerInfo, setCustomerInfo] = useState(null);
     const router = useRouter();
 
 
@@ -74,18 +73,25 @@ const Page = () => {
 
             if (type === 'CUSTOMER_INFO' && payload) {
                 console.log('Received CUSTOMER_INFO:', payload);
-                setCustomerInfo(payload);
+                // setCustomerInfo(payload);
+                // Log customer info to Firestore
+                logEvent('agent_loaded', {
+                    event: 'customer_info',
+                    customer_email: payload.customer.email || 'anonymous',
+                    customer_id: payload.customer.id || 'anonymous',
+                    source: 'shopify_iframe',
+                });
             }
 
             // Only stop loading when both messages are received
-            if (pageName !== 'unknown-page' && customerInfo) {
+            if (pageName !== 'unknown-page' || fullPath !== '') {
                 setIsLoading(false);
             }
         };
 
         window.addEventListener('message', handleMessage);
         return () => window.removeEventListener('message', handleMessage);
-    }, [pageName, customerInfo]);
+    }, [pageName, fullPath]);
 
     // Redirect logic after message is received
     useEffect(() => {
@@ -123,23 +129,20 @@ const Page = () => {
     if (isLoading) {
         return (
             // <div className='absolute top-[50%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-sm:w-full px-4'>
-            <div className='flex max-w-2xl mx-auto  flex-col min-h-[calc(100vh-200px)]  items-center justify-center md:justify-end max-sm:w-full px-4 '>
-                <div className="py-16 h-2 w-full grid grid-cols-4 gap-3">
+            <div className='flex max-w-2xl mx-auto  flex-col min-h-[calc(100vh-200px)]  items-center justify-center  max-sm:w-full px-4 '>
+                {/* <div className="py-16 h-2 w-full grid grid-cols-4 gap-3">
                     <div className='w-full h-1.5 rounded-full bg-primary'></div>
                     <div className='w-full h-1.5 rounded-full bg-gray-100'></div>
                     <div className='w-full h-1.5 rounded-full bg-gray-100'></div>
                     <div className='w-full h-1.5 rounded-full bg-gray-100'></div>
-                </div>
+                </div> */}
                 <Sparkles size={60} className='text-primary inline-block mr-1 pb-3' />
                 <h1 className='text-xl md:text-3xl text-center max-sm:pt-10'>{currentHeading}</h1>
                 <div className='flex justify-center pt-14'>
                     <Image src="/arrow.svg" alt="Arrow" width={80} height={80} className='animate-bounce' />
                 </div>
                 <p className='hidden md:block text-center text-lg pt-10 pb-3'>Just type here, and I&apos;ll do the digging.</p>
-                <div style={{ padding: '1em', background: '#f9f9f9' }}>
-                    <h4>Customer Info</h4>
-                    <pre style={{ fontSize: '0.9em' }}>{JSON.stringify(customerInfo, null, 2)}</pre>
-                </div>
+
             </div>
         );
     }
@@ -147,23 +150,20 @@ const Page = () => {
     // Fallback content
     return (
         // <div className='absolute top-[50%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-sm:w-full px-4'>
-        <div className='flex max-w-2xl mx-auto  flex-col min-h-[calc(100vh-200px)]  items-center justify-center md:justify-end max-sm:w-full px-4 '>
-            <div className="py-16 h-2 w-full grid grid-cols-4 gap-3">
+        <div className='flex max-w-2xl mx-auto  flex-col min-h-[calc(100vh-200px)]  items-center justify-center max-sm:w-full px-4 '>
+            {/* <div className="py-16 h-2 w-full grid grid-cols-4 gap-3">
                 <div className='w-full h-1.5 rounded-full bg-primary'></div>
                 <div className='w-full h-1.5 rounded-full bg-gray-100'></div>
                 <div className='w-full h-1.5 rounded-full bg-gray-100'></div>
                 <div className='w-full h-1.5 rounded-full bg-gray-100'></div>
-            </div>
+            </div> */}
             <Sparkles size={60} className='text-primary inline-block mr-1 pb-3' />
             <h1 className='text-xl md:text-3xl text-center max-sm:pt-10'>{currentHeading}</h1>
             <div className='flex justify-center pt-14'>
                 <Image src="/arrow.svg" alt="Arrow" width={80} height={80} className='animate-bounce' />
             </div>
             <p className='hidden md:block text-center text-lg pt-10 pb-3'>Just type here, and I&apos;ll do the digging.</p>
-            <div style={{ padding: '1em', background: '#f9f9f9' }}>
-                <h4>Customer Info</h4>
-                <pre style={{ fontSize: '0.9em' }}>{JSON.stringify(customerInfo, null, 2)}</pre>
-            </div>
+
         </div>
     );
 

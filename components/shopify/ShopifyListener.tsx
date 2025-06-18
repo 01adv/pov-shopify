@@ -2,9 +2,15 @@
 
 import { useEffect, useState } from 'react';
 
-interface ShopifyInfo {
+export type ShopifyInfo = {
     cartToken?: string;
     trackedSourceId?: string;
+    customer?: {
+        email?: string;
+        id?: string;
+        first_name?: string;
+        last_name?: string;
+    };
 }
 
 interface Props {
@@ -12,38 +18,29 @@ interface Props {
 }
 
 const ShopifyInfoListener = ({ onData }: Props) => {
-    const [shopifyInfo, setShopifyInfo] = useState<ShopifyInfo>({});
+    const [info, setInfo] = useState<ShopifyInfo | null>(null);
 
     useEffect(() => {
         const handleMessage = (event: MessageEvent) => {
-            const { type, payload } = event.data || {};
-            if (type === 'SHOPIFY_INFO' && typeof payload === 'object') {
-                const newInfo: ShopifyInfo = {
-                    ...shopifyInfo,
-                    ...payload,
-                };
+            // Validate origin if needed
+            // if (event.origin !== 'https://your-shopify-domain.com') return;
 
-                setShopifyInfo(newInfo);
-                if (onData) onData(newInfo);
+            const { type, payload } = event.data || {};
+            if (type === 'SHOPIFY_INFO' && payload) {
+                setInfo(payload);
+                onData?.(payload);
             }
         };
 
         window.addEventListener('message', handleMessage);
         return () => window.removeEventListener('message', handleMessage);
-    }, [shopifyInfo, onData]);
+    }, [onData]);
 
     return (
-        <pre
-            style={{
-                display: 'block',
-                background: '#f6f8fa',
-                padding: '1em',
-                borderRadius: '4px',
-                fontSize: '0.95em',
-            }}
-        >
-            {JSON.stringify(shopifyInfo, null, 2)}
-        </pre>
+        <div style={{ padding: '1em', background: '#f9f9f9' }}>
+            <h4>Shopify Session Info</h4>
+            <pre style={{ fontSize: '0.9em' }}>{JSON.stringify(info, null, 2)}</pre>
+        </div>
     );
 };
 

@@ -82,11 +82,8 @@ const Page = () => {
                     source: 'shopify_iframe',
                 });
             }
+            setIsLoading(false);
 
-            // Only stop loading when both messages are received
-            if (pageName !== 'unknown-page' || fullPath !== '') {
-                setIsLoading(false);
-            }
         };
 
         window.addEventListener('message', handleMessage);

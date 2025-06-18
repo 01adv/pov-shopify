@@ -17,6 +17,7 @@ const Page = () => {
     const [fullPath, setFullPath] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [currentHeading, setCurrentHeading] = useState(Headings[0]);
+    const [customerInfo, setCustomerInfo] = useState(null);
     const router = useRouter();
 
 
@@ -33,23 +34,58 @@ const Page = () => {
     }, [isLoading]);
 
     // Embedded hook logic to listen for messages
+    // useEffect(() => {
+    //     const handleMessage = (event: MessageEvent) => {
+    //         if (event.origin !== "https://testing-pov.myshopify.com") return;
+
+    //         if (event.data?.type === "PAGE_INFO") {
+    //             const pageName = event.data.payload?.pageName ?? "unknown-page";
+    //             const fullPath = event.data.payload?.fullPath ?? "unknown-path";
+    //             console.log("Received from Shopify:", pageName, event.data.payload?.fullPath);
+    //             setPageName(pageName);
+    //             setFullPath(fullPath);
+    //             setIsLoading(false);
+    //         }
+    //     };
+
+    //     window.addEventListener("message", handleMessage);
+    //     return () => window.removeEventListener("message", handleMessage);
+    // }, []);
+
+    // Listen for both PAGE_INFO and CUSTOMER_INFO
     useEffect(() => {
         const handleMessage = (event: MessageEvent) => {
-            if (event.origin !== "https://testing-pov.myshopify.com") return;
+            console.log('Message received from origin:', event.origin);
+            if (event.origin !== 'https://testing-pov.myshopify.com') {
+                console.log('Invalid origin, expected https://testing-pov.myshopify.com, got:', event.origin);
+                return;
+            }
 
-            if (event.data?.type === "PAGE_INFO") {
-                const pageName = event.data.payload?.pageName ?? "unknown-page";
-                const fullPath = event.data.payload?.fullPath ?? "unknown-path";
-                console.log("Received from Shopify:", pageName, event.data.payload?.fullPath);
+            const { type, payload } = event.data || {};
+            console.log('Message data:', { type, payload });
+
+            if (type === 'PAGE_INFO' && payload) {
+                const pageName = payload.pageName ?? 'unknown-page';
+                const fullPath = payload.fullPath ?? 'unknown-path';
+                console.log('Received PAGE_INFO:', pageName, fullPath);
                 setPageName(pageName);
                 setFullPath(fullPath);
+            }
+
+            if (type === 'CUSTOMER_INFO' && payload) {
+                console.log('Received CUSTOMER_INFO:', payload);
+                setCustomerInfo(payload);
+            }
+
+            // Only stop loading when both messages are received
+            if (pageName !== 'unknown-page' && customerInfo) {
                 setIsLoading(false);
             }
         };
 
-        window.addEventListener("message", handleMessage);
-        return () => window.removeEventListener("message", handleMessage);
-    }, []);
+        window.addEventListener('message', handleMessage);
+        return () => window.removeEventListener('message', handleMessage);
+    }, [pageName, customerInfo]);
 
     // Redirect logic after message is received
     useEffect(() => {
@@ -100,6 +136,10 @@ const Page = () => {
                     <Image src="/arrow.svg" alt="Arrow" width={80} height={80} className='animate-bounce' />
                 </div>
                 <p className='hidden md:block text-center text-lg pt-10 pb-3'>Just type here, and I&apos;ll do the digging.</p>
+                <div style={{ padding: '1em', background: '#f9f9f9' }}>
+                    <h4>Customer Info</h4>
+                    <pre style={{ fontSize: '0.9em' }}>{JSON.stringify(customerInfo, null, 2)}</pre>
+                </div>
             </div>
         );
     }
@@ -120,6 +160,10 @@ const Page = () => {
                 <Image src="/arrow.svg" alt="Arrow" width={80} height={80} className='animate-bounce' />
             </div>
             <p className='hidden md:block text-center text-lg pt-10 pb-3'>Just type here, and I&apos;ll do the digging.</p>
+            <div style={{ padding: '1em', background: '#f9f9f9' }}>
+                <h4>Customer Info</h4>
+                <pre style={{ fontSize: '0.9em' }}>{JSON.stringify(customerInfo, null, 2)}</pre>
+            </div>
         </div>
     );
 

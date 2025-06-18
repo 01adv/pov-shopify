@@ -18,14 +18,16 @@ const ShopifyInfoListener = ({ onData }: Props) => {
 
     useEffect(() => {
         const handleMessage = (event: MessageEvent) => {
+            console.log('Message received from origin:', event.origin); // Debug log
             if (event.origin !== 'https://testing-pov.myshopify.com') {
-                console.log('Invalid origin:', event.origin); // Debug log
+                console.log('Invalid origin, expected https://testing-pov.myshopify.com, got:', event.origin);
                 return;
             }
 
             const { type, payload } = event.data || {};
+            console.log('Message data:', { type, payload }); // Debug log
             if (type === 'CUSTOMER_INFO' && payload) {
-                console.log('Received CUSTOMER_INFO:', payload); // Debug log
+                console.log('Received CUSTOMER_INFO:', payload);
                 setInfo(payload);
                 onData?.(payload);
             }

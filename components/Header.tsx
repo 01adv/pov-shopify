@@ -21,7 +21,7 @@ const shopLinks = [
 const aboutUsLinks = [
     { name: 'Our Story', href: '/about-us' },
     { name: 'Contact Us', href: '/contact-us' },
-    { name: 'Test', href: '/test2' },
+    // { name: 'Test', href: '/test2' },
 ];
 
 const Header = () => {

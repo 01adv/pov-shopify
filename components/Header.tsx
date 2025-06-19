@@ -100,7 +100,7 @@ const Header = () => {
             </div>
 
             <header className="bg-secondary relative">
-                <div className="mx-auto flex max-w-6xl px-6 py-6 xl:px-7 items-center justify-between relative">
+                <div className="mx-auto flex max-w-6xl px-3 md:px-6 py-6 xl:px-7 items-center justify-between relative">
                     <nav className="hidden lg:flex items-center gap-8">
                         <div className="group relative">
                             <Link
@@ -157,12 +157,46 @@ const Header = () => {
                     </nav>
                     <Link
                         href="/all-workwear"
-                        className="text-2xl font-bold absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto"
+                        className="text-2xl font-bold flex sm:absolute left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 pointer-events-auto"
                     >
                         <Image src="/logo.png" alt="Logo" width={90} height={60} />
                     </Link>
 
-                    <div className="flex items-center gap-4">
+                    <div className="group relative block sm:hidden" onClick={handleAIGenClicked}>
+                        <Link href="/ai-curation">
+                            <Button
+                                size={"sm"}
+                                variant={"outline"}
+                                className="flex items-center gap-1 text-sm bg-[#FEE6EA1A] text-primary border border-[rgba(251,144,162,1)] rounded-full hover:bg-primary/20 hover:text-primary/80 hover:border-[rgba(251,144,162,0.8)] transition-all duration-300"
+                                style={{
+                                    boxShadow: "0px 0px 2px 2px rgba(251, 144, 162, 0.3)", // Updated to match Figma
+                                }}
+                            >
+                                <Sparkles className="h-5 w-5" />
+                                <span className="hidden md:flex uppercase items-center">Your AI Curated Picks</span>
+                                <span className="flex md:hidden uppercase items-center text-xs"> AI Picks</span>
+                            </Button>
+                        </Link>
+                    </div>
+                    <div className="flex items-center gap-2 sm:gap-6">
+
+                        {/* <div className="text-white" onClick={handleSwitchToText}><Text /></div> */}
+                        <div className="group relative sm:block hidden" onClick={handleAIGenClicked}>
+                            <Link href="/ai-curation">
+                                <Button
+                                    size={"sm"}
+                                    variant={"outline"}
+                                    className="flex items-center gap-1 text-sm bg-[#FEE6EA1A] text-primary border border-[rgba(251,144,162,1)] rounded-full hover:bg-primary/20 hover:text-primary/80 hover:border-[rgba(251,144,162,0.8)] transition-all duration-300"
+                                    style={{
+                                        boxShadow: "0px 0px 2px 2px rgba(251, 144, 162, 0.3)", // Updated to match Figma
+                                    }}
+                                >
+                                    <Sparkles className="h-5 w-5" />
+                                    <span className="hidden md:flex uppercase items-center">Your AI Curated Picks</span>
+                                    <span className="flex md:hidden uppercase items-center text-xs"> AI Picks</span>
+                                </Button>
+                            </Link>
+                        </div>
                         <div className="relative">
                             <a
                                 href="https://pointofviewlabel.com/cart"
@@ -172,28 +206,14 @@ const Header = () => {
                                 rel="noopener noreferrer"
                             >
                                 <Image src="/cart.svg" alt="Cart" width={24} height={24} />
-                            </a>
-                            <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-white bg-primary rounded-full">
-                                {itemCount > 0 && itemCount || 0}
-                            </span>
-                        </div>
-                        {/* <div className="text-white" onClick={handleSwitchToText}><Text /></div> */}
-                        <div className="group relative" onClick={handleAIGenClicked}>
-                            <Link href="/ai-curation">
-                                <Button
-                                    variant={"outline"}
-                                    className="flex items-center gap-1 text-sm bg-[#FEE6EA1A] text-primary border border-[rgba(251,144,162,1)] rounded-full hover:bg-primary/20 hover:text-primary/80 hover:border-[rgba(251,144,162,0.8)] transition-all duration-300"
-                                    style={{
-                                        boxShadow: "0px 0px 4px 4px rgba(251, 144, 162, 0.3)", // Updated to match Figma
-                                    }}
-                                >
-                                    <Sparkles className="h-6 w-6" />
-                                    <span className="hidden md:flex uppercase items-center">Your AI Curated Picks</span>
-                                    <span className="flex md:hidden uppercase items-center text-xs"> AI Picks</span>
-                                </Button>
-                            </Link>
+                                {itemCount > 0 && (
+                                    <span className="absolute bottom-0 -right-1 flex items-center justify-center w-3.5 h-3.5 text-[10px] text-gray-600 bg-white rounded-full">
+                                        {itemCount}
+                                    </span>
+                                )}    </a>
                         </div>
                     </div>
+
 
                 </div>
                 {(isShopOpen || isAboutOpen) && (

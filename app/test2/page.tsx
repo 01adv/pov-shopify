@@ -19,7 +19,7 @@ const Test = () => {
     return (
         <div>Test
             <div className="h-screen w-full i text-center justify-center">
-                <button className="p-4 bg-black text-white" onClick={() => handleAddToCart({ variantId: 8839600570580, quantity: 1 })}>
+                <button className="p-4 bg-black text-white" onClick={() => handleAddToCart({ variantId: 46327431659732, quantity: 1 })}>
                     Add to Cart
                 </button>
             </div>

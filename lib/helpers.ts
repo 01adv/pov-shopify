@@ -10,6 +10,19 @@ export const getOrCreateSessionId = () => {
   return newSessionId;
 };
 
+// store a boolean in sessionStorage to indicate if the user has seen the welcome message
+export const setWelcomeMessageSeen = (seen: boolean) => {
+  if (typeof window === "undefined") return; // SSR-safe fallback
+
+  sessionStorage.setItem("wlcm", JSON.stringify(seen));
+};
+export const getWelcomeMessageSeen = (): boolean => {
+  if (typeof window === "undefined") return false; // SSR-safe fallback
+
+  const seen = sessionStorage.getItem("wlcm");
+  return seen ? JSON.parse(seen) : false;
+};
+
 export function extractProductNamesFromTranscript(
   transcript: string
 ): string[] {

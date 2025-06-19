@@ -9,33 +9,18 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { RingLoader } from 'react-spinners';
 
-const Headings = [
-    "There’s a lot here—I can curate a look that matches your mood?",
-    "Scrolling strains the thumb (ouch!) — instead say ‘want a posh look under $150”",
-    "You could browse. Or you could say: ‘Black, versatile, not boring dress’",
-]
+
 
 const ListenerLoading = () => {
     const [pageName, setPageName] = useState('unknown-page');
     const [fullPath, setFullPath] = useState('');
     const [isLoading, setIsLoading] = useState(true);
-    const [currentHeading, setCurrentHeading] = useState(Headings[0]);
     const [isIframeReady, setIsIframeReady] = useState(false);
     const router = useRouter();
     const isPhone = useIsPhone();
 
 
-    // Cycle heading every 1 second
-    useEffect(() => {
-        if (!isLoading) return;
 
-        const interval = setInterval(() => {
-            const randomIndex = Math.floor(Math.random() * Headings.length);
-            setCurrentHeading(Headings[randomIndex]);
-        }, 2000);
-
-        return () => clearInterval(interval);
-    }, [isLoading]);
 
     useEffect(() => {
         const bootstrapListener = (event: MessageEvent) => {
@@ -149,7 +134,7 @@ const ListenerLoading = () => {
         <div className='flex max-w-2xl mx-auto  flex-col min-h-[calc(100vh-200px)]  items-center justify-center max-sm:w-full px-4 '>
 
             <Sparkles size={60} className='text-primary inline-block mr-1 pb-3' />
-            <h1 className='text-xl md:text-3xl text-center max-sm:pt-10'>{currentHeading}</h1>
+            <h1 className='text-xl md:text-3xl text-center max-sm:pt-10'>Your AI Personal Shopper is Loading...</h1>
             <div className='flex justify-center pt-14'>
                 <RingLoader color="#fb90a2" size={isPhone ? 100 : 150} />
 

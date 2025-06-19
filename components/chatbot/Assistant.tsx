@@ -6,7 +6,7 @@ import { getNudges } from "@/hooks/getNudges";
 import useIsPhone from "@/hooks/usePhone";
 import { useProductContext } from "@/hooks/useProduct";
 import { extractProducts, Product } from "@/lib/extractedProductsForPopup";
-import { getOrCreateSessionId } from "@/lib/helpers";
+import { getOrCreateSessionId, getWelcomeMessageSeen, setWelcomeMessageSeen } from "@/lib/helpers";
 import { logEvent } from "@/lib/logger";
 import { matchProducts } from "@/lib/productMatcher";
 import { X } from "lucide-react";
@@ -18,7 +18,7 @@ import { ProductCardForPopup } from "../ProductCardForPopup";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 import ChatLoader from "./ChatLoader";
 import { InputBar } from "./InputBar2";
-
+import { Headings } from "@/lib/data";
 
 
 export function AssistantChat() {
@@ -45,18 +45,33 @@ export function AssistantChat() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
-
+  //related to welcome message
+  const welcomeSeen = getWelcomeMessageSeen();
+  const [currentHeading, setCurrentHeading] = useState(Headings[0]);
+  // const [welcomeSeen, setWelcomeSeen] = useState(false);
   const MIN_CHAT_HEIGHT = 140; // Minimum height including input bar
   const MAX_CHAT_HEIGHT = 560; // Maximum card height
   const HEADER_HEIGHT = 65; // Header + border
   const INPUT_HEIGHT = 72; // Input bar + padding
 
 
-  // Initialize session ID
+  // Initialize session ID and welcome message on mount
   useEffect(() => {
     const currentSessionId = getOrCreateSessionId();
     setSessionId(currentSessionId || "");
   }, []);
+
+  // Cycle heading every 1 second
+  useEffect(() => {
+    if (welcomeSeen) return;
+
+    const interval = setInterval(() => {
+      const randomIndex = Math.floor(Math.random() * Headings.length);
+      setCurrentHeading(Headings[randomIndex]);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [welcomeSeen]);
 
   // Clear nudge when not on product details page or productName changes
   useEffect(() => {
@@ -79,6 +94,9 @@ export function AssistantChat() {
       try {
         const nudge = await getNudges({ productName, sessionId });
         console.log('nudge', nudge);
+        if (!welcomeSeen) {
+          setWelcomeMessageSeen(true);
+        }
         setNudge(nudge || "");
         if (nudge && setPersonalizedNudge) {
           setPersonalizedNudge(nudge);
@@ -129,6 +147,11 @@ export function AssistantChat() {
 
     if (!isExpanded) {
       setIsExpanded(true);
+    }
+
+    // set welcomeSeen to true in session storage
+    if (!welcomeSeen) {
+      setWelcomeMessageSeen(true);
     }
 
     // setMessages((prev) => [...prev, userMessage])
@@ -320,8 +343,10 @@ export function AssistantChat() {
             />
           )}
 
+          {/* would show loading nudges when nudge and response is not there and initial load */}
+
           {/* Chat Interface */}
-          {isExpanded || (isProductDetailsPage && nudge) ? (
+          {!welcomeSeen || isExpanded || (isProductDetailsPage && nudge) ? (
             <Card
               className="shadow-lg flex flex-col transition-all duration-300 ease-in-out pt-1 pb-3 px-3 no-scrollbar gap-3"
               // className={`shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4 ${isDialogOpen ? "hidden" : ""}`}
@@ -343,44 +368,31 @@ export function AssistantChat() {
                   </span>
                   <div className="flex justify-start">
                     <div className="w-full rounded-xl p-2 bg-[#F9F9F9] border border-primary">
-                      {/* {isFetching ? (
-                      <>
-                        <ChatLoader />
-                      </>
-                    ) : (
-                      <p className="text-sm lg:text-base">
-                    
-                        <span
-                          className=""
-                          dangerouslySetInnerHTML={{
-                            __html: latestResponse,
-                          }}
-                        />
-                      </p>
-                    )}
-                    {nudge && latestResponse.length < 1 && (
-                      isFetching ?
-                        <ChatLoader /> :
-                        <p className="text-sm lg:text-base">{nudge}</p>
-                    )} */}
-                      {isFetching ? (
-                        <ChatLoader showText={true} />
-                      ) : latestResponse.length > 0 && (!isProductDetailsPage || !showNudge || !nudge) ? (
-                        <p className="text-sm lg:text-base">
-                          <span
-                            dangerouslySetInnerHTML={{
-                              __html: latestResponse,
-                            }}
-                          />
-                        </p>
-                      ) : isProductDetailsPage && showNudge && nudge ? (
-                        <p className="text-sm lg:text-base">{nudge}</p>
-                      ) : null}
+                      {
+                        !welcomeSeen ?
+                          <p className="text-sm lg:text-base">
+                            {currentHeading}
+                          </p> :
+                          <>
+                            {isFetching ? (
+                              <ChatLoader showText={true} />
+                            ) : latestResponse.length > 0 && (!isProductDetailsPage || !showNudge || !nudge) ? (
+                              <p className="text-sm lg:text-base">
+                                <span
+                                  dangerouslySetInnerHTML={{
+                                    __html: latestResponse,
+                                  }}
+                                />
+                              </p>
+                            ) : isProductDetailsPage && showNudge && nudge ? (
+                              <p className="text-sm lg:text-base">{nudge}</p>
+                            ) : null}
+                          </>
+                      }
+
                     </div>
 
                   </div>
-                  {/* ) : null
-                                })()} */}
                   <div ref={messagesEndRef} />
                 </div>
               </div>
@@ -406,6 +418,8 @@ export function AssistantChat() {
               isProductDetailsPage={isProductDetailsPage}
             />
           )}
+
+
         </div>
       </div>
       {/* )} */}

@@ -2,11 +2,13 @@
 import { useEffect, useRef } from 'react';
 
 const useCartPolling = (interval = 3000) => {
+  const parentOrigin = `${process.env.NEXT_PUBLIC_SHOPIFY_URL}`;
+
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     const handleMessage = (event) => {
-      if (event.origin !== 'https://testing-pov.myshopify.com') return;
+      if (event.origin !== parentOrigin) return;
       const { type, payload } = event.data || {};
 
       if (type === 'CART_INFO') {
@@ -33,7 +35,7 @@ const useCartPolling = (interval = 3000) => {
       }
       window.removeEventListener('message', handleMessage);
     };
-  }, [interval]);
+  }, [interval, parentOrigin]);
 };
 
 export default useCartPolling;

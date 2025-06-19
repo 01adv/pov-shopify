@@ -255,7 +255,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                                 {/* Add to Cart Button */}
 
 
-                                <AddToCartButton title={product.name} color={product.color} size={product.size} imageUrl={product.image} variantId={8839600570580} variantAvailable={selectedVariant.available} />
+                                <AddToCartButton title={product.name} color={product.color} size={product.size} imageUrl={product.image} variantId={Number(variantId)} variantAvailable={selectedVariant.available} />
 
                                 <br />
                                 {/* <p className="py-5 underline underline-offset-2"></p> */}

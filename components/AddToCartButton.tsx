@@ -95,6 +95,7 @@ import { CartPopup } from './AddToCartPopup';
 import { logEvent } from '@/lib/logger';
 import Link from 'next/link';
 import Image from 'next/image';
+import useCartPolling from '@/app/test2/useCartPolling';
 
 type AddToCartButtonProps = {
     variantId: number;
@@ -110,8 +111,9 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
     const [isCartOpen, setIsCartOpen] = useState(false)
     const { setItemCount } = useProductContext();
     const [error, setError] = useState<string | null>(null);
-
-    const parentOrigin = `${process.env.NEXT_PUBLIC_SHOPIFY_URL}/`; // Replace with your Shopify store's domain (e.g., 'https://your-store.myshopify.com')
+    useCartPolling(6000); // Poll every 6 seconds
+    console.log('passed variatId', variantId)
+    const parentOrigin = `${process.env.NEXT_PUBLIC_SHOPIFY_URL}`; // Replace with your Shopify store's domain (e.g., 'https://your-store.myshopify.com')
 
     const handleAddToCart = () => {
         console.log('Add to Cart clicked', { variantId, quantity });
@@ -145,6 +147,7 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
             if (event.origin !== parentOrigin) return;
 
             const { type, payload } = event.data;
+            console.log('Message received:', { type, payload }); // Debug log
 
             if (type === 'CART_INFO') {
                 const { itemCount } = payload;
@@ -160,7 +163,7 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
         window.addEventListener('message', handleMessage);
 
         // Request initial cart count on load
-        window.parent.postMessage({ type: 'GET_CART' }, parentOrigin);
+        // window.parent.postMessage({ type: 'GET_CART' }, parentOrigin);
 
         return () => window.removeEventListener('message', handleMessage);
     }, [setItemCount, parentOrigin]);
@@ -183,6 +186,7 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
                     onClick={() => {
                         handleAddToCart();
                         logAddToCartEvent();
+                        console.log('Add to Cart button clicked', { variantId, quantity });
                     }}
                 >
                     Add to Cart

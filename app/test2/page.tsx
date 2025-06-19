@@ -35,6 +35,8 @@ import React, { useEffect } from 'react'
 import useCartPolling from './useCartPolling';
 
 const Test = () => {
+    const parentOrigin = `${process.env.NEXT_PUBLIC_SHOPIFY_URL}`; // Replace with your Shopify store's domain (e.g., 'https://your-store.myshopify.com')
+
     useCartPolling(2000); // Poll every 2 seconds
     const handleAddToCart = ({ variantId, quantity }) => {
         window.parent.postMessage(
@@ -45,7 +47,7 @@ const Test = () => {
                     quantity,
                 },
             },
-            "https://testing-pov.myshopify.com" // ✅ better than '*'
+            parentOrigin // ✅ better than '*'
         );
         console.log('button clicked in next', variantId);
     };
@@ -53,7 +55,7 @@ const Test = () => {
     useEffect(() => {
         const handleMessage = (event) => {
             // ✅ Verify origin
-            if (event.origin !== 'https://testing-pov.myshopify.com') return;
+            if (event.origin !== parentOrigin) return;
 
             const { type, payload } = event.data || {};
             console.log('Message received:', { type, payload }); // Debug log
@@ -69,14 +71,14 @@ const Test = () => {
 
         window.addEventListener('message', handleMessage);
         return () => window.removeEventListener('message', handleMessage);
-    }, []);
+    }, [parentOrigin]);
 
     return (
         <div>Test
             <div className="h-screen w-full i text-center justify-center">
                 <button
                     className="p-4 bg-black text-white"
-                    onClick={() => handleAddToCart({ variantId: 46327431659732, quantity: 1 })}
+                    onClick={() => handleAddToCart({ variantId: 50006520922415, quantity: 1 })}
                 >
                     Add to Cart
                 </button>

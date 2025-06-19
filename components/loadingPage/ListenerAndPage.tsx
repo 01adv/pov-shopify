@@ -170,6 +170,7 @@ const ListenerLoading = () => {
     const [fullPath, setFullPath] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [currentHeading, setCurrentHeading] = useState(Headings[0]);
+    const [isIframeReady, setIsIframeReady] = useState(false);
     const router = useRouter();
 
 
@@ -185,9 +186,27 @@ const ListenerLoading = () => {
         return () => clearInterval(interval);
     }, [isLoading]);
 
+    useEffect(() => {
+        const bootstrapListener = (event: MessageEvent) => {
+            if (event.origin !== process.env.NEXT_PUBLIC_SHOPIFY_URL) return;
+
+            const { type } = event.data || {};
+            if (type === 'IFRAME_OPENED') {
+                console.log('✅ IFRAME_OPENED received');
+                setIsIframeReady(true);
+            }
+        };
+
+        window.addEventListener('message', bootstrapListener);
+        return () => window.removeEventListener('message', bootstrapListener);
+    }, []);
+
+
 
     // Listen for both PAGE_INFO and CUSTOMER_INFO
     useEffect(() => {
+        if (!isIframeReady) return;
+
         const handleMessage = (event: MessageEvent) => {
             console.log('Message received from origin:', event.origin);
             if (event.origin !== `${process.env.NEXT_PUBLIC_SHOPIFY_URL}`) {
@@ -223,7 +242,7 @@ const ListenerLoading = () => {
 
         window.addEventListener('message', handleMessage);
         return () => window.removeEventListener('message', handleMessage);
-    }, [pageName, fullPath]);
+    }, [isIframeReady]);
 
     // Redirect logic after message is received
     useEffect(() => {

@@ -1,27 +1,30 @@
+
 'use client'
-import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import React from 'react'
 
-// Dynamically import VideoAgent with SSR disabled
-const VideoAgent = dynamic(() => import('@/components/VideoAgent/VdoAgent2'), { ssr: false });
-
-export default function VideoAgentPage() {
-    const [showAgent, setShowAgent] = useState(true);
-
+const Test = () => {
+    const handleAddToCart = ({ variantId, quantity }) => {
+        window.parent.postMessage(
+            {
+                type: "ADD_TO_CART",
+                payload: {
+                    variantId,
+                    quantity,
+                },
+            },
+            "*"
+        );
+        console.log('button clicked in next', variantId)
+    };
     return (
-        <div className="relative h-screen bg-gray-100">
-            <h1 className="text-2xl font-bold text-center mt-8">Welcome to the Video Agent Page</h1>
-
-            {showAgent && <VideoAgent onClose={() => setShowAgent(false)} />}
-
-            {!showAgent && (
-                <button
-                    onClick={() => setShowAgent(true)}
-                    className="mt-4 mx-auto block px-4 py-2 bg-blue-600 text-white rounded shadow"
-                >
-                    Launch Agent Again
+        <div>Test
+            <div className="h-screen w-full i text-center justify-center">
+                <button className="p-4 bg-black text-white" onClick={() => handleAddToCart({ variantId: 8839600570580, quantity: 1 })}>
+                    Add to Cart
                 </button>
-            )}
+            </div>
         </div>
-    );
+    )
 }
+
+export default Test

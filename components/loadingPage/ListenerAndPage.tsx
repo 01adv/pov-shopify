@@ -117,7 +117,7 @@ const ListenerLoading = () => {
                 tags: ["page", "load", "initial"],
                 source: "site_entry",
             });
-            router.push('/cart');
+            router.push('/ai-curation');
         }
         else {
             logEvent("agent_loaded", {

@@ -107,12 +107,18 @@ export const extractProducts = (): Product[] => {
       const firstVariant = product.variants[0];
 
       const price = parseFloat(firstVariant.price);
-      const compareAtPrice = firstVariant.compare_at_price
-        ? parseFloat(firstVariant.compare_at_price)
-        : undefined;
-      const discountPercentage = compareAtPrice
-        ? Math.round(((compareAtPrice - price) / compareAtPrice) * 100)
-        : undefined;
+      const compareAtPrice =
+        firstVariant.compare_at_price &&
+        parseFloat(firstVariant.compare_at_price) > 0
+          ? parseFloat(firstVariant.compare_at_price)
+          : undefined;
+
+      const discountPercentage =
+        compareAtPrice != null && compareAtPrice !== price
+          ? compareAtPrice - price > 0
+            ? Math.round(((compareAtPrice - price) / compareAtPrice) * 100)
+            : 0
+          : undefined;
 
       const description = product.body_html
         .replace(/<[^>]+>/g, "") // Remove HTML tags
@@ -133,9 +139,7 @@ export const extractProducts = (): Product[] => {
           ? { text: "Bestseller", type: "selling-fast" }
           : product.tags.includes("Sale")
           ? { text: "Sale", type: "sale" }
-          : // : product.tags.includes("Aug2024")
-            // ? { text: "New", type: "new" }
-            undefined,
+          : undefined,
         image: firstVariant.featured_image?.src || "/placeholder.png",
         slug: product.handle,
         colors,

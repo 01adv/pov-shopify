@@ -76,19 +76,23 @@ export const ProductCardForPopup = ({ product, onClick }: { product: Product, on
             </div>
           </CardContent>
           <CardFooter className="flex flex-col items-start p-0 mt-auto">
-            <Badge
-              variant="default"
-              className=" max-w-[80%] w-full text-xs py-0.5 rounded-full"
-            >
-              {/* {product.discount}% OFF */}
-              50% OFF
-            </Badge>
+            {product.discountPercentage && product.discountPercentage > 0 && (
+
+              <Badge
+                variant="default"
+                className=" max-w-[80%] w-full text-xs py-0.5 rounded-full"
+              >
+                {product.discountPercentage}% OFF
+                {/* 50% OFF */}
+              </Badge>
+            )}
+
             <div className="flex flex-col mt-2">
-              {/* {product?.originalPrice && (
-                <span className="text-muted-foreground/85 text-xs line-through">
-                  ${product.originalPrice.toFixed(2)} USD
+              {product.originalPrice && (product?.originalPrice > product.price) && product.originalPrice > 0 && (
+                <span className="text-lg text-muted-foreground/75 line-through">
+                  $ {product.originalPrice?.toFixed(2)}
                 </span>
-              )} */}
+              )}
               <span className="text-muted-foreground">
                 ${product?.price.toFixed(2)} USD
               </span>

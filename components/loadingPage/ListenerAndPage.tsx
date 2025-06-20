@@ -15,33 +15,37 @@ const ListenerLoading = () => {
     const [pageName, setPageName] = useState('unknown-page');
     const [fullPath, setFullPath] = useState('');
     const [isLoading, setIsLoading] = useState(true);
-    const [isIframeReady, setIsIframeReady] = useState(false);
+    const [hasRedirected, setHasRedirected] = useState(false);
+
+    // const [isIframeReady, setIsIframeReady] = useState(false);
     const router = useRouter();
     const isPhone = useIsPhone();
 
 
 
 
-    useEffect(() => {
-        const bootstrapListener = (event: MessageEvent) => {
-            if (event.origin !== process.env.NEXT_PUBLIC_SHOPIFY_URL) return;
+    // useEffect(() => {
+    //     const bootstrapListener = (event: MessageEvent) => {
+    //         if (event.origin !== process.env.NEXT_PUBLIC_SHOPIFY_URL) return;
 
-            const { type } = event.data || {};
-            if (type === 'IFRAME_OPENED') {
-                console.log('✅ IFRAME_OPENED received');
-                setIsIframeReady(true);
-            }
-        };
+    //         const { type } = event.data || {};
+    //         if (type === 'IFRAME_OPENED') {
+    //             console.log('✅ IFRAME_OPENED received');
+    //             setIsIframeReady(true);
+    //         }
+    //     };
 
-        window.addEventListener('message', bootstrapListener);
-        return () => window.removeEventListener('message', bootstrapListener);
-    }, []);
+    //     window.addEventListener('message', bootstrapListener);
+    //     return () => window.removeEventListener('message', bootstrapListener);
+    // }, []);
 
 
 
     // Listen for both PAGE_INFO and CUSTOMER_INFO
     useEffect(() => {
-        if (!isIframeReady) return;
+        // if (!isIframeReady) return;
+        if (typeof window === "undefined") return; // SSR-safe fallback
+        console.log('Setting up message listener for Shopify iframe...');
 
         const handleMessage = (event: MessageEvent) => {
             console.log('Message received from origin:', event.origin);
@@ -52,14 +56,6 @@ const ListenerLoading = () => {
 
             const { type, payload } = event.data || {};
             console.log('Message data:', { type, payload });
-
-            if (type === 'PAGE_INFO' && payload) {
-                const pageName = payload.pageName ?? 'unknown-page';
-                const fullPath = payload.fullPath ?? 'unknown-path';
-                console.log('Received PAGE_INFO:', pageName, fullPath);
-                setPageName(pageName);
-                setFullPath(fullPath);
-            }
 
             if (type === 'CUSTOMER_INFO' && payload) {
                 console.log('Received CUSTOMER_INFO:', payload);
@@ -72,17 +68,30 @@ const ListenerLoading = () => {
                     source: 'shopify_iframe',
                 });
             }
-            setIsLoading(false);
+            if (type === 'PAGE_INFO' && payload) {
+                const pageName = payload.pageName ?? 'unknown-page';
+                const fullPath = payload.fullPath ?? 'unknown-path';
+                console.log('Received PAGE_INFO:', pageName, fullPath);
+                setPageName(pageName);
+                setFullPath(fullPath);
+                setTimeout(() => setIsLoading(false), 1000);
+            }
+
+
+
 
         };
 
         window.addEventListener('message', handleMessage);
         return () => window.removeEventListener('message', handleMessage);
-    }, [isIframeReady]);
+    }, []);
 
     // Redirect logic after message is received
     useEffect(() => {
-        if (isLoading) return;
+        if (isLoading || hasRedirected) return;
+
+        setHasRedirected(true);
+
 
         if (fullPath === '/') {
             logEvent("agent_loaded", {
@@ -119,7 +128,7 @@ const ListenerLoading = () => {
             });
             router.push('/all-workwear');
         }
-    }, [isLoading, fullPath, pageName, router]);
+    }, [isLoading, fullPath, pageName, router, hasRedirected]);
 
     // Optional loading state
     if (isLoading) {

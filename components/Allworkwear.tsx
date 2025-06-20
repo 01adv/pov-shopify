@@ -39,6 +39,7 @@ export type Variant = {
 
 export type Product = {
     id: string;
+    parentTitle: string; // Parent title for grouping
     title: string;
     handle: string; // Product handle (for /products/[handle])
     price: number;
@@ -86,12 +87,19 @@ export const products: Product[] = rawProductData.flatMap((product) => {
             const firstVariant = variantsByColor[color][0]; // Use first variant for data
             return {
                 id: firstVariant.id.toString(),
+                parentTitle: product.title, // Parent title for grouping
                 title: `${product.title} - ${color}`,
                 handle: product.handle, // Product handle for URL
                 price: parseFloat(firstVariant.price),
-                originalPrice: firstVariant.compare_at_price
-                    ? parseFloat(firstVariant.compare_at_price)
-                    : undefined,
+                // originalPrice: firstVariant.compare_at_price
+                //     ? parseFloat(firstVariant.compare_at_price)
+                //     : undefined,
+                originalPrice:
+                    firstVariant.compare_at_price &&
+                        parseFloat(firstVariant.compare_at_price) > 0
+                        ? parseFloat(firstVariant.compare_at_price)
+                        : undefined,
+
                 rating: 5, // Placeholder (not in JSON)
                 reviewCount: 3, // Placeholder (not in JSON)
                 image: firstVariant.featured_image?.src || "/placeholder.png",
@@ -105,12 +113,16 @@ export const products: Product[] = rawProductData.flatMap((product) => {
         return [
             {
                 id: firstVariant.id.toString(),
+                parentTitle: product.title, // Parent title for grouping
                 title: product.title, // No color suffix
                 handle: product.handle, // Product handle for URL
                 price: parseFloat(firstVariant.price),
-                originalPrice: firstVariant.compare_at_price
-                    ? parseFloat(firstVariant.compare_at_price)
-                    : undefined,
+                originalPrice:
+                    firstVariant.compare_at_price &&
+                        parseFloat(firstVariant.compare_at_price) > 0
+                        ? parseFloat(firstVariant.compare_at_price)
+                        : undefined,
+
                 rating: 5, // Placeholder (not in JSON)
                 reviewCount: 3, // Placeholder (not in JSON)
                 image: firstVariant.featured_image?.src || "/placeholder.png",

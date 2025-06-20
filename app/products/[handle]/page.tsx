@@ -91,9 +91,12 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
         name: productData.title,
         color: selectedVariant.option1,
         size: selectedVariant.option2 || sizes[0],
-        originalPrice: selectedVariant.compare_at_price
-            ? parseFloat(selectedVariant.compare_at_price)
-            : undefined,
+        originalPrice:
+            selectedVariant.compare_at_price &&
+                parseFloat(selectedVariant.compare_at_price) > 0
+                ? parseFloat(selectedVariant.compare_at_price)
+                : undefined,
+
         salePrice: parseFloat(selectedVariant.price),
         image: selectedVariant.featured_image?.src || productData.images[0]?.src || "/placeholder.png",
         description: productData.body_html.replace(/<[^>]+>/g, ""),
@@ -107,15 +110,6 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
         handle: productData.handle,
     };
 
-    // Transform product for StickyProductHeader
-    // const stickyProduct = {
-    //     name: product.name,
-    //     color: product.color,
-    //     size: product.size,
-    //     originalPrice: product.originalPrice,
-    //     salePrice: product.salePrice,
-    //     image: product.image,
-    // };
 
 
     // Calculate discount percentage
@@ -142,8 +136,8 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                     {/* Left side */}
                     <ProductGallery
                         images={productData.images || []}
-                        tags={productData.tags}
                         selectedVariantId={selectedVariant.id}
+                        name={product.name}
                     />
 
                     {/* Right side */}

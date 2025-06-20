@@ -4,7 +4,7 @@ import ProductGallery from "@/components/Gallery";
 import { Badge } from "@/components/ui/badge";
 import rawProductData from "@/lib/all_products.json";
 import { getHexCode } from "@/lib/colorHexMap";
-import { ChevronDown, Circle, Star, Truck } from "lucide-react";
+import { ChevronDown, Circle, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -119,13 +119,13 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
 
 
     // Calculate discount percentage
-    // const discountPercentage = product.originalPrice
-    //     ? product.originalPrice - product.salePrice > 0
-    //         ? Math.round(
-    //             ((product.originalPrice - product.salePrice) / product.originalPrice) * 100
-    //         )
-    //         : 0
-    //     : undefined;
+    const discountPercentage = product.originalPrice != null && product.originalPrice !== product.salePrice
+        ? product.originalPrice - product.salePrice > 0
+            ? Math.round(
+                ((product.originalPrice - product.salePrice) / product.originalPrice) * 100
+            )
+            : 0
+        : undefined;
 
     return (
         <Suspense fallback={<></>}>
@@ -152,27 +152,27 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
                             <h1 className="text-[30px] md:text-[40px] mb-4 leading-tight text-muted-foreground">{product.name}</h1>
                             <div className="space-y-2.5">
                                 {/* Rating */}
-                                <div className="flex gap-1 items-center">
+                                {/* <div className="flex gap-1 items-center">
                                     {[...Array(5)].map((_, i) => (
                                         <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                                     ))}
                                     <span className="text-muted-foreground/75">
                                         {product.reviewCount} review(s)
                                     </span>
-                                </div>
+                                </div> */}
                                 {/* Discount */}
-                                {/* {discountPercentage && discountPercentage > 0 && (
+                                {discountPercentage && discountPercentage > 0 && (
                                     <Badge className="w-fit bg-primary rounded-xl text-white py-2 px-7">
                                         {discountPercentage}% OFF
                                     </Badge>
-                                )} */}
+                                )}
                                 {/* Price */}
                                 <div className="gap-5 flex items-center">
-                                    {/* {product.originalPrice && (product?.originalPrice > product.salePrice) && product.originalPrice > 0 && (
+                                    {product.originalPrice && (product?.originalPrice > product.salePrice) && product.originalPrice > 0 && (
                                         <span className="text-lg text-muted-foreground/75 line-through">
                                             $ {product.originalPrice?.toFixed(2)}
                                         </span>
-                                    )} */}
+                                    )}
                                     <span className="text-lg text-muted-foreground">
                                         $ {product.salePrice.toFixed(2)}
                                     </span>

@@ -128,7 +128,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
     //     : undefined;
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<></>}>
             <ClientBackHandler productName={product.name.toString()} />
             <div className="mt-3 md:mt-7 max-w-[1200px] mx-auto px-4 md:px-[50px] relative">
                 {/* <StickyProductHeader product={stickyProduct} /> */}

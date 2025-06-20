@@ -101,6 +101,15 @@ const ListenerLoading = () => {
             });
             router.push('/collections/resilience-tailored');
         }
+        else if (pageName === 'cart') {
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: "cart",
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
+            router.push('/cart');
+        }
         else {
             logEvent("agent_loaded", {
                 event: "page_load",

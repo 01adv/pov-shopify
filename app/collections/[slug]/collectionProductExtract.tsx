@@ -37,6 +37,7 @@ export function getProductsByTags(tagsToFilter: string[], orderByField?: string)
                 const firstVariant = variantsByColor[color][0]; // Use first variant for data
                 return {
                     id: firstVariant.id.toString(),
+                    parentTitle: product.title, // Parent title for grouping
                     title: `${product.title} - ${color}`,
                     handle: product.handle, // Product handle for URL
                     price: parseFloat(firstVariant.price),
@@ -57,6 +58,7 @@ export function getProductsByTags(tagsToFilter: string[], orderByField?: string)
             return [
                 {
                     id: firstVariant.id.toString(),
+                    parentTitle: product.title, // Parent title for grouping
                     title: product.title, // No color suffix
                     handle: product.handle, // Product handle for URL
                     price: parseFloat(firstVariant.price),

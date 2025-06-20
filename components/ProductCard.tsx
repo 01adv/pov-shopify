@@ -9,7 +9,7 @@ import SellingLabel from "./SellingLabel";
 // Product type definition
 type Product = {
     id: string;
-    parentTitle: string; // Parent title for grouping
+    parentTitle?: string; // Parent title for grouping
     title: string;
     handle: string;
     price: number;
@@ -17,10 +17,6 @@ type Product = {
     discountPercentage?: number;
     rating: number;
     reviewCount: number;
-    badge?: {
-        text: string;
-        type: "selling-fast" | "sale" | "out-of-stock";
-    };
     image: string;
     slug: string;
 };

@@ -74,7 +74,7 @@ const ListenerLoading = () => {
                 console.log('Received PAGE_INFO:', pageName, fullPath);
                 setPageName(pageName);
                 setFullPath(fullPath);
-                setTimeout(() => setIsLoading(false), 1000);
+                setTimeout(() => setIsLoading(false), 300);
             }
 
 

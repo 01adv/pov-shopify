@@ -133,9 +133,9 @@ export const extractProducts = (): Product[] => {
           ? { text: "Bestseller", type: "selling-fast" }
           : product.tags.includes("Sale")
           ? { text: "Sale", type: "sale" }
-          : product.tags.includes("Aug2024")
-          ? { text: "New", type: "new" }
-          : undefined,
+          : // : product.tags.includes("Aug2024")
+            // ? { text: "New", type: "new" }
+            undefined,
         image: firstVariant.featured_image?.src || "/placeholder.png",
         slug: product.handle,
         colors,

@@ -17,7 +17,7 @@ type Product = {
     reviewCount: number;
     badge?: {
         text: string;
-        type: "selling-fast" | "sale" | "new" | "out-of-stock";
+        type: "selling-fast" | "sale" | "out-of-stock";
     };
     image: string;
     slug: string;

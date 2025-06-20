@@ -24,6 +24,7 @@ import { Headings } from "@/lib/data";
 export function AssistantChat() {
   const pathname = usePathname();
   const isProductDetailsPage = pathname.startsWith('/products/') && pathname.split('/').length >= 3;
+  const isHomePage = pathname === '/';
   const { setMatchedProducts, setTitle, title: contextTitle, setPersonalizedNudge, productName, setProductName } = useProductContext();
   const products: Product[] = extractProducts()
   const isPhone = useIsPhone();
@@ -63,7 +64,7 @@ export function AssistantChat() {
 
   // Cycle heading every 1 second
   useEffect(() => {
-    if (welcomeSeen) return;
+    if (welcomeSeen || isHomePage) return;
 
     const interval = setInterval(() => {
       const randomIndex = Math.floor(Math.random() * Headings.length);
@@ -71,7 +72,7 @@ export function AssistantChat() {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [welcomeSeen]);
+  }, [welcomeSeen, isHomePage]);
 
   // Clear nudge when not on product details page or productName changes
   useEffect(() => {
@@ -346,7 +347,7 @@ export function AssistantChat() {
           {/* would show loading nudges when nudge and response is not there and initial load */}
 
           {/* Chat Interface */}
-          {!welcomeSeen || isExpanded || (isProductDetailsPage && nudge) ? (
+          {(!welcomeSeen && !isHomePage) || isExpanded || (isProductDetailsPage && nudge) ? (
             <Card
               className="shadow-lg flex flex-col transition-all duration-300 ease-in-out pt-1 pb-3 px-3 no-scrollbar gap-3"
               // className={`shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4 ${isDialogOpen ? "hidden" : ""}`}
@@ -369,7 +370,7 @@ export function AssistantChat() {
                   <div className="flex justify-start">
                     <div className="w-full rounded-xl p-2 bg-[#F9F9F9] border border-primary">
                       {
-                        !welcomeSeen ?
+                        (!welcomeSeen && !isHomePage) ?
                           <p className="text-sm lg:text-base">
                             {currentHeading}
                           </p> :

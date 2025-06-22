@@ -101,14 +101,50 @@ const ListenerLoading = () => {
                 source: "site_entry",
             });
             router.push('/all-workwear');
-        } else if (pageName === 'new-collection') {
+        } else if (pageName === "resilience-tailored") {
             logEvent("agent_loaded", {
                 event: "page_load",
-                page_path: "new-collection",
+                page_path: "resilience-tailored",
                 tags: ["page", "load", "initial"],
                 source: "site_entry",
             });
             router.push('/collections/resilience-tailored');
+        }
+        else if (pageName === "work-dresses-for-women") {
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: "work-dresses-for-women",
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
+            router.push('/collections/dresses');
+        }
+        else if (pageName === "womens-workwear-blouses") {
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: "womens-workwear-blouses",
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
+            router.push('/collections/jackets');
+        }
+        else if (pageName === "womens-power-suit") {
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: "womens-power-suit",
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
+            router.push('/collections/suits');
+        }
+        else if (pageName === "dress-pants-for-women") {
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: "dress-pants-for-women",
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
+            router.push('/collections/pants');
         }
         else if (pageName === 'cart') {
             logEvent("agent_loaded", {

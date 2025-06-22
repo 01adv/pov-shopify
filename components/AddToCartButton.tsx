@@ -89,13 +89,13 @@
 
 'use client';
 
+import useCartPolling from '@/app/test2/useCartPolling';
 import { useProductContext } from '@/hooks/useProduct';
+import { logEvent } from '@/lib/logger';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CartPopup } from './AddToCartPopup';
-import { logEvent } from '@/lib/logger';
-import Link from 'next/link';
-import Image from 'next/image';
-import useCartPolling from '@/app/test2/useCartPolling';
 
 type AddToCartButtonProps = {
     variantId: number;
@@ -110,6 +110,7 @@ type AddToCartButtonProps = {
 const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl, variantAvailable }: AddToCartButtonProps) => {
     const [isCartOpen, setIsCartOpen] = useState(false)
     const { setItemCount } = useProductContext();
+    const router = useRouter();
     const [error, setError] = useState<string | null>(null);
     useCartPolling(6000); // Poll every 6 seconds
     console.log('passed variatId', variantId)
@@ -199,13 +200,40 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
                     Sold Out
                 </button>
             )}
-            {
+            {/* {
 
                 variantAvailable &&
-                <Link
-                    href="https://pointofviewlabel.com/cart?50006520922415"
+                <div onClick={() => {
+                    handleAddToCart()
+                }}
                     className="bg-[#5433eb] mb-5 max-w-md h-11 w-full text-white text-sm rounded-none flex items-center justify-center gap-2 disabled:opacity-50"
-                    onClick={logAddToCartEvent}
+                >
+                    <Link
+                        className='h-full w-full flex items-center justify-center'
+                        href={`https://pointofviewlabel.com/cart?${variantId}`}
+                        onClick={logAddToCartEvent}
+                    >
+                        <span className="flex items-center gap-0.5">
+                            Buy with
+                            <Image
+                                src="/shop-pay.svg"
+                                alt="ShopPay"
+                                width={60}
+                                height={20}
+                                className="h-5 w-auto"
+                            />
+                        </span>
+                    </Link>
+                </div>
+            } */}
+            {variantAvailable && (
+                <button
+                    onClick={() => {
+                        handleAddToCart(); // Wait for the async function
+                        logAddToCartEvent();     // Optional, or await if needed
+                        router.push(`https://pointofviewlabel.com/cart?${variantId}`);
+                    }}
+                    className="bg-[#5433eb] mb-5 max-w-md h-11 w-full text-white text-sm rounded-none flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                     <span className="flex items-center gap-0.5">
                         Buy with
@@ -217,8 +245,8 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
                             className="h-5 w-auto"
                         />
                     </span>
-                </Link>
-            }
+                </button>
+            )}
             {error && (
                 <div className="text-red-500 text-sm">
                     {error}

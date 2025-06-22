@@ -93,7 +93,6 @@ import useCartPolling from '@/app/test2/useCartPolling';
 import { useProductContext } from '@/hooks/useProduct';
 import { logEvent } from '@/lib/logger';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CartPopup } from './AddToCartPopup';
 
@@ -110,7 +109,7 @@ type AddToCartButtonProps = {
 const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl, variantAvailable }: AddToCartButtonProps) => {
     const [isCartOpen, setIsCartOpen] = useState(false)
     const { setItemCount } = useProductContext();
-    const router = useRouter();
+    // const router = useRouter();
     const [error, setError] = useState<string | null>(null);
     useCartPolling(6000); // Poll every 6 seconds
     console.log('passed variatId', variantId)
@@ -231,7 +230,9 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
                     onClick={() => {
                         handleAddToCart(); // Wait for the async function
                         logAddToCartEvent();     // Optional, or await if needed
-                        router.push(`https://pointofviewlabel.com/cart?${variantId}`);
+                        // router.push(`https://pointofviewlabel.com/cart?${variantId}`);
+                        window?.top?.location?.assign(`https://pointofviewlabel.com/cart?${variantId}`);
+                        console.log('Redirecting to cart with variantId:', variantId);
                     }}
                     className="bg-[#5433eb] mb-5 max-w-md h-11 w-full text-white text-sm rounded-none flex items-center justify-center gap-2 disabled:opacity-50"
                 >

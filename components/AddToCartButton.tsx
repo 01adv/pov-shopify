@@ -176,6 +176,12 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
     //         return () => clearTimeout(timer);
     //     }
     // }, [isCartOpen]);
+    const handleBuyWithShopPay = () => {
+        console.log('Buy with Shop Pay clicked', { variantId, quantity });
+        handleAddToCart(); // Ensure the item is added to cart first
+        logAddToCartEvent(); // Log the event
+
+    }
 
 
     return (
@@ -226,27 +232,30 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
                 </div>
             } */}
             {variantAvailable && (
-                <button
-                    onClick={() => {
-                        handleAddToCart(); // Wait for the async function
-                        logAddToCartEvent();     // Optional, or await if needed
-                        // router.push(`https://pointofviewlabel.com/cart?${variantId}`);
-                        window?.top?.location?.assign(`https://pointofviewlabel.com/cart?${variantId}`);
-                        console.log('Redirecting to cart with variantId:', variantId);
-                    }}
-                    className="bg-[#5433eb] mb-5 max-w-md h-11 w-full text-white text-sm rounded-none flex items-center justify-center gap-2 disabled:opacity-50"
+                <a
+                    href={`https://pointofviewlabel.com/cart?${variantId}`}
+                    aria-label="Cart"
+                    target="_top"
+                    rel="noopener noreferrer"
+                    className="w-full block"
+                    onClick={handleBuyWithShopPay}
                 >
-                    <span className="flex items-center gap-0.5">
-                        Buy with
-                        <Image
-                            src="/shop-pay.svg"
-                            alt="ShopPay"
-                            width={60}
-                            height={20}
-                            className="h-5 w-auto"
-                        />
-                    </span>
-                </button>
+
+                    <button
+                        className="bg-[#5433eb] mb-5 max-w-md h-11 w-full text-white text-sm rounded-none flex items-center justify-center gap-2 disabled:opacity-50"
+                    >
+                        <span className="flex items-center gap-0.5">
+                            Buy with
+                            <Image
+                                src="/shop-pay.svg"
+                                alt="ShopPay"
+                                width={60}
+                                height={20}
+                                className="h-5 w-auto"
+                            />
+                        </span>
+                    </button>
+                </a>
             )}
             {error && (
                 <div className="text-red-500 text-sm">

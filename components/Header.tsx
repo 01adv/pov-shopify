@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from './ui/button';
+import useCartPolling from '@/app/test2/useCartPolling';
 
 const shopLinks = [
     { name: 'New Collections', href: '/collections/resilience-tailored' },
@@ -31,6 +32,7 @@ const Header = () => {
     const aboutRef = useRef<HTMLButtonElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const { itemCount } = useProductContext();
+    useCartPolling(10000); // Polling every 10 seconds
 
     const handleAIGenClicked = () => {
         logEvent("clicks", {

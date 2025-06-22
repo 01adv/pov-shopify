@@ -1,7 +1,9 @@
 'use client';
+import { useProductContext } from '@/hooks/useProduct';
 import { useEffect, useRef } from 'react';
 
 const useCartPolling = (interval = 3000) => {
+  const { setItemCount } = useProductContext();
   const parentOrigin = `${process.env.NEXT_PUBLIC_SHOPIFY_URL}`;
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -13,6 +15,7 @@ const useCartPolling = (interval = 3000) => {
 
       if (type === 'CART_INFO') {
         console.log('[Next.js Polling] Cart item count:', payload.itemCount);
+        setItemCount(payload.itemCount);
         // Optionally: update state/UI here
       }
 

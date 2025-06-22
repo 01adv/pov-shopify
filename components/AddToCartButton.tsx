@@ -1,90 +1,4 @@
-// // 'use client';
-// // // AddToCartButton.tsx
-// // type AddToCartButtonProps = {
-// //     variantId: number;
-// //     quantity?: number;
-// // }
-// // const AddToCartButton = ({ variantId, quantity = 1 }: AddToCartButtonProps) => {
-// //     console.log('button clicked')
-// //     const handleAddToCart = () => {
-// //         window.parent.postMessage(
-// //             {
-// //                 type: "ADD_TO_CART",
-// //                 payload: {
-// //                     variantId,
-// //                     quantity,
-// //                 },
-// //             },
-// //             "*"
-// //         );
-// //     };
-// //     console.log('button clicked in next', variantId)
 
-// //     return <button className="p-4 bg-black text-white" onClick={handleAddToCart}>Add to Cart</button>;
-// // };
-
-// // export default AddToCartButton;
-
-
-// 'use client';
-
-// import { useProductContext } from '@/hooks/useProduct';
-// import { useEffect } from 'react';
-
-// type AddToCartButtonProps = {
-//     variantId: number;
-//     quantity?: number;
-// };
-
-// const AddToCartButton = ({ variantId, quantity = 1 }: AddToCartButtonProps) => {
-//     // const [cartCount, setCartCount] = useState<number | null>(null);
-//     const { setItemCount } = useProductContext()
-
-//     const handleAddToCart = () => {
-//         console.log('Add to Cart clicked', variantId);
-//         window.parent.postMessage(
-//             {
-//                 type: "ADD_TO_CART",
-//                 payload: {
-//                     variantId,
-//                     quantity,
-//                 },
-//             },
-//             "*"
-//         );
-//     };
-
-//     useEffect(() => {
-//         const handleMessage = (event: MessageEvent) => {
-//             if (event.data?.type === "CART_INFO") {
-//                 const { itemCount } = event.data.payload;
-//                 // setCartCount(itemCount);
-//                 setItemCount(itemCount)
-//                 console.log("Updated cart count:", itemCount);
-//             }
-//         };
-
-//         window.addEventListener("message", handleMessage);
-
-//         // Request cart on load (optional)
-//         window.parent.postMessage({ type: "GET_CART" }, "*");
-
-//         return () => window.removeEventListener("message", handleMessage);
-//     }, []);
-
-//     return (
-//         <div className="flex items-center gap-4">
-//             <button
-//                 className="p-4 bg-black text-white rounded"
-//                 onClick={handleAddToCart}
-//             >
-//                 Add to Cart
-//             </button>
-//         </div>
-//     );
-// };
-
-// export default AddToCartButton;
 
 
 'use client';
@@ -176,12 +90,12 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
     //         return () => clearTimeout(timer);
     //     }
     // }, [isCartOpen]);
-    const handleBuyWithShopPay = () => {
-        console.log('Buy with Shop Pay clicked', { variantId, quantity });
-        handleAddToCart(); // Ensure the item is added to cart first
-        logAddToCartEvent(); // Log the event
+    // const handleBuyWithShopPay = () => {
+    //     console.log('Buy with Shop Pay clicked', { variantId, quantity });
+    //     handleAddToCart(); // Ensure the item is added to cart first
+    //     logAddToCartEvent(); // Log the event
 
-    }
+    // }
 
 
     return (
@@ -205,32 +119,7 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
                     Sold Out
                 </button>
             )}
-            {/* {
-
-                variantAvailable &&
-                <div onClick={() => {
-                    handleAddToCart()
-                }}
-                    className="bg-[#5433eb] mb-5 max-w-md h-11 w-full text-white text-sm rounded-none flex items-center justify-center gap-2 disabled:opacity-50"
-                >
-                    <Link
-                        className='h-full w-full flex items-center justify-center'
-                        href={`https://pointofviewlabel.com/cart?${variantId}`}
-                        onClick={logAddToCartEvent}
-                    >
-                        <span className="flex items-center gap-0.5">
-                            Buy with
-                            <Image
-                                src="/shop-pay.svg"
-                                alt="ShopPay"
-                                width={60}
-                                height={20}
-                                className="h-5 w-auto"
-                            />
-                        </span>
-                    </Link>
-                </div>
-            } */}
+            {/* 
             {variantAvailable && (
                 <a
                     href={`https://pointofviewlabel.com/cart?${variantId}`}
@@ -256,7 +145,37 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
                         </span>
                     </button>
                 </a>
+            )} */}
+            {variantAvailable && (
+                <button
+                    onClick={async () => {
+                        // Log event
+                        logAddToCartEvent();
+
+                        // Add to cart
+                        handleAddToCart();
+
+                        // Wait a bit for the parent iframe/cart to process the add-to-cart postMessage
+                        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+                        // Then safely redirect
+                        window.top?.location.replace(`https://pointofviewlabel.com/checkout`);
+                    }}
+                    className="bg-[#5433eb] mb-5 max-w-md h-11 w-full text-white text-sm rounded-none flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                    <span className="flex items-center gap-0.5">
+                        Buy with
+                        <Image
+                            src="/shop-pay.svg"
+                            alt="ShopPay"
+                            width={60}
+                            height={20}
+                            className="h-5 w-auto"
+                        />
+                    </span>
+                </button>
             )}
+
             {error && (
                 <div className="text-red-500 text-sm">
                     {error}

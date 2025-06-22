@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
 import { Check } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 interface CartPopupProps {
     isOpen: boolean
@@ -66,14 +67,20 @@ export function CartPopup({ isOpen, onClose, title = "Innovation Zipper Slit Cre
 
                     {/* Action Buttons */}
                     <div className="space-y-3">
-                        <Button
-                            variant="outline"
-                            className="w-full rounded-none border-white text-white hover:bg-white/10 hover:text-white bg-transparent border-2"
-                        >
-                            View cart (1)
-                        </Button>
+                        <Link href="https://pointofviewlabel.com/cart" className="block w-full">
+                            <Button
+                                variant="outline"
+                                className="w-full rounded-none border-white text-white hover:bg-white/10 hover:text-white bg-transparent border-2"
+                            >
+                                View cart
+                            </Button>
+                        </Link>
 
-                        <Button className="w-full rounded-none bg-white text-black hover:bg-gray-100">Check out</Button>
+                        <Link href="https://pointofviewlabel.com/checkout" className="block w-full">
+                            <Button className="w-full rounded-none bg-white text-black hover:bg-gray-100">
+                                Check out
+                            </Button>
+                        </Link>
 
                         <button
                             onClick={onClose}

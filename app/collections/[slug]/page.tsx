@@ -17,8 +17,8 @@ const collectionsData: Record<string, CollectionMetadata> = {
         tags: ['Dress', 'Dresses'],
     },
     'jackets': {
-        title: 'Womens Workwear Blouses',
-        description: 'Explore our collection of designer Womens Workwear Blouses at Point of View Label. From chic casual designs to elegant statement pieces, find the perfect fit for your wardrobe.',
+        title: 'Womens Workwear Blazers',
+        description: "Explore our collection of designer Women's Workwear Blazers at Point of View Label. From chic casual designs to elegant statement pieces, find the perfect fit for your wardrobe.",
         tags: ['Jacket', 'Jackets'],
     },
     'pants': {

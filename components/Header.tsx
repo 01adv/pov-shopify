@@ -1,13 +1,13 @@
 
 
 'use client';
+import { useProductContext } from '@/hooks/useProduct';
+import { logEvent } from '@/lib/logger';
 import { ChevronDown, Sparkles, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from './ui/button';
-import { logEvent } from '@/lib/logger';
-import { useProductContext } from '@/hooks/useProduct';
 
 const shopLinks = [
     { name: 'New Collections', href: '/collections/resilience-tailored' },
@@ -15,7 +15,6 @@ const shopLinks = [
     { name: 'Blazers', href: '/collections/jackets' },
     { name: 'Pants & Skirts', href: '/collections/pants' },
     { name: 'Power Suits', href: '/collections/suits' },
-    // { name: 'Shop All Workwear', href: '/' },
 ];
 
 const aboutUsLinks = [
@@ -198,19 +197,17 @@ const Header = () => {
                             </Link>
                         </div>
                         <div className="relative">
-                            <a
+                            <Link
                                 href="https://pointofviewlabel.com/cart"
                                 aria-label="Cart"
                                 className="h-5 w-5 text-gray-200 pointer-events-auto"
-                                target="_blank"
-                                rel="noopener noreferrer"
                             >
                                 <Image src="/cart.svg" alt="Cart" width={24} height={24} />
                                 {itemCount > 0 && (
                                     <span className="absolute bottom-0 -right-1 flex items-center justify-center w-3.5 h-3.5 text-[10px] text-gray-600 bg-white rounded-full">
                                         {itemCount}
                                     </span>
-                                )}    </a>
+                                )}    </Link>
                         </div>
                     </div>
 

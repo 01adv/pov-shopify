@@ -1,6 +1,7 @@
 
 
 'use client';
+import useCartPolling from '@/app/test2/useCartPolling';
 import { useProductContext } from '@/hooks/useProduct';
 import { logEvent } from '@/lib/logger';
 import { ChevronDown, Sparkles, X } from 'lucide-react';
@@ -8,7 +9,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from './ui/button';
-import useCartPolling from '@/app/test2/useCartPolling';
 
 const shopLinks = [
     { name: 'New Collections', href: '/collections/resilience-tailored' },
@@ -32,6 +32,8 @@ const Header = () => {
     const aboutRef = useRef<HTMLButtonElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const { itemCount } = useProductContext();
+    // const cartCount = itemCount || 0; // Fallback to 0 if itemCount is undefined
+    const [cartCount, setCartCount] = useState(itemCount || 0);
     useCartPolling(10000); // Polling every 10 seconds
 
     const handleAIGenClicked = () => {
@@ -41,6 +43,15 @@ const Header = () => {
             source: "chatbot.recommendation",
         });
     }
+
+    // item count update useEffect
+    useEffect(() => {
+        if (itemCount !== undefined) {
+            setCartCount(itemCount);
+        }
+    }, [itemCount]);
+
+
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -198,7 +209,7 @@ const Header = () => {
                                 </Button>
                             </Link>
                         </div>
-                        <div className="relative">
+                        {/* <div className="relative">
                             <Link
                                 href="https://pointofviewlabel.com/cart"
                                 aria-label="Cart"
@@ -210,43 +221,21 @@ const Header = () => {
                                         {itemCount}
                                     </span>
                                 )}    </Link>
-                        </div>
+                        </div> */}
                         <div className="relative">
                             <a
                                 href="https://pointofviewlabel.com/cart"
                                 aria-label="Cart"
                                 target="_top"
                                 rel="noopener noreferrer"
-                                className="h-5 w-5 text-red-500 pointer-events-auto"
+                                className="h-5 w-5 text-gray-200 pointer-events-auto"
                             >
                                 <Image src="/cart.svg" alt="Cart" width={24} height={24} />
-                                {itemCount > 0 && (
+                                {cartCount > 0 && (
                                     <span className="absolute bottom-0 -right-1 flex items-center justify-center w-3.5 h-3.5 text-[10px] text-gray-600 bg-white rounded-full">
-                                        {itemCount}
+                                        {cartCount}
                                     </span>
                                 )}    </a>
-                        </div>
-                        <div className="relative">
-                            <div
-                                onClick={() => {
-                                    if (typeof window !== 'undefined' && window.top !== window && window.top) {
-                                        console.log('Redirecting to cart using window.top.location.href');
-                                        window.top.location.href = `https://pointofviewlabel.com/cart`
-                                    }
-                                    else {
-                                        console.log('Redirecting to cart using window.location.href');
-                                        window.location.href = `https://pointofviewlabel.com/cart`;
-                                    }
-                                }
-                                }
-                                className="h-5 w-5 text-blue-500 pointer-events-auto"
-                            >
-                                <Image src="/cart.svg" alt="Cart" width={24} height={24} />
-                                {itemCount > 0 && (
-                                    <span className="absolute bottom-0 -right-1 flex items-center justify-center w-3.5 h-3.5 text-[10px] text-gray-600 bg-white rounded-full">
-                                        {itemCount}
-                                    </span>
-                                )}    </div>
                         </div>
 
                     </div>

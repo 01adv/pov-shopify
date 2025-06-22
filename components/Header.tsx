@@ -211,6 +211,44 @@ const Header = () => {
                                     </span>
                                 )}    </Link>
                         </div>
+                        <div className="relative">
+                            <a
+                                href="https://pointofviewlabel.com/cart"
+                                aria-label="Cart"
+                                target="_top"
+                                rel="noopener noreferrer"
+                                className="h-5 w-5 text-red-500 pointer-events-auto"
+                            >
+                                <Image src="/cart.svg" alt="Cart" width={24} height={24} />
+                                {itemCount > 0 && (
+                                    <span className="absolute bottom-0 -right-1 flex items-center justify-center w-3.5 h-3.5 text-[10px] text-gray-600 bg-white rounded-full">
+                                        {itemCount}
+                                    </span>
+                                )}    </a>
+                        </div>
+                        <div className="relative">
+                            <div
+                                onClick={() => {
+                                    if (typeof window !== 'undefined' && window.top !== window && window.top) {
+                                        console.log('Redirecting to cart using window.top.location.href');
+                                        window.top.location.href = `https://pointofviewlabel.com/cart`
+                                    }
+                                    else {
+                                        console.log('Redirecting to cart using window.location.href');
+                                        window.location.href = `https://pointofviewlabel.com/cart`;
+                                    }
+                                }
+                                }
+                                className="h-5 w-5 text-blue-500 pointer-events-auto"
+                            >
+                                <Image src="/cart.svg" alt="Cart" width={24} height={24} />
+                                {itemCount > 0 && (
+                                    <span className="absolute bottom-0 -right-1 flex items-center justify-center w-3.5 h-3.5 text-[10px] text-gray-600 bg-white rounded-full">
+                                        {itemCount}
+                                    </span>
+                                )}    </div>
+                        </div>
+
                     </div>
 
 

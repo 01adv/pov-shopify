@@ -176,7 +176,7 @@ const ListenerLoading = () => {
                 <div className='flex justify-center pt-14'>
                     <RingLoader color="#fb90a2" size={isPhone ? 100 : 150} />
                 </div>
-                <p className='hidden md:block text-center text-lg pt-10 pb-3'>Just type here, and I&apos;ll do the digging.</p>
+                {/* <p className='hidden md:block text-center text-lg pt-10 pb-3'>Just type here, and I&apos;ll do the digging.</p> */}
 
             </div>
         );
@@ -194,7 +194,7 @@ const ListenerLoading = () => {
 
 
             </div>
-            <p className='hidden md:block text-center text-lg pt-10 pb-3'>Just type here, and I&apos;ll do the digging.</p>
+            {/* <p className='hidden md:block text-center text-lg pt-10 pb-3'>Just type here, and I&apos;ll do the digging.</p> */}
 
         </div>
     );

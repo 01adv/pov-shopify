@@ -50,20 +50,20 @@ export const ProductCard = ({ product }: { product: Product }) => {
                                 tag === "almost-gone" ? (
                                     <SellingLabel
                                         label={"Almost Gone"} />
-                                ) :
-                                    (
-                                        <>
-                                            {
-                                                discountPercentage && discountPercentage > 0 ? (
-                                                    <Badge className="absolute top-2 left-2 z-10 bg-white text-black rounded-full">
-                                                        Sale
-                                                    </Badge>
-                                                ) : null
-                                            }
-                                        </>
-                                    )}
+                                ) : null
+
+                            }
+
+
                         </div>
                     )}
+                    {
+                        discountPercentage && !tag && discountPercentage > 0 ? (
+                            <Badge className="absolute top-2 left-2 z-10 bg-white text-black rounded-full">
+                                Sale
+                            </Badge>
+                        ) : null
+                    }
                     <Image
                         src={product.image || "/placeholder.png"}
                         alt={product.title}

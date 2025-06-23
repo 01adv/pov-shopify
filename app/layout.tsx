@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${quicksand.variable} font-sans min-h-screen overflow-x-hidden flex flex-col`}>
+      <body className={`${quicksand.variable} font-sans min-h-screen overflow-x-hidden flex flex-col relative`}>
         <ProductProvider>
           <Header />
           {/* <ChatBot /> */}

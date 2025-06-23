@@ -320,8 +320,8 @@ export function AssistantChat() {
   const shouldScroll = chatHeight === MAX_CHAT_HEIGHT;
 
   return (
-    <div className=" z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-center justify-center  pointer-events-none"
-      style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 2rem)" }}
+    <div className=" z-40 fixed bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center  pointer-events-none"
+    // style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 2rem)" }}
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">
         {/* Product Popup */}

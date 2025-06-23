@@ -4,6 +4,8 @@ import { Send, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { mobilePlaceholderTexts, placeholderTexts, productPagePlaceholderTexts } from "@/lib/data";
+import useIsPhone from "@/hooks/usePhone";
 
 type InputBarProps = {
     input?: string;
@@ -14,23 +16,7 @@ type InputBarProps = {
     isProductDetailsPage?: boolean;
 };
 
-// Array of placeholder texts
-const placeholderTexts = [
-    "Classy outfit for a Friday night",
-    "Something work-ish but not boring!",
-    "Relaxed work dresses in quarter sleeves",
-    "Work Jackets, but versatile",
-    "Only straight fit dresses, no sleeveless",
-    "Cute brunch outfits, no bold colors",
-    "Work outfit that makes a statement",
-];
 
-const productPagePlaceholderTexts = [
-    "How can I make it more casual?",
-    "What color earrings would go with this?",
-    "How to style it more professionally?",
-    "Style it for an evening glam outing!!",
-]
 
 export const InputBar: React.FC<InputBarProps> = ({
     input,
@@ -44,10 +30,12 @@ export const InputBar: React.FC<InputBarProps> = ({
     const [isInteracting, setIsInteracting] = useState(false);
     const lastInteractionRef = useRef(Date.now());
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
+    const isPhone = useIsPhone();
 
     // Function to get a random placeholder
     const getRandomPlaceholder = () => {
-        const texts = isProductDetailsPage ? productPagePlaceholderTexts : placeholderTexts;
+        const simplePlaceholderTexts = isPhone ? mobilePlaceholderTexts : placeholderTexts
+        const texts = isProductDetailsPage ? productPagePlaceholderTexts : simplePlaceholderTexts;
         const randomIndex = Math.floor(Math.random() * texts.length);
         return texts[randomIndex];
     };

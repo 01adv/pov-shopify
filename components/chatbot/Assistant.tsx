@@ -320,110 +320,108 @@ export function AssistantChat() {
   const shouldScroll = chatHeight === MAX_CHAT_HEIGHT;
 
   return (
-    <div>
-      {/* {switchToTextAgent && ( */}
-      <div className=" z-40 fixed bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center  pointer-events-none">
-        <div className="relative w-full lg:max-w-md pointer-events-auto">
-          {/* Product Popup */}
-          {!isPhone && (
-            <ProductPopup
-              title={contextTitle}
-              isOpen={isDialogOpen}
-              onClose={() => {
-                setIsDialogOpen(false);
-                setIsExpanded(false);
-                setNudge('');
-                setLatestResponse('')
-              }}
-              products={recommendedProducts}
-              input={input}
-              setInput={setInput}
-              handleKeyDown={handleKeyDown}
-              handleSendMessage={handleSendMessage}
-              loader={loader}
-            />
-          )}
+    <div className=" z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-center justify-center  pointer-events-none"
+      style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 2rem)" }}
+    >
+      <div className="relative w-full lg:max-w-md pointer-events-auto">
+        {/* Product Popup */}
+        {!isPhone && (
+          <ProductPopup
+            title={contextTitle}
+            isOpen={isDialogOpen}
+            onClose={() => {
+              setIsDialogOpen(false);
+              setIsExpanded(false);
+              setNudge('');
+              setLatestResponse('')
+            }}
+            products={recommendedProducts}
+            input={input}
+            setInput={setInput}
+            handleKeyDown={handleKeyDown}
+            handleSendMessage={handleSendMessage}
+            loader={loader}
+          />
+        )}
 
-          {/* would show loading nudges when nudge and response is not there and initial load */}
+        {/* would show loading nudges when nudge and response is not there and initial load */}
 
-          {/* Chat Interface */}
-          {(!welcomeSeen && !isHomePage) || isExpanded || (isProductDetailsPage && nudge) ? (
-            <Card
-              className="shadow-lg flex flex-col transition-all duration-300 ease-in-out pt-1 pb-3 px-3 no-scrollbar gap-3"
-              // className={`shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4 ${isDialogOpen ? "hidden" : ""}`}
-              style={{
-                maxHeight: `${MAX_CHAT_HEIGHT}px`,
-                // minHeight: `${MIN_CHAT_HEIGHT}px`,
-              }}
+        {/* Chat Interface */}
+        {(!welcomeSeen && !isHomePage) || isExpanded || (isProductDetailsPage && nudge) ? (
+          <Card
+            className="shadow-lg flex flex-col transition-all duration-300 ease-in-out pt-1 pb-3 px-3 no-scrollbar gap-3"
+            // className={`shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4 ${isDialogOpen ? "hidden" : ""}`}
+            style={{
+              maxHeight: `${MAX_CHAT_HEIGHT}px`,
+              // minHeight: `${MIN_CHAT_HEIGHT}px`,
+            }}
+          >
+            <div
+              className={`flex-1 no-scrollbar ${shouldScroll ? "overflow-y-auto" : "overflow-visible"
+                }`}
+              ref={messagesContainerRef}
             >
-              <div
-                className={`flex-1 no-scrollbar ${shouldScroll ? "overflow-y-auto" : "overflow-visible"
-                  }`}
-                ref={messagesContainerRef}
-              >
-                <div className="">
-                  <span className=" flex justify-end w-full">
-                    <button onClick={() => { setIsExpanded(false); setNudge(''); setLatestResponse('') }}>
-                      <X className=" text-muted-foreground/40" size={12} />
-                    </button>
-                  </span>
-                  <div className="flex justify-start">
-                    <div className="w-full rounded-xl p-2 bg-[#F9F9F9] border border-primary">
-                      {
-                        (!welcomeSeen && !isHomePage) ?
-                          <p className="text-sm lg:text-base">
-                            {currentHeading}
-                          </p> :
-                          <>
-                            {isFetching ? (
-                              <ChatLoader showText={true} />
-                            ) : latestResponse.length > 0 && (!isProductDetailsPage || !showNudge || !nudge) ? (
-                              <p className="text-sm lg:text-base">
-                                <span
-                                  dangerouslySetInnerHTML={{
-                                    __html: latestResponse,
-                                  }}
-                                />
-                              </p>
-                            ) : isProductDetailsPage && showNudge && nudge ? (
-                              <p className="text-sm lg:text-base">{nudge}</p>
-                            ) : null}
-                          </>
-                      }
-
-                    </div>
+              <div className="">
+                <span className=" flex justify-end w-full">
+                  <button onClick={() => { setIsExpanded(false); setNudge(''); setLatestResponse('') }}>
+                    <X className=" text-muted-foreground/40" size={12} />
+                  </button>
+                </span>
+                <div className="flex justify-start">
+                  <div className="w-full rounded-xl p-2 bg-[#F9F9F9] border border-primary">
+                    {
+                      (!welcomeSeen && !isHomePage) ?
+                        <p className="text-sm lg:text-base">
+                          {currentHeading}
+                        </p> :
+                        <>
+                          {isFetching ? (
+                            <ChatLoader showText={true} />
+                          ) : latestResponse.length > 0 && (!isProductDetailsPage || !showNudge || !nudge) ? (
+                            <p className="text-sm lg:text-base">
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: latestResponse,
+                                }}
+                              />
+                            </p>
+                          ) : isProductDetailsPage && showNudge && nudge ? (
+                            <p className="text-sm lg:text-base">{nudge}</p>
+                          ) : null}
+                        </>
+                    }
 
                   </div>
-                  <div ref={messagesEndRef} />
+
                 </div>
+                <div ref={messagesEndRef} />
               </div>
+            </div>
 
-              <div className="">
-                <InputBar
-                  className="border-muted-foreground/20"
-                  input={input}
-                  setInput={setInput}
-                  handleKeyDown={handleKeyDown}
-                  handleSendMessage={handleSendMessage}
-                  isProductDetailsPage={isProductDetailsPage}
-                />
-              </div>
-            </Card>
-          ) : (
-            <InputBar
-              className="border-primary"
-              input={input}
-              setInput={setInput}
-              handleKeyDown={handleKeyDown}
-              handleSendMessage={handleSendMessage}
-              isProductDetailsPage={isProductDetailsPage}
-            />
-          )}
+            <div className="">
+              <InputBar
+                className="border-muted-foreground/20"
+                input={input}
+                setInput={setInput}
+                handleKeyDown={handleKeyDown}
+                handleSendMessage={handleSendMessage}
+                isProductDetailsPage={isProductDetailsPage}
+              />
+            </div>
+          </Card>
+        ) : (
+          <InputBar
+            className="border-primary"
+            input={input}
+            setInput={setInput}
+            handleKeyDown={handleKeyDown}
+            handleSendMessage={handleSendMessage}
+            isProductDetailsPage={isProductDetailsPage}
+          />
+        )}
 
 
-        </div>
       </div>
-      {/* )} */}
     </div>
   );
 }

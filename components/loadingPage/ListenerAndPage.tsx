@@ -74,7 +74,7 @@ const ListenerLoading = () => {
                 console.log('Received PAGE_INFO:', pageName, fullPath);
                 setPageName(pageName);
                 setFullPath(fullPath);
-                setTimeout(() => setIsLoading(false), 300);
+                setTimeout(() => setIsLoading(false), 800);
             }
 
 
@@ -172,12 +172,18 @@ const ListenerLoading = () => {
         const fallbackTimer = setTimeout(() => {
             if (!hasRedirected) {
                 console.warn("Fallback timeout triggered, redirecting to default");
+                logEvent("agent_loaded", {
+                    event: "page_load",
+                    page_path: fullPath,
+                    tags: ["fallback redirection", "page", "load", "initial"],
+                    source: "site_entry",
+                });
                 router.push('/all-workwear');
             }
-        }, 4000); // 4s max wait
+        }, 2000); // 4s max wait
 
         return () => clearTimeout(fallbackTimer);
-    }, [hasRedirected, router]);
+    }, [hasRedirected, router, fullPath]);
 
 
     // Optional loading state

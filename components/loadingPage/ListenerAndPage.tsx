@@ -1,5 +1,6 @@
 'use client';
 
+import useCartPolling from '@/app/test2/useCartPolling';
 import useIsPhone from '@/hooks/usePhone';
 import { logEvent } from '@/lib/logger';
 import { Sparkles } from 'lucide-react';
@@ -16,6 +17,7 @@ const ListenerLoading = () => {
     // const [isIframeReady, setIsIframeReady] = useState(false);
     const router = useRouter();
     const isPhone = useIsPhone();
+    useCartPolling(500); // Custom hook for cart polling
     console.log('isPhone:', isPhone);
 
     // Centralized function for logging page load events

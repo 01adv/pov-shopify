@@ -363,7 +363,7 @@ export function AssistantChat() {
             >
               <div className="">
                 <span className=" flex justify-end w-full">
-                  <button onClick={() => { setIsExpanded(false); setNudge(''); setLatestResponse('') }}>
+                  <button className="cursor-pointer" onClick={() => { setIsExpanded(false); setNudge(''); setLatestResponse(''); setWelcomeMessageSeen(true) }}>
                     <X className=" text-muted-foreground/40" size={12} />
                   </button>
                 </span>

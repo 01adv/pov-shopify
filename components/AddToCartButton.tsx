@@ -22,10 +22,10 @@ type AddToCartButtonProps = {
 
 const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl, variantAvailable }: AddToCartButtonProps) => {
     const [isCartOpen, setIsCartOpen] = useState(false)
-    const { setItemCount, itemCount: cartCount } = useProductContext();
+    const { setItemCount, } = useProductContext();
     // const router = useRouter();
     const [error, setError] = useState<string | null>(null);
-    useCartPolling(6000); // Poll every 6 seconds
+    useCartPolling(5000); // Poll every 6 seconds
     console.log('passed variatId', variantId)
     const parentOrigin = `${process.env.NEXT_PUBLIC_SHOPIFY_URL}`; // Replace with your Shopify store's domain (e.g., 'https://your-store.myshopify.com')
 
@@ -65,7 +65,7 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
 
             if (type === 'CART_INFO') {
                 const { itemCount } = payload;
-                setItemCount(cartCount + itemCount);
+                // setItemCount(cartCount + itemCount);
                 console.log('Updated cart count:', itemCount);
             } else if (type === 'CART_ERROR') {
                 const { error } = payload;

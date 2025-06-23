@@ -19,25 +19,7 @@ const ListenerLoading = () => {
 
     // const [isIframeReady, setIsIframeReady] = useState(false);
     const router = useRouter();
-    const isPhone = useIsPhone();
-
-
-
-
-    // useEffect(() => {
-    //     const bootstrapListener = (event: MessageEvent) => {
-    //         if (event.origin !== process.env.NEXT_PUBLIC_SHOPIFY_URL) return;
-
-    //         const { type } = event.data || {};
-    //         if (type === 'IFRAME_OPENED') {
-    //             console.log('✅ IFRAME_OPENED received');
-    //             setIsIframeReady(true);
-    //         }
-    //     };
-
-    //     window.addEventListener('message', bootstrapListener);
-    //     return () => window.removeEventListener('message', bootstrapListener);
-    // }, []);
+    const isPhone = useIsPhone()
 
 
 
@@ -169,6 +151,8 @@ const ListenerLoading = () => {
 
     // loading fallback
     useEffect(() => {
+        if (typeof window === "undefined") return; // SSR-safe fallback
+
         const fallbackTimer = setTimeout(() => {
             if (!hasRedirected) {
                 console.warn("Fallback timeout triggered, redirecting to default");

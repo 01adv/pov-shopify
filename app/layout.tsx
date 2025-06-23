@@ -27,14 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${quicksand.variable} font-sans`}>
+      <body className={`${quicksand.variable} font-sans min-h-screen overflow-x-hidden flex flex-col`}>
         <ProductProvider>
           <Header />
           {/* <ChatBot /> */}
           <AssistantChat />
-          {/* <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange> */}
           {children}
-          {/* </ThemeProvider> */}
         </ProductProvider>
       </body>
     </html>

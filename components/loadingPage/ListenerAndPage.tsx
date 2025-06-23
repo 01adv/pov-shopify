@@ -152,24 +152,24 @@ const ListenerLoading = () => {
 
 
     // loading fallback
-    useEffect(() => {
-        if (typeof window === "undefined") return; // SSR-safe fallback
+    // useEffect(() => {
+    //     if (typeof window === "undefined") return; // SSR-safe fallback
 
-        const fallbackTimer = setTimeout(() => {
-            if (!hasRedirected) {
-                console.warn("Fallback timeout triggered, redirecting to default");
-                logEvent("agent_loaded", {
-                    event: "page_load",
-                    page_path: fullPath,
-                    tags: ["fallback redirection", "page", "load", "initial"],
-                    source: "site_entry",
-                });
-                router.push('/all-workwear');
-            }
-        }, 2000); // 4s max wait
+    //     const fallbackTimer = setTimeout(() => {
+    //         if (!hasRedirected) {
+    //             console.warn("Fallback timeout triggered, redirecting to default");
+    //             logEvent("agent_loaded", {
+    //                 event: "page_load",
+    //                 page_path: fullPath,
+    //                 tags: ["fallback redirection", "page", "load", "initial"],
+    //                 source: "site_entry",
+    //             });
+    //             router.push('/all-workwear');
+    //         }
+    //     }, 2000); // 4s max wait
 
-        return () => clearTimeout(fallbackTimer);
-    }, [hasRedirected, router, fullPath]);
+    //     return () => clearTimeout(fallbackTimer);
+    // }, [hasRedirected, router, fullPath]);
 
 
     // Optional loading state

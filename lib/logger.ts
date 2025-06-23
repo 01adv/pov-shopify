@@ -99,11 +99,11 @@
 "use client";
 import { getOrCreateSessionId } from "./helpers";
 
-// interface DeviceInfo {
-//   browser: string;
-//   os: string;
-//   screen: string;
-// }
+interface DeviceInfo {
+  // browser: string;
+  // os: string;
+  screen: string;
+}
 
 interface ConversationLogData {
   event: string;
@@ -118,11 +118,11 @@ interface ConversationLogData {
 
 type LogData = ConversationLogData | Record<string, any>;
 
-// const getDeviceInfo = (): DeviceInfo => ({
-//   browser: navigator.userAgent,
-//   os: navigator.platform,
-//   screen: `${window.screen.width}x${window.screen.height}`,
-// });
+const getDeviceInfo = (): DeviceInfo => ({
+  // browser: navigator.userAgent,
+  // os: navigator.platform,
+  screen: `${window.screen.width}x${window.screen.height}`,
+});
 
 export const logEvent = async (
   logType: string,
@@ -140,7 +140,7 @@ export const logEvent = async (
     userId,
     logType,
     data,
-    // deviceInfo: getDeviceInfo(),
+    deviceInfo: getDeviceInfo(),
     targetEndpoint: logEndpoint,
   });
 
@@ -153,7 +153,7 @@ export const logEvent = async (
         userId,
         logType,
         data,
-        // deviceInfo: getDeviceInfo(),
+        deviceInfo: getDeviceInfo(),
       }),
     });
 
@@ -178,7 +178,7 @@ export const logEvent = async (
             userId,
             logType,
             data,
-            // deviceInfo: getDeviceInfo(),
+            deviceInfo: getDeviceInfo(),
           }),
         });
         if (!retryResponse.ok) {

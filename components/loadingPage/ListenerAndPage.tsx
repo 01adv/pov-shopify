@@ -1,12 +1,15 @@
+
+
 'use client';
 
-import useCartPolling from '@/app/test2/useCartPolling';
 import useIsPhone from '@/hooks/usePhone';
 import { logEvent } from '@/lib/logger';
 import { Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { RingLoader } from 'react-spinners';
+
+
 
 const ListenerLoading = () => {
     const [pageName, setPageName] = useState('unknown-page');
@@ -16,21 +19,9 @@ const ListenerLoading = () => {
 
     // const [isIframeReady, setIsIframeReady] = useState(false);
     const router = useRouter();
-    const isPhone = useIsPhone();
-    useCartPolling(500); // Custom hook for cart polling
-    console.log('isPhone:', isPhone);
+    const isPhone = useIsPhone()
 
-    // Centralized function for logging page load events
-    const logPageLoad = (pagePath: string, isFallback: boolean = false) => {
-        if (typeof window === "undefined") return; // SSR-safe fallback
-        logEvent("agent_loaded", {
-            event: "page_load",
-            page_path: pagePath,
-            tags: ["page", "load", "initial"].concat(isFallback ? ["fallback_redirection"] : []),
-            source: "site_entry",
-            device: isPhone ? "mobile" : "desktop",
-        });
-    };
+
 
     // Listen for both PAGE_INFO and CUSTOMER_INFO
     useEffect(() => {
@@ -68,6 +59,9 @@ const ListenerLoading = () => {
                 setTimeout(() => setIsLoading(false), 800);
             }
 
+
+
+
         };
 
         window.addEventListener('message', handleMessage);
@@ -80,38 +74,79 @@ const ListenerLoading = () => {
 
         setHasRedirected(true);
 
+
         if (fullPath === '/') {
-            logPageLoad("all-workwear");
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: "all-workwear",
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
             router.push('/all-workwear');
         } else if (pageName === "resilience-tailored") {
-            logPageLoad("resilience-tailored");
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: "resilience-tailored",
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
             router.push('/collections/resilience-tailored');
         }
         else if (pageName === "work-dresses-for-women") {
-            logPageLoad("work-dresses-for-women");
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: "work-dresses-for-women",
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
             router.push('/collections/dresses');
         }
         else if (pageName === "womens-workwear-blouses") {
-            logPageLoad("womens-workwear-blouses");
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: "womens-workwear-blouses",
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
             router.push('/collections/jackets');
         }
         else if (pageName === "womens-power-suit") {
-            logPageLoad("womens-power-suit");
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: "womens-power-suit",
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
             router.push('/collections/suits');
         }
         else if (pageName === "dress-pants-for-women") {
-            logPageLoad("dress-pants-for-women");
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: "dress-pants-for-women",
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
             router.push('/collections/pants');
         }
         else if (pageName === 'cart') {
-            logPageLoad("cart");
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: "cart",
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
             router.push('/ai-curation');
         }
         else {
-            logPageLoad(fullPath);
-            router.push('/all-workwear'); // Default redirect if no specific match
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: fullPath,
+                tags: ["page", "load", "initial"],
+                source: "site_entry",
+            });
+            router.push('/all-workwear');
         }
-    }, [isLoading, fullPath, pageName, router, hasRedirected]); // Removed logPageLoad from deps as it's defined in the component scope and doesn't change
+    }, [isLoading, fullPath, pageName, router, hasRedirected]);
 
 
     // loading fallback
@@ -121,13 +156,18 @@ const ListenerLoading = () => {
         const fallbackTimer = setTimeout(() => {
             if (!hasRedirected) {
                 console.warn("Fallback timeout triggered, redirecting to default");
-                logPageLoad(fullPath, true); // Use the centralized logger with fallback indication
+                logEvent("agent_loaded", {
+                    event: "page_load",
+                    page_path: fullPath,
+                    tags: ["fallback redirection", "page", "load", "initial"],
+                    source: "site_entry",
+                });
                 router.push('/all-workwear');
             }
-        }, 2000); // 2s max wait, was 4s
+        }, 2000); // 4s max wait
 
         return () => clearTimeout(fallbackTimer);
-    }, [hasRedirected, router, fullPath]); // Removed logPageLoad from deps
+    }, [hasRedirected, router, fullPath]);
 
 
     // Optional loading state

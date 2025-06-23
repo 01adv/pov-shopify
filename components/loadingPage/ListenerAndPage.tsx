@@ -166,6 +166,20 @@ const ListenerLoading = () => {
         }
     }, [isLoading, fullPath, pageName, router, hasRedirected]);
 
+
+    // loading fallback
+    useEffect(() => {
+        const fallbackTimer = setTimeout(() => {
+            if (!hasRedirected) {
+                console.warn("Fallback timeout triggered, redirecting to default");
+                router.push('/all-workwear');
+            }
+        }, 4000); // 4s max wait
+
+        return () => clearTimeout(fallbackTimer);
+    }, [hasRedirected, router]);
+
+
     // Optional loading state
     if (isLoading) {
         return (

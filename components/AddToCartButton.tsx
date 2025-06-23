@@ -22,7 +22,7 @@ type AddToCartButtonProps = {
 
 const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl, variantAvailable }: AddToCartButtonProps) => {
     const [isCartOpen, setIsCartOpen] = useState(false)
-    const { setItemCount } = useProductContext();
+    const { setItemCount, itemCount: cartCount } = useProductContext();
     // const router = useRouter();
     const [error, setError] = useState<string | null>(null);
     useCartPolling(6000); // Poll every 6 seconds
@@ -65,7 +65,7 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
 
             if (type === 'CART_INFO') {
                 const { itemCount } = payload;
-                setItemCount(itemCount);
+                setItemCount(cartCount + itemCount);
                 console.log('Updated cart count:', itemCount);
             } else if (type === 'CART_ERROR') {
                 const { error } = payload;

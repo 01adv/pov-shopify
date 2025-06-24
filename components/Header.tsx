@@ -106,7 +106,7 @@ const Header = () => {
     };
 
     return (
-        <div className='sticky top-0 z-50 '>
+        <div className='fixed w-full top-0 z-50 '>
             <div className=" bg-primary py-2 md:py-3 text-center text-xs md:text-[13px] tracking-wider">
                 FREE SHIPPING ON ALL ORDERS
             </div>

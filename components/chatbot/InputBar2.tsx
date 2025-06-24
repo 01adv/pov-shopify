@@ -31,10 +31,20 @@ export const InputBar: React.FC<InputBarProps> = ({
     const lastInteractionRef = useRef(Date.now());
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const isPhone = useIsPhone();
+    const [simplePlaceholderTexts, setSimplePlaceholderTexts] = useState<string[]>([]);
+
+    // initalize isphone in useeffect
+    useEffect(() => {
+        if (isPhone) {
+            setSimplePlaceholderTexts(mobilePlaceholderTexts);
+        } else {
+            setSimplePlaceholderTexts(placeholderTexts);
+        }
+    }, [isPhone]);
 
     // Function to get a random placeholder
     const getRandomPlaceholder = () => {
-        const simplePlaceholderTexts = isPhone ? mobilePlaceholderTexts : placeholderTexts
+        // const simplePlaceholderTexts = isPhone ? mobilePlaceholderTexts : placeholderTexts
         const texts = isProductDetailsPage ? productPagePlaceholderTexts : simplePlaceholderTexts;
         const randomIndex = Math.floor(Math.random() * texts.length);
         return texts[randomIndex];
@@ -118,7 +128,7 @@ export const InputBar: React.FC<InputBarProps> = ({
                 onKeyDown={handleKeyDown}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
-                placeholder={`${isPhone}"${currentPlaceholder}...`}
+                placeholder={`"${currentPlaceholder}...`}
                 className="flex-1 border-none bg-transparent shadow-none outline-none placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-sm max-md:placeholder:tracking-tighter placeholder:font-medium placeholder:italic"
             />
             <Button

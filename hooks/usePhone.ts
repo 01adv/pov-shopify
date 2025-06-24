@@ -1,9 +1,11 @@
+"use client";
 import { useState, useEffect } from "react";
 
 const useIsPhone = () => {
   const [isPhone, setIsPhone] = useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     const mediaQuery = window.matchMedia("(max-width: 600px)");
 
     const handleChange = () => {

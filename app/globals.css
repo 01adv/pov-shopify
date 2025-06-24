@@ -138,22 +138,3 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
 }
-
-/* Ensure proper mobile viewport handling */
-html {
-  height: 100%;
-  height: 100vh;
-  height: 100dvh; /* Dynamic viewport height for better mobile support */
-}
-
-body {
-  height: 100%;
-  height: 100vh;
-  height: 100dvh;
-  overflow: hidden; /* Prevent body scroll on mobile */
-}
-
-/* Safe area support for devices with notches */
-.safe-area-pb {
-  padding-bottom: env(safe-area-inset-bottom);
-}

@@ -23,11 +23,11 @@ export const productPagePlaceholderTexts = [
 ];
 
 export const mobilePlaceholderTexts = [
-  "Work-ish but not boring!",
-  "Make a statement at work",
-  "Work jackets, but versatile",
-  "Dresses, but no flares!",
-  "Tops, only sleeveless please!",
-  "Classy Friday night outfit",
-  "Cute brunch wear, no bold colors",
+  " Work-ish but not boring!",
+  " Make a statement at work",
+  " Work jackets, but versatile",
+  " Dresses, but no flares!",
+  " Tops, only sleeveless please!",
+  " Classy Friday night outfit",
+  " Cute brunch wear, no bold colors",
 ];

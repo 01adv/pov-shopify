@@ -349,11 +349,16 @@ export function AssistantChat() {
 
 
   return (
-    <div className={` z-40 fixed  px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none`}
+    <div className={` z-40 fixed bottom-8 px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none safe-area-pb`}
+
+      // style={{
+      //   paddingBottom: keyboardHeight > 0 ? `${keyboardHeight + 32}px` : "20px",
+      //   bottom: keyboardHeight > 0 ? "env(safe-area-inset-bottom, 0px)" : "calc(env(safe-area-inset-bottom, 0px) + 2rem)"
+      // }}
 
       style={{
-        paddingBottom: keyboardHeight > 0 ? `${keyboardHeight + 32}px` : "20px",
-        bottom: keyboardHeight > 0 ? "env(safe-area-inset-bottom, 0px)" : "calc(env(safe-area-inset-bottom, 0px) + 2rem)"
+        transform: keyboardHeight > 0 ? `translateY(-${keyboardHeight}px)` : "translateY(0)",
+        transition: "transform 0.2s ease-in-out",
       }}
 
     >

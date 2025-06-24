@@ -367,8 +367,8 @@ export function AssistantChat() {
       //     : "calc(env(safe-area-inset-bottom, 0px) + 2rem)",
       // }}
       style={{
-        paddingBottom: keyboardHeight > 0 ? `${keyboardHeight + 80}px` : "80px",
-        bottom: "calc(env(safe-area-inset-bottom, 0px) + 2rem)"
+        paddingBottom: keyboardHeight > 0 ? `${keyboardHeight + 40}px` : "4px",
+        bottom: "calc(env(safe-area-inset-bottom, 0px) + 1.8rem)"
       }}
 
     >

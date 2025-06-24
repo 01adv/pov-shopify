@@ -107,12 +107,12 @@ const Header = () => {
 
     return (
         <div className='sticky top-0 z-50 '>
-            <div className=" bg-primary py-3 text-center text-[13px] tracking-wider">
+            <div className=" bg-primary py-2 md:py-3 text-center text-xs md:text-[13px] tracking-wider">
                 FREE SHIPPING ON ALL ORDERS
             </div>
 
             <header className="bg-secondary relative">
-                <div className="mx-auto flex max-w-6xl px-3 md:px-6 py-6 xl:px-7 items-center justify-between relative">
+                <div className="mx-auto flex max-w-6xl py-4 md:py-6 px-3 md:px-6 xl:px-7 items-center justify-between relative">
                     <nav className="hidden lg:flex items-center gap-8">
                         <div className="group relative">
                             <Link

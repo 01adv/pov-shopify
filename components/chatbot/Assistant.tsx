@@ -49,8 +49,7 @@ export function AssistantChat() {
   //related to welcome message
   const welcomeSeen = getWelcomeMessageSeen();
   const [currentHeading, setCurrentHeading] = useState(Headings[0]);
-  // const [isKeyboardOpen, setKeyboardOpen] = useState(false);
-  // const [welcomeSeen, setWelcomeSeen] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0)
   const MIN_CHAT_HEIGHT = 140; // Minimum height including input bar
   const MAX_CHAT_HEIGHT = 560; // Maximum card height
   const HEADER_HEIGHT = 65; // Header + border
@@ -320,16 +319,7 @@ export function AssistantChat() {
 
   const shouldScroll = chatHeight === MAX_CHAT_HEIGHT;
 
-  // useEffect(() => {
-  //   const onResize = () => {
-  //     const isKeyboardOpen = window.innerHeight < screen.height - 100;
-  //     setKeyboardOpen(isKeyboardOpen);
-  //   };
 
-  //   window.addEventListener('resize', onResize);
-  //   return () => window.removeEventListener('resize', onResize);
-  // }, []);
-  const [keyboardHeight, setKeyboardHeight] = useState(0)
 
   useEffect(() => {
     const handleResize = () => {
@@ -360,15 +350,10 @@ export function AssistantChat() {
 
   return (
     <div className={` z-40 fixed  px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none`}
-      // style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 2rem)" }}
-      // style={{
-      //   bottom: isKeyboardOpen
-      //     ? "env(safe-area-inset-bottom, 0px)" // push up to visible area
-      //     : "calc(env(safe-area-inset-bottom, 0px) + 2rem)",
-      // }}
+
       style={{
-        paddingBottom: keyboardHeight > 0 ? `${keyboardHeight + 40}px` : "4px",
-        bottom: "calc(env(safe-area-inset-bottom, 0px) + 1.8rem)"
+        paddingBottom: keyboardHeight > 0 ? `${keyboardHeight + 8}px` : "4px",
+        bottom: "calc(env(safe-area-inset-bottom, 0px) + 1.5rem)"
       }}
 
     >

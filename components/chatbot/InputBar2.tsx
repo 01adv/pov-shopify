@@ -31,7 +31,7 @@ export const InputBar: React.FC<InputBarProps> = ({
     const lastInteractionRef = useRef(Date.now());
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const isPhone = useIsPhone();
-    const [simplePlaceholderTexts, setSimplePlaceholderTexts] = useState<string[]>([]);
+    const [simplePlaceholderTexts, setSimplePlaceholderTexts] = useState<string[]>(mobilePlaceholderTexts);
 
     // initalize isphone in useeffect
     useEffect(() => {

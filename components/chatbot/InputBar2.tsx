@@ -41,7 +41,6 @@ export const InputBar: React.FC<InputBarProps> = ({
             setSimplePlaceholderTexts(placeholderTexts);
         }
     }, [isPhone]);
-
     // Function to get a random placeholder
     const getRandomPlaceholder = () => {
         // const simplePlaceholderTexts = isPhone ? mobilePlaceholderTexts : placeholderTexts
@@ -74,7 +73,7 @@ export const InputBar: React.FC<InputBarProps> = ({
         startCycling();
 
         return () => stopCycling(); // Cleanup on unmount
-    }, [isProductDetailsPage]); // Add isProductDetailsPage, getRandomPlaceholder, and startCycling to dependency array
+    }, [isProductDetailsPage, isPhone, simplePlaceholderTexts]); // Add isProductDetailsPage, getRandomPlaceholder, and startCycling to dependency array
 
     // Handle user interaction (focus, typing, or blur)
     useEffect(() => {

@@ -1,5 +1,5 @@
 import { Product, Variant } from "@/components/Allworkwear";
-import rawProductData from "@/lib/all_products.json";
+import rawProductData from "@/lib/updated_all_products_24jun.json";
 
 export type OrderField = {
     [key: string]: number | undefined;

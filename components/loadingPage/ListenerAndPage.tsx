@@ -176,7 +176,7 @@ const ListenerLoading = () => {
     if (isLoading) {
         return (
             // <div className='absolute top-[50%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-sm:w-full px-4'>
-            <div className='flex max-w-2xl min-h-[calc(100vh-132px)] bg-orange-200 mx-auto flex-col  items-center justify-center  max-sm:w-full px-4 '>
+            <div className='flex max-w-2xl min-h-[calc(100vh-132px)] mx-auto flex-col  items-center justify-center  max-sm:w-full px-4 '>
                 <Sparkles size={60} className='text-primary inline-block mr-1 pb-3' />
                 <h1 className='text-xl md:text-3xl text-center max-sm:pt-10'>Your AI Personal Shopper is Loading...</h1>
                 <div className='flex justify-center pt-14'>

@@ -1,4 +1,5 @@
-import rawProducts from "@/lib/all_products.json";
+// import rawProducts from "@/lib/all_products.json";
+import rawProducts from "@/lib/updated_all_products_24jun.json";
 
 // Define the Product type
 export type Product = {

@@ -1,6 +1,5 @@
 
-// import rawProductData from "@/app/products.json";
-import rawProductData from "@/lib/all_products.json";
+import rawProductData from "@/lib/updated_all_products_24jun.json";
 import { ProductCard } from "./ProductCard";
 
 

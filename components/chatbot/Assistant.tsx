@@ -332,12 +332,12 @@ export function AssistantChat() {
 
 
   return (
-    <div className={` z-40 min-h-[calc(100vh-130px)] fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none`}
+    <div className={` z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none`}
       // style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 2rem)" }}
       style={{
         bottom: isKeyboardOpen
           ? "env(safe-area-inset-bottom, 0px)" // push up to visible area
-          : "calc(env(safe-area-inset-bottom, 0px) + 1.4rem)",
+          : "calc(env(safe-area-inset-bottom, 0px) + 1.8rem)",
       }}
 
     >

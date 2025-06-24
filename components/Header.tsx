@@ -106,8 +106,8 @@ const Header = () => {
     };
 
     return (
-        <div>
-            <div className="bg-primary py-3 text-center text-[13px] tracking-wider">
+        <div className='sticky top-0 z-50 '>
+            <div className=" bg-primary py-3 text-center text-[13px] tracking-wider">
                 FREE SHIPPING ON ALL ORDERS
             </div>
 

@@ -49,6 +49,7 @@ export function AssistantChat() {
   //related to welcome message
   const welcomeSeen = getWelcomeMessageSeen();
   const [currentHeading, setCurrentHeading] = useState(Headings[0]);
+  const [isKeyboardOpen, setKeyboardOpen] = useState(false);
   // const [welcomeSeen, setWelcomeSeen] = useState(false);
   const MIN_CHAT_HEIGHT = 140; // Minimum height including input bar
   const MAX_CHAT_HEIGHT = 560; // Maximum card height
@@ -319,11 +320,26 @@ export function AssistantChat() {
 
   const shouldScroll = chatHeight === MAX_CHAT_HEIGHT;
 
+  useEffect(() => {
+    const onResize = () => {
+      const isKeyboardOpen = window.innerHeight < screen.height - 100;
+      setKeyboardOpen(isKeyboardOpen);
+    };
+
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+
   return (
-    // <div className={` z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-center justify-center  pointer-events-none ${isPhone ? "bottom-[72px]" : "bottom-8"}`}
-    // <div className={` z-40  bg-orange-300 absolute md:fixed px-4 mx-auto lg:px-0 w-full flex items-center justify-center pointer-events-none ${isPhone ? "bottom-10" : "bottom-8"}`}
-    <div className={` z-40 min-h-[calc(100vh-150px)] fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none`}
-      style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 2rem)" }}
+    <div className={` z-40 min-h-[calc(100vh-130px)] fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none`}
+      // style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 2rem)" }}
+      style={{
+        bottom: isKeyboardOpen
+          ? "env(safe-area-inset-bottom, 0px)" // push up to visible area
+          : "calc(env(safe-area-inset-bottom, 0px) + 1.4rem)",
+      }}
+
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">
         {/* Product Popup */}

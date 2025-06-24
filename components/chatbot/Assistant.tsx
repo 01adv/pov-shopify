@@ -352,8 +352,8 @@ export function AssistantChat() {
     <div className={` z-40 fixed  px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none`}
 
       style={{
-        paddingBottom: keyboardHeight > 0 ? `${keyboardHeight + 8}px` : "4px",
-        bottom: keyboardHeight > 0 ? "env(safe-area-inset-bottom, 0px)" : "calc(env(safe-area-inset-bottom, 0px) + 1.5rem)"
+        paddingBottom: keyboardHeight > 0 ? `${keyboardHeight + 32}px` : "20px",
+        bottom: keyboardHeight > 0 ? "env(safe-area-inset-bottom, 0px)" : "calc(env(safe-area-inset-bottom, 0px) + 2rem)"
       }}
 
     >

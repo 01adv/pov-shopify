@@ -349,13 +349,13 @@ export function AssistantChat() {
 
 
   return (
-    <div className={` z-40 fixed  px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none`}
-
-      style={{
-        paddingBottom: keyboardHeight > 0 ? `${keyboardHeight + 36}px` : "24px",
-        bottom: keyboardHeight > 0 ? "env(safe-area-inset-bottom, 0px)" :
-          !isPhone ? "env(safe-area-inset-bottom, 0px)" : "calc(env(safe-area-inset-bottom, 0px) + 3rem)"
-      }}
+    <div className={` z-40 fixed bottom-8  px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none`}
+      style={{ bottom: "env(safe-area-inset-bottom, 0px)" }}
+    // style={{
+    //   paddingBottom: keyboardHeight > 0 ? `${keyboardHeight + 36}px` : "24px",
+    //   bottom: keyboardHeight > 0 ? "env(safe-area-inset-bottom, 0px)" :
+    //     !isPhone ? "env(safe-area-inset-bottom, 0px)" : "calc(env(safe-area-inset-bottom, 0px) + 3rem)"
+    // }}
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">
         {/* Product Popup */}

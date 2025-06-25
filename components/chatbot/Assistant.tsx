@@ -49,7 +49,7 @@ export function AssistantChat() {
   //related to welcome message
   const welcomeSeen = getWelcomeMessageSeen();
   const [currentHeading, setCurrentHeading] = useState(Headings[0]);
-  const [keyboardHeight, setKeyboardHeight] = useState(0)
+  // const [keyboardHeight, setKeyboardHeight] = useState(0)
   const MIN_CHAT_HEIGHT = 140; // Minimum height including input bar
   const MAX_CHAT_HEIGHT = 560; // Maximum card height
   const HEADER_HEIGHT = 65; // Header + border
@@ -321,31 +321,31 @@ export function AssistantChat() {
 
 
 
-  useEffect(() => {
-    const handleResize = () => {
-      // Detect keyboard on mobile by checking if viewport height changed significantly
-      const viewportHeight = window.visualViewport?.height || window.innerHeight
-      const windowHeight = window.innerHeight
-      const heightDifference = windowHeight - viewportHeight
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     // Detect keyboard on mobile by checking if viewport height changed significantly
+  //     const viewportHeight = window.visualViewport?.height || window.innerHeight
+  //     const windowHeight = window.innerHeight
+  //     const heightDifference = windowHeight - viewportHeight
 
-      // If height difference is significant (> 150px), keyboard is likely open
-      if (heightDifference > 150) {
-        setKeyboardHeight(heightDifference)
-      } else {
-        setKeyboardHeight(0)
-      }
-    }
+  //     // If height difference is significant (> 150px), keyboard is likely open
+  //     if (heightDifference > 150) {
+  //       setKeyboardHeight(heightDifference)
+  //     } else {
+  //       setKeyboardHeight(0)
+  //     }
+  //   }
 
-    // Listen for visual viewport changes (better for keyboard detection)
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener("resize", handleResize)
-      return () => window.visualViewport?.removeEventListener("resize", handleResize)
-    } else {
-      // Fallback for older browsers
-      window.addEventListener("resize", handleResize)
-      return () => window.removeEventListener("resize", handleResize)
-    }
-  }, [])
+  //   // Listen for visual viewport changes (better for keyboard detection)
+  //   if (window.visualViewport) {
+  //     window.visualViewport.addEventListener("resize", handleResize)
+  //     return () => window.visualViewport?.removeEventListener("resize", handleResize)
+  //   } else {
+  //     // Fallback for older browsers
+  //     window.addEventListener("resize", handleResize)
+  //     return () => window.removeEventListener("resize", handleResize)
+  //   }
+  // }, [])
 
 
   return (

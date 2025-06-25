@@ -359,12 +359,12 @@ export function AssistantChat() {
         top: (isExpanded || !welcomeSeen)
           ? isPhone
             ? keyboardHeight > 0
-              ? `calc(80% - ${keyboardHeight + (chatHeight * 4 / 5) + 8}px)`
-              : `calc(80% - ${chatHeight * 4 / 5}px)`
+              ? `calc(90% - ${keyboardHeight + (chatHeight * 4 / 5)}px)`
+              : `calc(90% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
             : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
           : isPhone
             ? keyboardHeight > 0
-              ? `calc(80% - ${keyboardHeight + 8}px)`
+              ? `calc(80% - ${keyboardHeight}px)`
               : '80%'
             : '90%',
       }}

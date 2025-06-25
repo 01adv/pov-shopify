@@ -357,8 +357,8 @@ export function AssistantChat() {
       style={{
         paddingBottom: isPhone
           ? keyboardHeight > 0
-            ? `${keyboardHeight + 24}px`
-            : '12px'
+            ? `${keyboardHeight + 32}px`
+            : '32px'
           : undefined,
         bottom: isPhone
           ? keyboardHeight > 0

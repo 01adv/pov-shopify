@@ -368,7 +368,7 @@ export function AssistantChat() {
       //       : '90%',
       // }}
       style={{
-        top: (!welcomeSeen)
+        top: (!welcomeSeen && !isHomePage)
           ? isPhone
             ? keyboardHeight > 0
               ? `calc(70% - ${keyboardHeight + 170}px)` // Lower top value for welcome message on phone

@@ -60,10 +60,7 @@ const ListenerLoading = () => {
                 setFullPath(fullPath);
                 setTimeout(() => setIsLoading(false), 800);
             }
-
-
-
-
+            setTimeout(() => setIsLoading(false), 2000);
         };
 
         window.addEventListener('message', handleMessage);

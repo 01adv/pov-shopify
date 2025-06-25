@@ -368,9 +368,9 @@ export function AssistantChat() {
       style={{
         top: isPhone
           ? keyboardHeight > 0
-            ? `calc(75% - ${keyboardHeight + 8}px)`
-            : '75%'
-          : '78%',
+            ? `calc(70% - ${keyboardHeight + 16}px)`
+            : '70%'
+          : '76%',
       }}
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">

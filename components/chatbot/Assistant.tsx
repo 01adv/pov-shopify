@@ -359,12 +359,12 @@ export function AssistantChat() {
           ? keyboardHeight > 0
             ? `${keyboardHeight + 12}px`
             : '24px'
-          : undefined,
+          : "32px",
         bottom: isPhone
           ? keyboardHeight > 0
             ? 'env(safe-area-inset-bottom, 0px)'
             : 'calc(env(safe-area-inset-bottom, 0px) + 2.4rem)'
-          : undefined,
+          : "32px",
       }}
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">

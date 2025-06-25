@@ -364,12 +364,12 @@ export function AssistantChat() {
     //   }}
     // >
     <div
-      className={`z-40 fixed pb-10 px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none transition-all duration-300 ease-in-out`}
+      className={`z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none transition-all duration-300 ease-in-out`}
       style={{
         top: isPhone
           ? keyboardHeight > 0
-            ? `calc(70% - ${keyboardHeight + 16}px)`
-            : '70%'
+            ? `calc(66% - ${keyboardHeight + 20}px)`
+            : '66%'
           : '76%',
       }}
     >

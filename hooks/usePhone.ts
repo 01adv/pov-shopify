@@ -26,26 +26,36 @@
 
 // export default useIsPhone;
 
+// "use client";
+// import { useEffect, useState } from "react";
+
+// const useIsPhone = () => {
+//   const [isPhone, setIsPhone] = useState(false);
+
+//   useEffect(() => {
+//     if (typeof window === "undefined") return;
+
+//     const checkIfPhone = () => {
+//       const width = window.innerWidth;
+//       setIsPhone(width <= 600); // Or any threshold you define as "phone"
+//     };
+
+//     checkIfPhone();
+
+//     window.addEventListener("resize", checkIfPhone);
+//     return () => window.removeEventListener("resize", checkIfPhone);
+//   }, []);
+
+//   return isPhone;
+// };
+
+// export default useIsPhone;
+
 "use client";
-import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 const useIsPhone = () => {
-  const [isPhone, setIsPhone] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const checkIfPhone = () => {
-      const width = window.innerWidth;
-      setIsPhone(width <= 600); // Or any threshold you define as "phone"
-    };
-
-    checkIfPhone();
-
-    window.addEventListener("resize", checkIfPhone);
-    return () => window.removeEventListener("resize", checkIfPhone);
-  }, []);
-
+  const isPhone = useMediaQuery({ maxWidth: 600 });
   return isPhone;
 };
 

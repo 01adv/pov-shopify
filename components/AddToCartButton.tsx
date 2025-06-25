@@ -4,7 +4,6 @@
 'use client';
 
 import useCartPolling from '@/app/test2/useCartPolling';
-import { useProductContext } from '@/hooks/useProduct';
 import { logEvent } from '@/lib/logger';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -22,7 +21,7 @@ type AddToCartButtonProps = {
 
 const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl, variantAvailable }: AddToCartButtonProps) => {
     const [isCartOpen, setIsCartOpen] = useState(false)
-    const { setItemCount, } = useProductContext();
+    // const { setItemCount, } = useProductContext();
     // const router = useRouter();
     const [error, setError] = useState<string | null>(null);
     useCartPolling(5000); // Poll every 6 seconds
@@ -80,7 +79,7 @@ const AddToCartButton = ({ variantId, quantity = 1, title, color, size, imageUrl
         // window.parent.postMessage({ type: 'GET_CART' }, parentOrigin);
 
         return () => window.removeEventListener('message', handleMessage);
-    }, [setItemCount, parentOrigin]);
+    }, [parentOrigin]);
 
 
     // Auto-close the popup after a delay

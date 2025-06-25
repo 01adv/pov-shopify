@@ -80,9 +80,12 @@ export function AssistantChat() {
       setNudge(""); // Clear nudge if not on product details page
       setShowNudge(false); // Ensure nudge is not shown
       setProductName(""); // Clear product name
+      if (!latestResponse) {
+        setIsExpanded(false); // Collapse chat if not on product details page
+      }
       return;
     }
-  }, [isProductDetailsPage, productName, setProductName]);
+  }, [isProductDetailsPage, setIsExpanded, latestResponse, productName, setProductName]);
 
   useEffect(() => {
     const fetchNudges = async () => {
@@ -99,6 +102,7 @@ export function AssistantChat() {
           setWelcomeMessageSeen(true);
         }
         setNudge(nudge || "");
+        setIsExpanded(true); // Expand chat if nudge is available
         if (nudge && setPersonalizedNudge) {
           setPersonalizedNudge(nudge);
         }
@@ -349,29 +353,28 @@ export function AssistantChat() {
 
 
   return (
-    // <div className={` z-40 fixed top-[78%] px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none`}
-    //   style={{
-    //     paddingBottom: isPhone
-    //       ? keyboardHeight > 0
-    //         ? `${keyboardHeight + 32}px`
-    //         : '32px'
-    //       : undefined,
-    //     bottom: isPhone
-    //       ? keyboardHeight > 0
-    //         ? 'env(safe-area-inset-bottom, 0px)'
-    //         : 'calc(env(safe-area-inset-bottom, 0px) + 3rem)'
-    //       : "32px",
-    //   }}
-    // >
     <div
-      className={`z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none transition-all duration-300 ease-in-out`}
+      className={`z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none transition-all duration-150 ease-in-out`}
       style={{
-        top: isPhone
-          ? keyboardHeight > 0
-            ? `calc(66% - ${keyboardHeight + 20}px)`
-            : '66%'
-          : '76%',
+        top: (isExpanded || !welcomeSeen)
+          ? isPhone
+            ? keyboardHeight > 0
+              ? `calc(80% - ${keyboardHeight + chatHeight + 8}px)`
+              : `calc(80% - ${chatHeight}px)`
+            : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+          : isPhone
+            ? keyboardHeight > 0
+              ? `calc(80% - ${keyboardHeight + 8}px)`
+              : '80%'
+            : '90%',
       }}
+    // style={{
+    //   top: isPhone
+    //     ? keyboardHeight > 0
+    //       ? `calc(66% - ${keyboardHeight + 20}px)`
+    //       : '66%'
+    //     : '76%',
+    // }}
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">
         {/* Product Popup */}

@@ -382,8 +382,8 @@ export function AssistantChat() {
               : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
             : isPhone
               ? keyboardHeight > 0
-                ? `calc(80% - ${keyboardHeight}px)`
-                : '84%'
+                ? `calc(82% - ${keyboardHeight}px)`
+                : '82%'
               : '90%',
       }}
     >

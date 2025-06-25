@@ -167,12 +167,15 @@ const Header = () => {
                         }
 
                     </nav>
-                    <Link
-                        href="/all-workwear"
+                    <a
+                        href="https://pointofviewlabel.com"
+                        aria-label="home page"
+                        target="_top"
+                        rel="noopener noreferrer"
                         className="text-2xl font-bold flex sm:absolute left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 pointer-events-auto"
                     >
                         <Image src="/logo.png" alt="Logo" width={90} height={60} />
-                    </Link>
+                    </a>
 
                     <div className="group relative block sm:hidden" onClick={handleAIGenClicked}>
                         <Link href="/ai-curation">

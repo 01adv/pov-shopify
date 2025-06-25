@@ -21,7 +21,7 @@ const ListenerLoading = () => {
     // const [isIframeReady, setIsIframeReady] = useState(false);
     const router = useRouter();
     const isPhone = useIsPhone()
-    useCartPolling(1000); // Polling every 1 second
+    useCartPolling(5000); // Polling every 1 second
 
 
 

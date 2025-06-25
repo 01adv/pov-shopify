@@ -351,30 +351,41 @@ export function AssistantChat() {
     }
   }, [])
 
-
   return (
     <div
       className={`z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none transition-all duration-150 ease-in-out`}
+      // style={{
+      //   top: (isExpanded || !welcomeSeen)
+      //     ? isPhone
+      //       ? keyboardHeight > 0
+      //         ? `calc(90% - ${keyboardHeight + (chatHeight * 4 / 5)}px)`
+      //         : `calc(90% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+      //       : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+      //     : isPhone
+      //       ? keyboardHeight > 0
+      //         ? `calc(80% - ${keyboardHeight}px)`
+      //         : '80%'
+      //       : '90%',
+      // }}
       style={{
-        top: (isExpanded || !welcomeSeen)
+        top: (!welcomeSeen && !isHomePage)
           ? isPhone
             ? keyboardHeight > 0
-              ? `calc(90% - ${keyboardHeight + (chatHeight * 4 / 5)}px)`
-              : `calc(90% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
-            : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
-          : isPhone
-            ? keyboardHeight > 0
-              ? `calc(80% - ${keyboardHeight}px)`
-              : '80%'
-            : '90%',
+              ? `calc(70% - ${keyboardHeight}px)`
+              : '70%'
+            : '80%'
+          : (isExpanded)
+            ? isPhone
+              ? keyboardHeight > 0
+                ? `calc(90% - ${keyboardHeight + (chatHeight * 4 / 5)}px)`
+                : `calc(90% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+              : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+            : isPhone
+              ? keyboardHeight > 0
+                ? `calc(80% - ${keyboardHeight}px)`
+                : '80%'
+              : '90%',
       }}
-    // style={{
-    //   top: isPhone
-    //     ? keyboardHeight > 0
-    //       ? `calc(66% - ${keyboardHeight + 20}px)`
-    //       : '66%'
-    //     : '76%',
-    // }}
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">
         {/* Product Popup */}

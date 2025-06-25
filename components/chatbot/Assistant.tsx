@@ -349,22 +349,28 @@ export function AssistantChat() {
 
 
   return (
-    <div className={` z-40 fixed  px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none`}
-      // style={{
-      //   paddingBottom: keyboardHeight > 0 ? `${keyboardHeight + 12}px` : "24px",
-      //   bottom: keyboardHeight > 0 ? "env(safe-area-inset-bottom, 0px)" : "calc(env(safe-area-inset-bottom, 0px) + 3rem)"
-      // }}
+    // <div className={` z-40 fixed top-[78%] px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none`}
+    //   style={{
+    //     paddingBottom: isPhone
+    //       ? keyboardHeight > 0
+    //         ? `${keyboardHeight + 32}px`
+    //         : '32px'
+    //       : undefined,
+    //     bottom: isPhone
+    //       ? keyboardHeight > 0
+    //         ? 'env(safe-area-inset-bottom, 0px)'
+    //         : 'calc(env(safe-area-inset-bottom, 0px) + 3rem)'
+    //       : "32px",
+    //   }}
+    // >
+    <div
+      className={`z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none transition-all duration-300 ease-in-out`}
       style={{
-        paddingBottom: isPhone
+        top: isPhone
           ? keyboardHeight > 0
-            ? `${keyboardHeight + 32}px`
-            : '32px'
-          : undefined,
-        bottom: isPhone
-          ? keyboardHeight > 0
-            ? 'env(safe-area-inset-bottom, 0px)'
-            : 'calc(env(safe-area-inset-bottom, 0px) + 3rem)'
-          : "32px",
+            ? `calc(78% - ${keyboardHeight}px)`
+            : '78%'
+          : '78%',
       }}
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">

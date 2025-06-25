@@ -329,7 +329,7 @@ export function AssistantChat() {
       const heightDifference = windowHeight - viewportHeight
 
       // If height difference is significant (> 150px), keyboard is likely open
-      if (heightDifference > 150) {
+      if (heightDifference > 100) {
         setKeyboardHeight(heightDifference)
       } else {
         setKeyboardHeight(0)
@@ -358,8 +358,8 @@ export function AssistantChat() {
         paddingBottom: isPhone
           ? keyboardHeight > 0
             ? `${keyboardHeight + 12}px`
-            : '24px'
-          : "32px",
+            : '8px'
+          : undefined,
         bottom: isPhone
           ? keyboardHeight > 0
             ? 'env(safe-area-inset-bottom, 0px)'

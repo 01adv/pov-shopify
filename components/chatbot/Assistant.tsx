@@ -371,9 +371,9 @@ export function AssistantChat() {
         top: (!welcomeSeen && !isHomePage)
           ? isPhone
             ? keyboardHeight > 0
-              ? `calc(70% - ${keyboardHeight}px)`
-              : '70%'
-            : '80%'
+              ? `calc(70% - ${keyboardHeight + 176}px)` // Lower top value for welcome message on phone
+              : '68%' // Lower top value for welcome message on phone
+            : '75%' // Lower top value for welcome message on desktop
           : (isExpanded)
             ? isPhone
               ? keyboardHeight > 0

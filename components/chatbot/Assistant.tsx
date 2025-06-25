@@ -357,13 +357,13 @@ export function AssistantChat() {
       style={{
         paddingBottom: isPhone
           ? keyboardHeight > 0
-            ? `${keyboardHeight + 12}px`
-            : '8px'
+            ? `${keyboardHeight + 24}px`
+            : '12px'
           : undefined,
         bottom: isPhone
           ? keyboardHeight > 0
             ? 'env(safe-area-inset-bottom, 0px)'
-            : 'calc(env(safe-area-inset-bottom, 0px) + 2.4rem)'
+            : 'calc(env(safe-area-inset-bottom, 0px) + 3rem)'
           : "32px",
       }}
     >

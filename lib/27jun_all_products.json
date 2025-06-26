@@ -14,6 +14,9 @@
             "Pants",
             "wbs2025"
         ],
+        "order": {
+            "new": 5
+        },
         "variants": [
             {
                 "id": 51316704706863,
@@ -493,6 +496,9 @@
             "Jackets",
             "wbs2025"
         ],
+        "order": {
+            "new": 1
+        },
         "variants": [
             {
                 "id": 51313954750767,
@@ -922,6 +928,9 @@
             "Jackets",
             "wbs2025"
         ],
+        "order": {
+            "new": 3
+        },
         "variants": [
             {
                 "id": 51313936498991,
@@ -1395,6 +1404,9 @@
             "Jackets",
             "WBS2025"
         ],
+        "order": {
+            "new": 4
+        },
         "variants": [
             {
                 "id": 51313931911471,
@@ -1802,6 +1814,9 @@
             "Jackets",
             "wbs2025"
         ],
+        "order": {
+            "new": 0
+        },
         "variants": [
             {
                 "id": 51313832493359,
@@ -2262,6 +2277,9 @@
         "tags": [
             "bundles"
         ],
+        "order": {
+            "suit": 5
+        },
         "variants": [
             {
                 "id": 51152690708783,
@@ -2470,6 +2488,9 @@
         "tags": [
             "bundles"
         ],
+        "order": {
+            "suit": 0
+        },
         "variants": [
             {
                 "id": 51080976728367,
@@ -3192,6 +3213,9 @@
         "tags": [
             "bundles"
         ],
+        "order": {
+            "suit": 1
+        },
         "variants": [
             {
                 "id": 50679786766639,
@@ -4296,6 +4320,9 @@
         "tags": [
             "bundles"
         ],
+        "order": {
+            "suit": 3
+        },
         "variants": [
             {
                 "id": 50679694000431,
@@ -6570,6 +6597,9 @@
         "tags": [
             "bundles"
         ],
+        "order": {
+            "suit": 2
+        },
         "variants": [
             {
                 "id": 50677507522863,
@@ -9045,6 +9075,9 @@
             "dress",
             "dresses"
         ],
+        "order": {
+            "dress": 2
+        },
         "variants": [
             {
                 "id": 50136115085615,
@@ -9525,6 +9558,9 @@
             "Pants",
             "wbs2025"
         ],
+        "order": {
+            "new": 6
+        },
         "variants": [
             {
                 "id": 51351932797231,
@@ -12001,6 +12037,9 @@
             "dress",
             "dresses"
         ],
+        "order": {
+            "dress": 7
+        },
         "variants": [
             {
                 "id": 50006518759727,
@@ -12535,6 +12574,9 @@
             "dress",
             "dresses"
         ],
+        "order": {
+            "dress": 3
+        },
         "variants": [
             {
                 "id": 50006517907759,
@@ -13047,6 +13089,9 @@
             "dress",
             "dresses"
         ],
+        "order": {
+            "dress": 0
+        },
         "variants": [
             {
                 "id": 50006511976751,
@@ -13559,6 +13604,9 @@
             "dress",
             "dresses"
         ],
+        "order": {
+            "dress": 1
+        },
         "variants": [
             {
                 "id": 50006505718063,
@@ -14094,6 +14142,9 @@
             "Jan2023",
             "wbs2025"
         ],
+        "order": {
+            "new": 2
+        },
         "variants": [
             {
                 "id": 51344013918511,
@@ -15000,6 +15051,9 @@
             "dresses",
             "Jan2023"
         ],
+        "order": {
+            "dress": 5
+        },
         "variants": [
             {
                 "id": 50448220848431,
@@ -15447,6 +15501,9 @@
             "dresses",
             "Jan2023"
         ],
+        "order": {
+            "dress": 6
+        },
         "variants": [
             {
                 "id": 48166709264687,
@@ -15949,6 +16006,9 @@
             "dresses",
             "Jan2023"
         ],
+        "order": {
+            "dress": 4
+        },
         "variants": [
             {
                 "id": 48166993527087,
@@ -16450,6 +16510,9 @@
             "dresses",
             "Jan2023"
         ],
+        "order": {
+            "dress": 8
+        },
         "variants": [
             {
                 "id": 48166968787247,

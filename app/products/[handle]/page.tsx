@@ -2,7 +2,7 @@ import AddToCartButton from "@/components/AddToCartButton";
 import CustomerReviews from "@/components/CustomerReviews";
 import ProductGallery from "@/components/Gallery";
 import { Badge } from "@/components/ui/badge";
-import rawProductData from "@/lib/updated_all_products_24jun.json";
+import rawProductData from "@/lib/27jun_all_products.json";
 import { getHexCode } from "@/lib/colorHexMap";
 import { ChevronDown, Circle, Truck } from "lucide-react";
 import Image from "next/image";

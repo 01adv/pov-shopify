@@ -1,5 +1,5 @@
 
-import rawProductData from "@/lib/updated_all_products_24jun.json";
+import rawProductData from "@/lib/27jun_all_products.json";
 import { ProductCard } from "./ProductCard";
 
 
@@ -143,7 +143,7 @@ export default function AllWorkWear() {
                     <div className="space-y-5 md:mt-4 ">
                         <h1 className="text-[40px]">All Workwear</h1>
                         {/* <div className="block md:hidden"><ChatBot /></div> */}
-                        <p className="hidden md:block text-muted-foreground/75 max-w-md lg:max-w-3xl text-lg tracking-wide">
+                        <p className=" text-muted-foreground/75 max-w-md lg:max-w-3xl md:text-lg tracking-wide">
                             As seen on TV, functional workwear with POCKETS for women! Designer
                             corporate wear without the designer price. #pocketspledge
                         </p>

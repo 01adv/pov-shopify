@@ -71,7 +71,7 @@ export default async function CollectionPage({ params }: PageProps) { // Changed
                     <div className="space-y-5 my-4 max-md:sticky top-0 max-md:z-40 bg-white pb-1">
                         {/* <h1 className="text-[30px] lg:text-[40px]">{collectionInfo.title}</h1> */}
                         <h1 className="text-[40px]">{collectionInfo.title}</h1>
-                        <p className="hidden md:block text-muted-foreground/75 max-w-lg xl:max-w-3xl xl:pr-12 text-lg tracking-wide ">
+                        <p className=" text-muted-foreground/75 max-w-lg xl:max-w-3xl xl:pr-12 md:text-lg tracking-wide ">
                             {collectionInfo.description}
                         </p>
                     </div>

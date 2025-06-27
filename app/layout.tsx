@@ -38,10 +38,10 @@ export default function RootLayout({
         style={{ height: "calc(var(--vh, 1vh) * 100)", overflow: "hidden" }} // ← Crucial
       >
         <ProductProvider>
-          <Header />
           {/* <ChatBot /> */}
           <AssistantChat />
           <div className="h-full overflow-y-auto">
+            <Header />
             {children}
           </div>
         </ProductProvider>

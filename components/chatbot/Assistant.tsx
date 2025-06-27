@@ -398,7 +398,7 @@ export function AssistantChat() {
         bottom: isPhone
           ? keyboardHeight > 0
             ? "env(safe-area-inset-bottom, 0px)"
-            : "calc(env(safe-area-inset-bottom, 0px) + 3rem)"
+            : "calc(env(safe-area-inset-bottom, 0px) + 2.5rem)"
           : keyboardHeight > 0
             ? "env(safe-area-inset-bottom, 0px)"
             : "calc(env(safe-area-inset-bottom, 0px) + 2rem)"

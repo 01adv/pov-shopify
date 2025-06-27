@@ -1,8 +1,7 @@
-'use client'
 import Header from "@/components/Header";
 import { AssistantChat } from "@/components/chatbot/Assistant";
 import { ProductProvider } from "@/hooks/useProduct";
-import { useRealViewportHeight } from "@/hooks/useRealViewportHeight";
+import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import type React from "react";
 import "./globals.css";
@@ -16,34 +15,27 @@ const quicksand = Quicksand({
   display: "swap",
 });
 
-// export const metadata: Metadata = {
-//   title: "POV - Women's Workwear",
-//   description: "Functional workwear with pockets for women",
-// };
+export const metadata: Metadata = {
+  title: "POV - Women's Workwear",
+  description: "Functional workwear with pockets for women",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  useRealViewportHeight()
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
       </head>
-      {/* <body className={`${quicksand.variable} font-sans`}> */}
-      <body
-        className={`${quicksand.variable} font-sans`}
-        style={{ height: "calc(var(--vh, 1vh) * 100)", overflow: "hidden" }} // ← Crucial
-      >
+      <body className={`${quicksand.variable} font-sans`}>
         <ProductProvider>
+          <Header />
           {/* <ChatBot /> */}
-          <div className="h-full overflow-y-auto">
-            <AssistantChat />
-            <Header />
-            {children}
-          </div>
+          <AssistantChat />
+          {children}
         </ProductProvider>
       </body>
     </html>

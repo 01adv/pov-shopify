@@ -353,7 +353,7 @@ export function AssistantChat() {
   return (
     <div
       // className={`z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none transition-all duration-150 ease-in-out`}
-      className=" z-40 fixed bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center"
+      className=" z-40 fixed bottom-20 md:bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center"
     // style={{
     //   paddingBottom: isPhone
     //     ? keyboardHeight > 0

@@ -327,9 +327,9 @@ export function AssistantChat() {
 
   return (
     <div
-      className=" z-40 fixed bottom-24 md:bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center pointer-events-none transition-all duration-150 ease-in-out"
+      className=" z-40 fixed bottom-[84px] md:bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center pointer-events-none transition-all duration-150 ease-in-out"
     >
-      <div className="relative w-full lg:max-w-md pointer-events-auto">
+      <div className="relative w-full lg:max-w-[400px] pointer-events-auto">
         {/* Product Popup */}
         {!isPhone && (
           <ProductPopup

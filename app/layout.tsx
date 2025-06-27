@@ -39,8 +39,8 @@ export default function RootLayout({
       >
         <ProductProvider>
           {/* <ChatBot /> */}
-          <AssistantChat />
           <div className="h-full overflow-y-auto">
+            <AssistantChat />
             <Header />
             {children}
           </div>

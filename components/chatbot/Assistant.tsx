@@ -6,7 +6,7 @@ import { getNudges } from "@/hooks/getNudges";
 import useIsPhone from "@/hooks/usePhone";
 import { useProductContext } from "@/hooks/useProduct";
 import { extractProducts, Product } from "@/lib/extractedProductsForPopup";
-import { getOrCreateSessionId, getWelcomeMessageSeen, setWelcomeMessageSeen } from "@/lib/helpers";
+import { getOrCreateSessionId, setWelcomeMessageSeen } from "@/lib/helpers";
 import { logEvent } from "@/lib/logger";
 import { matchProducts } from "@/lib/productMatcher";
 import { X } from "lucide-react";
@@ -18,13 +18,12 @@ import { ProductCardForPopup } from "../ProductCardForPopup";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 import ChatLoader from "./ChatLoader";
 import { InputBar } from "./InputBar2";
-import { Headings } from "@/lib/data";
 
 
 export function AssistantChat() {
   const pathname = usePathname();
   const isProductDetailsPage = pathname.startsWith('/products/') && pathname.split('/').length >= 3;
-  const isHomePage = pathname === '/';
+  // const isHomePage = pathname === '/';
   const { setMatchedProducts, setTitle, title: contextTitle, setPersonalizedNudge, productName, setProductName } = useProductContext();
   const products: Product[] = extractProducts()
   const isPhone = useIsPhone();
@@ -47,8 +46,8 @@ export function AssistantChat() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   //related to welcome message
-  const welcomeSeen = getWelcomeMessageSeen();
-  const [currentHeading, setCurrentHeading] = useState(Headings[0]);
+  // const welcomeSeen = getWelcomeMessageSeen();
+  // const [currentHeading, setCurrentHeading] = useState(Headings[0]);
   const [keyboardHeight, setKeyboardHeight] = useState(0)
   const MIN_CHAT_HEIGHT = 140; // Minimum height including input bar
   const MAX_CHAT_HEIGHT = 560; // Maximum card height
@@ -63,16 +62,16 @@ export function AssistantChat() {
   }, []);
 
   // Cycle heading every 1 second
-  useEffect(() => {
-    if (welcomeSeen || isHomePage) return;
+  // useEffect(() => {
+  //   if (welcomeSeen || isHomePage) return;
 
-    const interval = setInterval(() => {
-      const randomIndex = Math.floor(Math.random() * Headings.length);
-      setCurrentHeading(Headings[randomIndex]);
-    }, 2000);
+  //   const interval = setInterval(() => {
+  //     const randomIndex = Math.floor(Math.random() * Headings.length);
+  //     setCurrentHeading(Headings[randomIndex]);
+  //   }, 2000);
 
-    return () => clearInterval(interval);
-  }, [welcomeSeen, isHomePage]);
+  //   return () => clearInterval(interval);
+  // }, [welcomeSeen, isHomePage]);
 
   // Clear nudge when not on product details page or productName changes
   useEffect(() => {
@@ -98,9 +97,9 @@ export function AssistantChat() {
       try {
         const nudge = await getNudges({ productName, sessionId });
         console.log('nudge', nudge);
-        if (!welcomeSeen) {
-          setWelcomeMessageSeen(true);
-        }
+        // if (!welcomeSeen) {
+        //   setWelcomeMessageSeen(true);
+        // }
         setNudge(nudge || "");
         setIsExpanded(true); // Expand chat if nudge is available
         if (nudge && setPersonalizedNudge) {
@@ -155,9 +154,9 @@ export function AssistantChat() {
     }
 
     // set welcomeSeen to true in session storage
-    if (!welcomeSeen) {
-      setWelcomeMessageSeen(true);
-    }
+    // if (!welcomeSeen) {
+    //   setWelcomeMessageSeen(true);
+    // }
 
     // setMessages((prev) => [...prev, userMessage])
     const message = input;
@@ -354,38 +353,38 @@ export function AssistantChat() {
   return (
     <div
       className={`z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none transition-all duration-150 ease-in-out`}
-      // style={{
-      //   top: (isExpanded || !welcomeSeen)
-      //     ? isPhone
-      //       ? keyboardHeight > 0
-      //         ? `calc(90% - ${keyboardHeight + (chatHeight * 4 / 5)}px)`
-      //         : `calc(90% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
-      //       : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
-      //     : isPhone
-      //       ? keyboardHeight > 0
-      //         ? `calc(80% - ${keyboardHeight}px)`
-      //         : '80%'
-      //       : '90%',
-      // }}
       style={{
-        top: (!welcomeSeen && !isHomePage)
+        top: (isExpanded)
           ? isPhone
             ? keyboardHeight > 0
-              ? `calc(70% - ${keyboardHeight + 170}px)` // Lower top value for welcome message on phone
-              : '68%' // Lower top value for welcome message on phone
-            : '78%' // Lower top value for welcome message on desktop
-          : (isExpanded)
-            ? isPhone
-              ? keyboardHeight > 0
-                ? `calc(90% - ${keyboardHeight + (chatHeight * 4 / 5)}px)`
-                : `calc(90% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
-              : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
-            : isPhone
-              ? keyboardHeight > 0
-                ? `calc(82% - ${keyboardHeight}px)`
-                : '82%'
-              : '90%',
+              ? `calc(90% - ${keyboardHeight + (chatHeight * 4 / 5)}px)`
+              : `calc(90% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+            : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+          : isPhone
+            ? keyboardHeight > 0
+              ? `calc(82% - ${keyboardHeight}px)`
+              : '82%'
+            : '90%',
       }}
+    // style={{
+    //   top: (!welcomeSeen && !isHomePage)
+    //     ? isPhone
+    //       ? keyboardHeight > 0
+    //         ? `calc(70% - ${keyboardHeight + 170}px)` // Lower top value for welcome message on phone
+    //         : '68%' // Lower top value for welcome message on phone
+    //       : '78%' // Lower top value for welcome message on desktop
+    //     : (isExpanded)
+    //       ? isPhone
+    //         ? keyboardHeight > 0
+    //           ? `calc(90% - ${keyboardHeight + (chatHeight * 4 / 5)}px)`
+    //           : `calc(90% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+    //         : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+    //       : isPhone
+    //         ? keyboardHeight > 0
+    //           ? `calc(82% - ${keyboardHeight}px)`
+    //           : '82%'
+    //         : '90%',
+    // }}
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">
         {/* Product Popup */}
@@ -411,7 +410,7 @@ export function AssistantChat() {
         {/* would show loading nudges when nudge and response is not there and initial load */}
 
         {/* Chat Interface */}
-        {(!welcomeSeen && !isHomePage) || isExpanded || (isProductDetailsPage && nudge) ? (
+        {isExpanded || (isProductDetailsPage && nudge) ? (
           <Card
             className="shadow-lg flex flex-col transition-all duration-300 ease-in-out pt-1 pb-3 px-3 no-scrollbar gap-3"
             // className={`shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4 ${isDialogOpen ? "hidden" : ""}`}
@@ -433,27 +432,21 @@ export function AssistantChat() {
                 </span>
                 <div className="flex justify-start">
                   <div className="w-full rounded-xl p-2 bg-[#F9F9F9] border border-primary">
-                    {
-                      (!welcomeSeen && !isHomePage) ?
-                        <p className="text-sm lg:text-base">
-                          {currentHeading}
-                        </p> :
-                        <>
-                          {isFetching ? (
-                            <ChatLoader showText={true} />
-                          ) : latestResponse.length > 0 && (!isProductDetailsPage || !showNudge || !nudge) ? (
-                            <p className="text-sm lg:text-base">
-                              <span
-                                dangerouslySetInnerHTML={{
-                                  __html: latestResponse,
-                                }}
-                              />
-                            </p>
-                          ) : isProductDetailsPage && showNudge && nudge ? (
-                            <p className="text-sm lg:text-base">{nudge}</p>
-                          ) : null}
-                        </>
-                    }
+
+                    {isFetching ? (
+                      <ChatLoader showText={true} />
+                    ) : latestResponse.length > 0 && (!isProductDetailsPage || !showNudge || !nudge) ? (
+                      <p className="text-sm lg:text-base">
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: latestResponse,
+                          }}
+                        />
+                      </p>
+                    ) : isProductDetailsPage && showNudge && nudge ? (
+                      <p className="text-sm lg:text-base">{nudge}</p>
+                    ) : null}
+
 
                   </div>
 

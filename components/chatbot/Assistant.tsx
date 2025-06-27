@@ -48,7 +48,7 @@ export function AssistantChat() {
   //related to welcome message
   // const welcomeSeen = getWelcomeMessageSeen();
   // const [currentHeading, setCurrentHeading] = useState(Headings[0]);
-  const [keyboardHeight, setKeyboardHeight] = useState(0)
+  // const [keyboardHeight, setKeyboardHeight] = useState(0)
   const MIN_CHAT_HEIGHT = 140; // Minimum height including input bar
   const MAX_CHAT_HEIGHT = 560; // Maximum card height
   const HEADER_HEIGHT = 65; // Header + border
@@ -324,59 +324,60 @@ export function AssistantChat() {
 
 
 
-  useEffect(() => {
-    const handleResize = () => {
-      // Detect keyboard on mobile by checking if viewport height changed significantly
-      const viewportHeight = window.visualViewport?.height || window.innerHeight
-      const windowHeight = window.innerHeight
-      const heightDifference = windowHeight - viewportHeight
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     // Detect keyboard on mobile by checking if viewport height changed significantly
+  //     const viewportHeight = window.visualViewport?.height || window.innerHeight
+  //     const windowHeight = window.innerHeight
+  //     const heightDifference = windowHeight - viewportHeight
 
-      // If height difference is significant (> 150px), keyboard is likely open
-      if (heightDifference > 100) {
-        setKeyboardHeight(heightDifference)
-      } else {
-        setKeyboardHeight(0)
-      }
-    }
+  //     // If height difference is significant (> 150px), keyboard is likely open
+  //     if (heightDifference > 100) {
+  //       setKeyboardHeight(heightDifference)
+  //     } else {
+  //       setKeyboardHeight(0)
+  //     }
+  //   }
 
-    // Listen for visual viewport changes (better for keyboard detection)
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener("resize", handleResize)
-      return () => window.visualViewport?.removeEventListener("resize", handleResize)
-    } else {
-      // Fallback for older browsers
-      window.addEventListener("resize", handleResize)
-      return () => window.removeEventListener("resize", handleResize)
-    }
-  }, [])
+  //   // Listen for visual viewport changes (better for keyboard detection)
+  //   if (window.visualViewport) {
+  //     window.visualViewport.addEventListener("resize", handleResize)
+  //     return () => window.visualViewport?.removeEventListener("resize", handleResize)
+  //   } else {
+  //     // Fallback for older browsers
+  //     window.addEventListener("resize", handleResize)
+  //     return () => window.removeEventListener("resize", handleResize)
+  //   }
+  // }, [])
 
   return (
     <div
-      className={`z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none transition-all duration-150 ease-in-out`}
-      // style={{
-      //   paddingBottom: isPhone
-      //     ? keyboardHeight > 0
-      //       ? `${keyboardHeight + 48}px`
-      //       : "36px"
-      //     : "0px",
-      //   bottom: isPhone
-      //     ? keyboardHeight > 0
-      //       ? "env(safe-area-inset-bottom, 0px)"
-      //       : "calc(env(safe-area-inset-bottom, 0px) + 2.5rem)"
-      //     : "calc(env(safe-area-inset-bottom, 0px) + 2rem)"
-      // }}
-      style={{
-        paddingBottom: isPhone
-          ? keyboardHeight > 0
-            ? `${keyboardHeight + 48}px + 20px`
-            : "10%"
-          : "0px",
-        bottom: isPhone
-          ? keyboardHeight > 0
-            ? "env(safe-area-inset-bottom, 0px)"
-            : "calc(env(safe-area-inset-bottom, 0px) + 2.5rem)"
-          : "4%"
-      }}
+      // className={`z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none transition-all duration-150 ease-in-out`}
+      className=" z-40 fixed bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center"
+    // style={{
+    //   paddingBottom: isPhone
+    //     ? keyboardHeight > 0
+    //       ? `${keyboardHeight + 48}px`
+    //       : "36px"
+    //     : "0px",
+    //   bottom: isPhone
+    //     ? keyboardHeight > 0
+    //       ? "env(safe-area-inset-bottom, 0px)"
+    //       : "calc(env(safe-area-inset-bottom, 0px) + 2.5rem)"
+    //     : "calc(env(safe-area-inset-bottom, 0px) + 2rem)"
+    // }}
+    // style={{
+    //   paddingBottom: isPhone
+    //     ? keyboardHeight > 0
+    //       ? `${keyboardHeight + 48}px + 20px`
+    //       : "10%"
+    //     : "0px",
+    //   bottom: isPhone
+    //     ? keyboardHeight > 0
+    //       ? "env(safe-area-inset-bottom, 0px)"
+    //       : "calc(env(safe-area-inset-bottom, 0px) + 2.5rem)"
+    //     : "4%"
+    // }}
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">
         {/* Product Popup */}

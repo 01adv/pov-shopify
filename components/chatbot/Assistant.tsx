@@ -23,7 +23,7 @@ import { InputBar } from "./InputBar2";
 export function AssistantChat() {
   const pathname = usePathname();
   const isProductDetailsPage = pathname.startsWith('/products/') && pathname.split('/').length >= 3;
-  const isHomePage = pathname === '/';
+  // const isHomePage = pathname === '/';
   const { setMatchedProducts, setTitle, title: contextTitle, setPersonalizedNudge, productName, setProductName } = useProductContext();
   const products: Product[] = extractProducts()
   const isPhone = useIsPhone();
@@ -368,24 +368,28 @@ export function AssistantChat() {
       //   paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 2rem)',
       // }}
 
+      // style={{
+      //   top: (!isHomePage)
+      //     ? isPhone
+      //       ? keyboardHeight > 0
+      //         ? `calc(70% - ${keyboardHeight}px)` // Lower top value for welcome message on phone
+      //         : '70%' // Lower top value for welcome message on phone
+      //       : '90%' // Lower top value for welcome message on desktop
+      //     : (isExpanded)
+      //       ? isPhone
+      //         ? keyboardHeight > 0
+      //           ? `calc(90% - ${keyboardHeight + (chatHeight * 4 / 5)}px)`
+      //           : `calc(90% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+      //         : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+      //       : isPhone
+      //         ? keyboardHeight > 0
+      //           ? `calc(82% - ${keyboardHeight}px)`
+      //           : '82%'
+      //         : '90%',
+      // }}
       style={{
-        top: (!isHomePage)
-          ? isPhone
-            ? keyboardHeight > 0
-              ? `calc(70% - ${keyboardHeight}px)` // Lower top value for welcome message on phone
-              : '70%' // Lower top value for welcome message on phone
-            : '90%' // Lower top value for welcome message on desktop
-          : (isExpanded)
-            ? isPhone
-              ? keyboardHeight > 0
-                ? `calc(90% - ${keyboardHeight + (chatHeight * 4 / 5)}px)`
-                : `calc(90% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
-              : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
-            : isPhone
-              ? keyboardHeight > 0
-                ? `calc(82% - ${keyboardHeight}px)`
-                : '82%'
-              : '90%',
+        paddingBottom: keyboardHeight > 0 ? `${keyboardHeight + 32}px` : "20px",
+        bottom: keyboardHeight > 0 ? "env(safe-area-inset-bottom, 0px)" : "calc(env(safe-area-inset-bottom, 0px) + 2rem)"
       }}
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">

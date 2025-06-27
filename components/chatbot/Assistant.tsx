@@ -23,7 +23,7 @@ import { InputBar } from "./InputBar2";
 export function AssistantChat() {
   const pathname = usePathname();
   const isProductDetailsPage = pathname.startsWith('/products/') && pathname.split('/').length >= 3;
-  // const isHomePage = pathname === '/';
+  const isHomePage = pathname === '/';
   const { setMatchedProducts, setTitle, title: contextTitle, setPersonalizedNudge, productName, setProductName } = useProductContext();
   const products: Product[] = extractProducts()
   const isPhone = useIsPhone();
@@ -353,19 +353,39 @@ export function AssistantChat() {
   return (
     <div
       className={`z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none transition-all duration-150 ease-in-out`}
+      // style={{
+      //   top: (isExpanded)
+      //     ? isPhone
+      //       ? keyboardHeight > 0
+      //         ? `calc(90% - ${keyboardHeight + (chatHeight * 4 / 5)}px)`
+      //         : `calc(90% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+      //       : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+      //     : isPhone
+      //       ? keyboardHeight > 0
+      //         ? `calc(90% - ${keyboardHeight}px)`
+      //         : '90%'
+      //       : '90%',
+      //   paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 2rem)',
+      // }}
+
       style={{
-        top: (isExpanded)
+        top: (!isHomePage)
           ? isPhone
             ? keyboardHeight > 0
-              ? `calc(90% - ${keyboardHeight + (chatHeight * 4 / 5)}px)`
-              : `calc(90% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
-            : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
-          : isPhone
-            ? keyboardHeight > 0
-              ? `calc(90% - ${keyboardHeight}px)`
-              : '70%'
-            : '90%',
-        paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 2rem)',
+              ? `calc(70% - ${keyboardHeight + 170}px)` // Lower top value for welcome message on phone
+              : '68%' // Lower top value for welcome message on phone
+            : '78%' // Lower top value for welcome message on desktop
+          : (isExpanded)
+            ? isPhone
+              ? keyboardHeight > 0
+                ? `calc(90% - ${keyboardHeight + (chatHeight * 4 / 5)}px)`
+                : `calc(90% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+              : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
+            : isPhone
+              ? keyboardHeight > 0
+                ? `calc(82% - ${keyboardHeight}px)`
+                : '82%'
+              : '90%',
       }}
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">

@@ -42,6 +42,8 @@ export function AssistantChat() {
   const [lastResponseTime, setLastResponseTime] = useState<number | null>(null);
   const [showNudge, setShowNudge] = useState(false);
   const [nudgeTimeout, setNudgeTimeout] = useState<number>(40000);
+  const [bottomOffset, setBottomOffset] = useState(0);
+
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -324,10 +326,40 @@ export function AssistantChat() {
 
 
 
+  useEffect(() => {
+    const updateOffset = () => {
+      const vh = window.visualViewport?.height || window.innerHeight;
+      setBottomOffset(vh * 0.03); // 3% of actual visible height
+    };
+
+    updateOffset();
+
+    window.visualViewport?.addEventListener('resize', updateOffset);
+    window.addEventListener('resize', updateOffset); // fallback
+    return () => {
+      window.visualViewport?.removeEventListener('resize', updateOffset);
+      window.removeEventListener('resize', updateOffset);
+    };
+  }, []);
+
+
 
   return (
     <div
-      className=" z-40 fixed bottom-[84px] md:bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center pointer-events-none transition-all duration-150 ease-in-out"
+      className=" z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-center justify-center pointer-events-none transition-all duration-150 ease-in-out"
+      // style={{
+      //   // If keyboard is open (keyboardHeight > 0), add safe env padding to bottom
+      //   bottom: keyboardHeight > 0
+      //     ? `calc(env(safe-area-inset-bottom, 0px)`
+      //     : "calc(env(safe-area-inset-bottom, 0px) + 2rem)"
+      // }}
+      // style={{
+      //   bottom: 'calc(env(safe-area-inset-bottom, 0px) + 1.5vh)'
+      // }}
+      style={{
+        bottom: `calc(env(safe-area-inset-bottom, 0px) + ${bottomOffset}px)`
+      }}
+
     >
       <div className="relative w-full lg:max-w-[400px] pointer-events-auto">
         {/* Product Popup */}

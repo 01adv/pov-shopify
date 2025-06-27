@@ -363,7 +363,7 @@ export function AssistantChat() {
           : isPhone
             ? keyboardHeight > 0
               ? `calc(90% - ${keyboardHeight}px)`
-              : '80%'
+              : '70%'
             : '90%',
         paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 2rem)',
       }}

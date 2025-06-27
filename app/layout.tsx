@@ -41,8 +41,7 @@ export default function RootLayout({
           <Header />
           {/* <ChatBot /> */}
           <AssistantChat />
-          <div className="main-content">
-
+          <div className="h-full overflow-y-auto">
             {children}
           </div>
         </ProductProvider>

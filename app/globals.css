@@ -138,10 +138,3 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
 }
-
-.main-content {
-  height: calc(
-    var(--vh, 1vh) * 100 - 120px
-  ); /* subtract fixed header/input bar height */
-  overflow-y: auto;
-}

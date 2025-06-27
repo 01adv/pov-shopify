@@ -388,8 +388,20 @@ export function AssistantChat() {
       //         : '90%',
       // }}
       style={{
-        paddingBottom: keyboardHeight > 0 ? `${keyboardHeight + 32}px` : "20px",
-        bottom: keyboardHeight > 0 ? "env(safe-area-inset-bottom, 0px)" : "calc(env(safe-area-inset-bottom, 0px) + 2rem)"
+        paddingBottom: isPhone
+          ? keyboardHeight > 0
+            ? `${keyboardHeight + 48}px`
+            : "36px"
+          : keyboardHeight > 0
+            ? `${keyboardHeight + 32}px`
+            : "0px",
+        bottom: isPhone
+          ? keyboardHeight > 0
+            ? "env(safe-area-inset-bottom, 0px)"
+            : "calc(env(safe-area-inset-bottom, 0px) + 3rem)"
+          : keyboardHeight > 0
+            ? "env(safe-area-inset-bottom, 0px)"
+            : "calc(env(safe-area-inset-bottom, 0px) + 2rem)"
       }}
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">

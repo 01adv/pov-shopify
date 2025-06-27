@@ -353,21 +353,29 @@ export function AssistantChat() {
   return (
     <div
       className={`z-40 fixed px-4 mx-auto lg:px-0 w-full flex items-end justify-center pointer-events-none transition-all duration-150 ease-in-out`}
+      // style={{
+      //   paddingBottom: isPhone
+      //     ? keyboardHeight > 0
+      //       ? `${keyboardHeight + 48}px`
+      //       : "36px"
+      //     : "0px",
+      //   bottom: isPhone
+      //     ? keyboardHeight > 0
+      //       ? "env(safe-area-inset-bottom, 0px)"
+      //       : "calc(env(safe-area-inset-bottom, 0px) + 2.5rem)"
+      //     : "calc(env(safe-area-inset-bottom, 0px) + 2rem)"
+      // }}
       style={{
         paddingBottom: isPhone
           ? keyboardHeight > 0
-            ? `${keyboardHeight + 48}px`
-            : "36px"
-          : keyboardHeight > 0
-            ? `${keyboardHeight + 32}px`
-            : "0px",
+            ? `${keyboardHeight + 48}px + 20px`
+            : "10%"
+          : "0px",
         bottom: isPhone
           ? keyboardHeight > 0
             ? "env(safe-area-inset-bottom, 0px)"
             : "calc(env(safe-area-inset-bottom, 0px) + 2.5rem)"
-          : keyboardHeight > 0
-            ? "env(safe-area-inset-bottom, 0px)"
-            : "calc(env(safe-area-inset-bottom, 0px) + 2rem)"
+          : "4%"
       }}
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">

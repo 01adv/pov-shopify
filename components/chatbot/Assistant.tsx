@@ -365,26 +365,8 @@ export function AssistantChat() {
               ? `calc(82% - ${keyboardHeight}px)`
               : '82%'
             : '90%',
+        paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 2rem)',
       }}
-    // style={{
-    //   top: (!welcomeSeen && !isHomePage)
-    //     ? isPhone
-    //       ? keyboardHeight > 0
-    //         ? `calc(70% - ${keyboardHeight + 170}px)` // Lower top value for welcome message on phone
-    //         : '68%' // Lower top value for welcome message on phone
-    //       : '78%' // Lower top value for welcome message on desktop
-    //     : (isExpanded)
-    //       ? isPhone
-    //         ? keyboardHeight > 0
-    //           ? `calc(90% - ${keyboardHeight + (chatHeight * 4 / 5)}px)`
-    //           : `calc(90% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
-    //         : `calc(100% - ${chatHeight ? (chatHeight * 4 / 5) : 176}px)`
-    //       : isPhone
-    //         ? keyboardHeight > 0
-    //           ? `calc(82% - ${keyboardHeight}px)`
-    //           : '82%'
-    //         : '90%',
-    // }}
     >
       <div className="relative w-full lg:max-w-md pointer-events-auto">
         {/* Product Popup */}

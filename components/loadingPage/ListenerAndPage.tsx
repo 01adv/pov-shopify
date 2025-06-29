@@ -81,7 +81,7 @@ const ListenerLoading = () => {
                 tags: ["page", "load", "initial"],
                 source: "site_entry",
             });
-            router.push('/all-workwear');
+            router.replace('/all-workwear');
         } else if (pageName === "resilience-tailored") {
             logEvent("agent_loaded", {
                 event: "page_load",

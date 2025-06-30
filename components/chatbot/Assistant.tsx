@@ -92,7 +92,7 @@ export function AssistantChat() {
         const nudge = await getNudges({ productName, sessionId });
         console.log('nudge', nudge);
         setNudge(nudge || "");
-        setIsExpanded(true); // Expand chat if nudge is available
+        // setIsExpanded(true); // Expand chat if nudge is available
         if (nudge && setPersonalizedNudge) {
           setPersonalizedNudge(nudge);
         }

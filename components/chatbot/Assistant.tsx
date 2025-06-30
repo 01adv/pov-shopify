@@ -45,10 +45,7 @@ export function AssistantChat() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
-  //related to welcome message
-  // const welcomeSeen = getWelcomeMessageSeen();
-  // const [currentHeading, setCurrentHeading] = useState(Headings[0]);
-  // const [keyboardHeight, setKeyboardHeight] = useState(0)
+
   const MIN_CHAT_HEIGHT = 140; // Minimum height including input bar
   const MAX_CHAT_HEIGHT = 560; // Maximum card height
   const HEADER_HEIGHT = 65; // Header + border
@@ -61,17 +58,6 @@ export function AssistantChat() {
     setSessionId(currentSessionId || "");
   }, []);
 
-  // Cycle heading every 1 second
-  // useEffect(() => {
-  //   if (welcomeSeen || isHomePage) return;
-
-  //   const interval = setInterval(() => {
-  //     const randomIndex = Math.floor(Math.random() * Headings.length);
-  //     setCurrentHeading(Headings[randomIndex]);
-  //   }, 2000);
-
-  //   return () => clearInterval(interval);
-  // }, [welcomeSeen, isHomePage]);
 
   // Clear nudge when not on product details page or productName changes
   useEffect(() => {
@@ -86,20 +72,25 @@ export function AssistantChat() {
     }
   }, [isProductDetailsPage, setIsExpanded, latestResponse, productName, setProductName]);
 
+  const prevProductNameRef = useRef<string | null>(null);
+
   useEffect(() => {
     const fetchNudges = async () => {
       if (!isProductDetailsPage || !productName || !sessionId) {
         setNudge(""); // Clear nudge if no productName
         setShowNudge(false); // Ensure nudge is not shown
+        prevProductNameRef.current = null;
+        return;
+      }
+
+      // Only fetch if productName has changed
+      if (prevProductNameRef.current === productName) {
         return;
       }
 
       try {
         const nudge = await getNudges({ productName, sessionId });
         console.log('nudge', nudge);
-        // if (!welcomeSeen) {
-        //   setWelcomeMessageSeen(true);
-        // }
         setNudge(nudge || "");
         setIsExpanded(true); // Expand chat if nudge is available
         if (nudge && setPersonalizedNudge) {
@@ -120,6 +111,7 @@ export function AssistantChat() {
         if (isProductDetailsPage && !latestResponse) {
           setShowNudge(true);
         }
+        prevProductNameRef.current = productName; // ✅ Add this
       } catch (error) {
         console.error("Failed to fetch nudges", error);
         setNudge("");
@@ -152,11 +144,6 @@ export function AssistantChat() {
     if (!isExpanded) {
       setIsExpanded(true);
     }
-
-    // set welcomeSeen to true in session storage
-    // if (!welcomeSeen) {
-    //   setWelcomeMessageSeen(true);
-    // }
 
     // setMessages((prev) => [...prev, userMessage])
     const message = input;
@@ -327,7 +314,7 @@ export function AssistantChat() {
 
   return (
     <div
-      className=" z-40 fixed bottom-4 md:bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center pointer-events-none transition-all duration-150 ease-in-out"
+      className=" z-40 fixed bottom-1 md:bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center pointer-events-none transition-all duration-150 ease-in-out"
     >
       <div className="relative w-full lg:max-w-[400px] pointer-events-auto">
         {/* Product Popup */}
@@ -356,7 +343,6 @@ export function AssistantChat() {
         {isExpanded || (isProductDetailsPage && nudge) ? (
           <Card
             className="shadow-lg flex flex-col transition-all duration-300 ease-in-out pt-1 pb-3 px-3 no-scrollbar gap-3"
-            // className={`shadow-lg flex flex-col transition-all duration-300 ease-in-out p-4 no-scrollbar gap-4 ${isDialogOpen ? "hidden" : ""}`}
             style={{
               maxHeight: `${MAX_CHAT_HEIGHT}px`,
               // minHeight: `${MIN_CHAT_HEIGHT}px`,

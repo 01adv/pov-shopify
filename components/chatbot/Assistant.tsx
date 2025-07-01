@@ -148,6 +148,7 @@ export function AssistantChat() {
     // setMessages((prev) => [...prev, userMessage])
     const message = input;
     setInput("");
+    setNudge("");
     // setIsTyping(true)
     setIsFetching(true);
 

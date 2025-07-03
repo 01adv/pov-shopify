@@ -69,7 +69,7 @@ const ListenerLoading = () => {
                 if (productMatch) {
                     setIsShopifyProductPage(true);
                     // Remove all '-' from product name
-                    const productName = productMatch[1].replace(/-/g, '');
+                    const productName = productMatch[1].replace(/-/g, ' ');
                     setInitShopifyProductName(productName)
                     console.log('Product page detected, product name:', productName);
                 }

@@ -80,6 +80,9 @@ export function AssistantChat() {
 
   useEffect(() => {
     const fetchNudges = async () => {
+      if (initShopifyProductName.toLowerCase() === productName.toLocaleLowerCase()) {
+        return;
+      }
       if (!isProductDetailsPage || !productName || !sessionId) {
         setNudge(""); // Clear nudge if no productName
         setShowNudge(false); // Ensure nudge is not shown
@@ -124,7 +127,7 @@ export function AssistantChat() {
     };
 
     fetchNudges();
-  }, [productName, sessionId, latestResponse, setPersonalizedNudge, isProductDetailsPage]);
+  }, [productName, sessionId, latestResponse, setPersonalizedNudge, isProductDetailsPage, initShopifyProductName]);
 
   useEffect(() => {
     if (!lastResponseTime || !isProductDetailsPage) return;
@@ -290,7 +293,7 @@ export function AssistantChat() {
       setTimeout(() => {
         if (isShopifyProductPage && initShopifyProductName) {
           console.log('prouct page shopifyfff')
-          handleSendMessage(`Product: ${productName}, Question: ${shopifyPlaceholder}`);
+          handleSendMessage(`Product: ${initShopifyProductName}, Question: ${shopifyPlaceholder}`);
         }
         else {
           handleSendMessage(shopifyPlaceholder);

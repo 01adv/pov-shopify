@@ -27,7 +27,7 @@ export const InputBar: React.FC<InputBarProps> = ({
     className,
     isProductDetailsPage,
 }) => {
-    const { shopifyPlaceholder, setShopifyPlaceholder } = useProductContext()
+    const { shopifyPlaceholder, setShopifyPlaceholder, setIsShopifyProductPage, setInitShopifyProductName } = useProductContext()
     const [currentPlaceholder, setCurrentPlaceholder] = useState("");
     const [isInteracting, setIsInteracting] = useState(false);
     const lastInteractionRef = useRef(Date.now());
@@ -137,7 +137,13 @@ export const InputBar: React.FC<InputBarProps> = ({
             <Button
                 variant="ghost"
                 size="icon"
-                onClick={handleSendMessage}
+                onClick={() => {
+                    if (handleSendMessage) {
+                        handleSendMessage();
+                    }
+                    setInitShopifyProductName('');
+                    setIsShopifyProductPage(false);
+                }}
                 className="bg-gray-200 mr-1 h-9 w-9 rounded-full p-0"
             >
                 <Send size={20} className="text-black rotate-45" />

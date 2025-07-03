@@ -50,6 +50,7 @@ export function AssistantChat() {
   const MAX_CHAT_HEIGHT = 560; // Maximum card height
   const HEADER_HEIGHT = 65; // Header + border
   const INPUT_HEIGHT = 72; // Input bar + padding
+  console.log('simple shopify log', shopifyPlaceholder, initRedirectShopify)
 
 
   // Initialize session ID and welcome message on mount
@@ -61,10 +62,12 @@ export function AssistantChat() {
 
   //show agent response based on shopify placeholder, when user initialized from shopify
   useEffect(() => {
+    console.log('init placeholder assistant call', initRedirectShopify, shopifyPlaceholder)
     if (initRedirectShopify && shopifyPlaceholder) {
       setInput(shopifyPlaceholder);
       // Wait for input state to update before sending message
       setTimeout(() => {
+        console.log('sending plcehld quest to chat')
         handleSendMessage();
         setInitRedirectShopify(false);
       }, 0);

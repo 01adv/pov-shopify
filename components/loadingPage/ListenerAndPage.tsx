@@ -60,6 +60,7 @@ const ListenerLoading = () => {
                 console.log('Received PAGE_INFO:', pageName, fullPath);
                 setPageName(pageName);
                 setShopifyPlaceholder(((payload.placeholder.match(/"?([^"]*?)(?:\.\.\.)?"?$/) || [])[1] || '').trim())
+                console.log('shopify place', payload.placeholder)
                 setInitRedirectShopify(true)
                 setFullPath(fullPath);
                 setTimeout(() => setIsLoading(false), 800);

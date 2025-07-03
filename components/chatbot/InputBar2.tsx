@@ -34,6 +34,7 @@ export const InputBar: React.FC<InputBarProps> = ({
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const isPhone = useIsPhone();
     const [simplePlaceholderTexts, setSimplePlaceholderTexts] = useState<string[]>(mobilePlaceholderTexts);
+    console.log('placeholder', shopifyPlaceholder)
 
     // initalize isphone in useeffect
     useEffect(() => {

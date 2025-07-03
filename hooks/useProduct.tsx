@@ -83,6 +83,8 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         setTranscriptOnMobile,
         shopifyPlaceholder,
         setShopifyPlaceholder,
+        initRedirectShopify,
+        setInitRedirectShopify,
       }}
     >
       {children}

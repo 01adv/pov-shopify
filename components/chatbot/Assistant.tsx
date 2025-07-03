@@ -142,15 +142,18 @@ export function AssistantChat() {
 
 
   // 
-  const handleSendMessage = async () => {
-    if (!input.trim()) return;
+  const handleSendMessage = async (messageOverride?: string) => {
+    const message = messageOverride || input;
+    console.log('mess override', messageOverride, input)
+    if (!message.trim()) return;
+    // if (!input.trim()) return;
 
     if (!isExpanded) {
       setIsExpanded(true);
     }
 
     // setMessages((prev) => [...prev, userMessage])
-    const message = input;
+    // const message = input;
     setInput("");
     setNudge("");
     // setIsTyping(true)
@@ -279,13 +282,11 @@ export function AssistantChat() {
   useEffect(() => {
     console.log('init placeholder assistant call', initRedirectShopify, shopifyPlaceholder)
     if (initRedirectShopify && shopifyPlaceholder) {
-      setInput(shopifyPlaceholder);
       // Wait for input state to update before sending message
       setTimeout(() => {
         console.log('sending plcehld quest to chat')
-        handleSendMessage();
+        handleSendMessage(shopifyPlaceholder);
         setInitRedirectShopify(false);
-        setInput('')
       }, 0);
     }
     // No cleanup needed

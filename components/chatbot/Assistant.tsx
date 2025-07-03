@@ -24,7 +24,7 @@ export function AssistantChat() {
   const pathname = usePathname();
   const isProductDetailsPage = pathname.startsWith('/products/') && pathname.split('/').length >= 3;
   // const isHomePage = pathname === '/';
-  const { setMatchedProducts, setTitle, title: contextTitle, setPersonalizedNudge, productName, setProductName, initRedirectShopify, shopifyPlaceholder, setInitRedirectShopify } = useProductContext();
+  const { setMatchedProducts, setTitle, title: contextTitle, setPersonalizedNudge, productName, setProductName, initRedirectShopify, shopifyPlaceholder, setInitRedirectShopify, isShopifyProductPage, initShopifyProductName } = useProductContext();
   const products: Product[] = extractProducts()
   const isPhone = useIsPhone();
   const router = useRouter();
@@ -80,7 +80,7 @@ export function AssistantChat() {
 
   useEffect(() => {
     const fetchNudges = async () => {
-      if (!isProductDetailsPage || !productName || !sessionId || shopifyPlaceholder.trim()) {
+      if (!isProductDetailsPage || !productName || !sessionId) {
         setNudge(""); // Clear nudge if no productName
         setShowNudge(false); // Ensure nudge is not shown
         prevProductNameRef.current = null;
@@ -273,7 +273,6 @@ export function AssistantChat() {
       console.error(error);
       setLatestResponse("Sorry, I'm having trouble connecting right now.");
       setIsTyping(true);
-
     }
   };
 
@@ -282,19 +281,26 @@ export function AssistantChat() {
   useEffect(() => {
     console.log('init placeholder assistant call', initRedirectShopify, shopifyPlaceholder)
     if (initRedirectShopify && shopifyPlaceholder) {
+      // Wait for input state to update before sending message
+      // setTimeout(() => {
+      //   console.log('sending plcehld quest to chat')
+      //   handleSendMessage(shopifyPlaceholder);
+      //   setInitRedirectShopify(false);
+      // }, 0);
       setTimeout(() => {
-        console.log('sending placeholder quest to chat');
-        if (isProductDetailsPage && productName) {
-          // Add product name to the placeholder if on product details page
+        if (isShopifyProductPage && initShopifyProductName) {
+          console.log('prouct page shopifyfff')
           handleSendMessage(`Product: ${productName}, Question: ${shopifyPlaceholder}`);
-        } else {
-          handleSendMessage(shopifyPlaceholder);
         }
-        setInitRedirectShopify(false);
-      }, 1500);
+        else {
+          handleSendMessage(shopifyPlaceholder);
+
+        }
+        setInitRedirectShopify(false)
+      }, 0);
     }
     // No cleanup needed
-  }, [initRedirectShopify, shopifyPlaceholder, isProductDetailsPage, productName]);
+  }, [initRedirectShopify, shopifyPlaceholder]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {

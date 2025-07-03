@@ -14,7 +14,7 @@ import { RingLoader } from 'react-spinners';
 
 
 const ListenerLoading = () => {
-    const { setShopifyPlaceholder, setInitRedirectShopify } = useProductContext()
+    const { setShopifyPlaceholder, setInitRedirectShopify, setIsShopifyProductPage, setInitShopifyProductName } = useProductContext()
     const [pageName, setPageName] = useState('unknown-page');
     const [fullPath, setFullPath] = useState('');
     const [isLoading, setIsLoading] = useState(true);
@@ -59,13 +59,23 @@ const ListenerLoading = () => {
                 const fullPath = payload.fullPath ?? 'unknown-path';
                 console.log('Received PAGE_INFO:', pageName, fullPath);
                 setPageName(pageName);
-                setShopifyPlaceholder(((payload.placeholder.match(/"?([^"]*?)(?:\.\.\.)?"?$/) || [])[1] || '').trim())
-                console.log('shopify place', payload.placeholder)
-                setInitRedirectShopify(true)
+                setShopifyPlaceholder(((payload.placeholder.match(/"?([^"]*?)(?:\.\.\.)?"?$/) || [])[1] || '').trim());
+                console.log('shopify place', payload.placeholder);
+                setInitRedirectShopify(true);
                 setFullPath(fullPath);
+
+                // Check if fullPath is a product page
+                const productMatch = fullPath.match(/^\/products\/([^/]+)$/);
+                if (productMatch) {
+                    setIsShopifyProductPage(true);
+                    // Remove all '-' from product name
+                    const productName = productMatch[1].replace(/-/g, '');
+                    setInitShopifyProductName(productName)
+                    console.log('Product page detected, product name:', productName);
+                }
+
                 setTimeout(() => setIsLoading(false), 800);
-            }
-            // setTimeout(() => setIsLoading(false), 2000);
+            }    // setTimeout(() => setIsLoading(false), 2000);
         };
 
         window.addEventListener('message', handleMessage);

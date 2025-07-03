@@ -60,20 +60,7 @@ export function AssistantChat() {
   }, []);
 
 
-  //show agent response based on shopify placeholder, when user initialized from shopify
-  useEffect(() => {
-    console.log('init placeholder assistant call', initRedirectShopify, shopifyPlaceholder)
-    if (initRedirectShopify && shopifyPlaceholder) {
-      setInput(shopifyPlaceholder);
-      // Wait for input state to update before sending message
-      setTimeout(() => {
-        console.log('sending plcehld quest to chat')
-        handleSendMessage();
-        setInitRedirectShopify(false);
-      }, 0);
-    }
-    // No cleanup needed
-  }, [initRedirectShopify, shopifyPlaceholder]);
+
 
 
   // Clear nudge when not on product details page or productName changes
@@ -286,6 +273,23 @@ export function AssistantChat() {
 
     }
   };
+
+
+  //show agent response based on shopify placeholder, when user initialized from shopify
+  useEffect(() => {
+    console.log('init placeholder assistant call', initRedirectShopify, shopifyPlaceholder)
+    if (initRedirectShopify && shopifyPlaceholder) {
+      setInput(shopifyPlaceholder);
+      // Wait for input state to update before sending message
+      setTimeout(() => {
+        console.log('sending plcehld quest to chat')
+        handleSendMessage();
+        setInitRedirectShopify(false);
+        setInput('')
+      }, 0);
+    }
+    // No cleanup needed
+  }, [initRedirectShopify, shopifyPlaceholder]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {

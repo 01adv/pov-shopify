@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { mobilePlaceholderTexts, placeholderTexts, productPagePlaceholderTexts } from "@/lib/data";
 import useIsPhone from "@/hooks/usePhone";
+import { useProductContext } from "@/hooks/useProduct";
 
 type InputBarProps = {
     input?: string;
@@ -26,6 +27,7 @@ export const InputBar: React.FC<InputBarProps> = ({
     className,
     isProductDetailsPage,
 }) => {
+    const { shopifyPlaceholder, setShopifyPlaceholder } = useProductContext()
     const [currentPlaceholder, setCurrentPlaceholder] = useState("");
     const [isInteracting, setIsInteracting] = useState(false);
     const lastInteractionRef = useRef(Date.now());
@@ -107,6 +109,7 @@ export const InputBar: React.FC<InputBarProps> = ({
     // Handle input change
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInput(e.target.value);
+        setShopifyPlaceholder('')
         lastInteractionRef.current = Date.now();
         if (!isInteracting) {
             setIsInteracting(true);
@@ -127,7 +130,7 @@ export const InputBar: React.FC<InputBarProps> = ({
                 onKeyDown={handleKeyDown}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
-                placeholder={`"${currentPlaceholder}...`}
+                placeholder={`"${shopifyPlaceholder || currentPlaceholder}...`}
                 className="flex-1 border-none bg-transparent shadow-none outline-none placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-sm max-md:placeholder:tracking-tighter placeholder:font-medium placeholder:italic"
             />
             <Button

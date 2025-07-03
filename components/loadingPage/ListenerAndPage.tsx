@@ -4,6 +4,7 @@
 
 import useCartPolling from '@/app/test2/useCartPolling';
 import useIsPhone from '@/hooks/usePhone';
+import { useProductContext } from '@/hooks/useProduct';
 import { logEvent } from '@/lib/logger';
 import { Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -13,6 +14,7 @@ import { RingLoader } from 'react-spinners';
 
 
 const ListenerLoading = () => {
+    const { setShopifyPlaceholder, setInitRedirectShopify } = useProductContext()
     const [pageName, setPageName] = useState('unknown-page');
     const [fullPath, setFullPath] = useState('');
     const [isLoading, setIsLoading] = useState(true);
@@ -57,6 +59,8 @@ const ListenerLoading = () => {
                 const fullPath = payload.fullPath ?? 'unknown-path';
                 console.log('Received PAGE_INFO:', pageName, fullPath);
                 setPageName(pageName);
+                setShopifyPlaceholder(((payload.placeholder.match(/"?([^"]*?)(?:\.\.\.)?"?$/) || [])[1] || '').trim())
+                setInitRedirectShopify(true)
                 setFullPath(fullPath);
                 setTimeout(() => setIsLoading(false), 800);
             }

@@ -143,7 +143,7 @@ const ListenerLoading = () => {
                 tags: ["page", "load", "initial", "product_page"],
                 source: "site_entry",
             });
-            router.push(`/${fullPath}`);
+            router.push(fullPath);
         }
         else {
             logEvent("agent_loaded", {

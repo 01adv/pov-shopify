@@ -22,6 +22,10 @@ interface ProductContextType {
   setProductName: (productName: string) => void;
   transcriptOnMobile: string;
   setTranscriptOnMobile: (transcript: string) => void;
+  shopifyPlaceholder: string;
+  setShopifyPlaceholder: (shopifyPlaceholder: string) => void;
+  initRedirectShopify: boolean;
+  setInitRedirectShopify: (initRedirectShopify: boolean) => void;
 }
 
 // Create the context with a default value
@@ -37,6 +41,8 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [personalizedNudge, setPersonalizedNudge] = useState<string>('');
   const [productName, setProductName] = useState<string>('');
   const [transcriptOnMobile, setTranscriptOnMobile] = useState<string>('');
+  const [shopifyPlaceholder, setShopifyPlaceholder] = useState<string>('')
+  const [initRedirectShopify, setInitRedirectShopify] = useState<boolean>(false)
   // Initialize switchToTextAgent state from sessionStorage
   const [switchToTextAgent, setSwitchToTextAgentState] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
@@ -74,7 +80,9 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         productName,
         setProductName,
         transcriptOnMobile,
-        setTranscriptOnMobile
+        setTranscriptOnMobile,
+        shopifyPlaceholder,
+        setShopifyPlaceholder,
       }}
     >
       {children}

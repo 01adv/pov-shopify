@@ -136,6 +136,15 @@ const ListenerLoading = () => {
             });
             router.push('/ai-curation');
         }
+        else if (/^\/products\/[^/]+$/.test(fullPath)) {
+            logEvent("agent_loaded", {
+                event: "page_load",
+                page_path: fullPath,
+                tags: ["page", "load", "initial", "product_page"],
+                source: "site_entry",
+            });
+            router.push(`/${fullPath}`);
+        }
         else {
             logEvent("agent_loaded", {
                 event: "page_load",

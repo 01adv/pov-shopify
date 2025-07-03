@@ -24,7 +24,7 @@ export function AssistantChat() {
   const pathname = usePathname();
   const isProductDetailsPage = pathname.startsWith('/products/') && pathname.split('/').length >= 3;
   // const isHomePage = pathname === '/';
-  const { setMatchedProducts, setTitle, title: contextTitle, setPersonalizedNudge, productName, setProductName } = useProductContext();
+  const { setMatchedProducts, setTitle, title: contextTitle, setPersonalizedNudge, productName, setProductName, initRedirectShopify, shopifyPlaceholder, setInitRedirectShopify } = useProductContext();
   const products: Product[] = extractProducts()
   const isPhone = useIsPhone();
   const router = useRouter();
@@ -57,6 +57,20 @@ export function AssistantChat() {
     const currentSessionId = getOrCreateSessionId();
     setSessionId(currentSessionId || "");
   }, []);
+
+
+  //show agent response based on shopify placeholder, when user initialized from shopify
+  useEffect(() => {
+    if (initRedirectShopify && shopifyPlaceholder) {
+      setInput(shopifyPlaceholder);
+      // Wait for input state to update before sending message
+      setTimeout(() => {
+        handleSendMessage();
+        setInitRedirectShopify(false);
+      }, 0);
+    }
+    // No cleanup needed
+  }, [initRedirectShopify, shopifyPlaceholder]);
 
 
   // Clear nudge when not on product details page or productName changes

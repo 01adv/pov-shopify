@@ -41,7 +41,7 @@ export function AssistantChat() {
   const [nudge, setNudge] = useState("");
   const [lastResponseTime, setLastResponseTime] = useState<number | null>(null);
   const [showNudge, setShowNudge] = useState(false);
-  const [nudgeTimeout, setNudgeTimeout] = useState<number>(40000);
+  const [nudgeTimeout, setNudgeTimeout] = useState<number>(10000);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);

@@ -58,20 +58,22 @@ const ListenerLoading = () => {
                 const pageName = payload.pageName ?? 'unknown-page';
                 const fullPath = payload.fullPath ?? 'unknown-path';
                 console.log('Received PAGE_INFO:', pageName, fullPath);
-                setPageName(pageName);
-                setShopifyPlaceholder(((payload.placeholder.match(/"?([^"]*?)(?:\.\.\.)?"?$/) || [])[1] || '').trim());
-                console.log('shopify place', payload.placeholder);
-                setInitRedirectShopify(true);
                 setFullPath(fullPath);
+                setPageName(pageName);
+                if (payload.placeholder) {
+                    setShopifyPlaceholder(((payload.placeholder.match(/"?([^"]*?)(?:\.\.\.)?"?$/) || [])[1] || '').trim());
+                    console.log('shopify place', payload.placeholder);
+                    setInitRedirectShopify(true);
 
-                // Check if fullPath is a product page
-                const productMatch = fullPath.match(/^\/products\/([^/]+)$/);
-                if (productMatch) {
-                    setIsShopifyProductPage(true);
-                    // Remove all '-' from product name
-                    const productName = productMatch[1].replace(/-/g, ' ');
-                    setInitShopifyProductName(productName)
-                    console.log('Product page detected, product name:', productName);
+                    // Check if fullPath is a product page
+                    const productMatch = fullPath.match(/^\/products\/([^/]+)$/);
+                    if (productMatch) {
+                        setIsShopifyProductPage(true);
+                        // Remove all '-' from product name
+                        const productName = productMatch[1].replace(/-/g, ' ');
+                        setInitShopifyProductName(productName);
+                        console.log('Product page detected, product name:', productName);
+                    }
                 }
 
                 setTimeout(() => setIsLoading(false), 800);

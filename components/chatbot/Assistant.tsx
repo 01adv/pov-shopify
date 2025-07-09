@@ -109,6 +109,7 @@ export function AssistantChat() {
           session_id: sessionId,
           message: {
             role: "nudge",
+            product_name: productName,
             content: nudge,
             timestamp: new Date().toISOString(),
           },

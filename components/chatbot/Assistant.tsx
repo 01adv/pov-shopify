@@ -219,18 +219,18 @@ export function AssistantChat() {
       }
 
       // Log nudge if present and on product details page
-      if (isProductDetailsPage && nudge && showNudge) {
-        logEvent("append_conversation", {
-          event: "chat_message",
-          session_id: sessionId,
-          message: {
-            role: "nudge",
-            content: nudge,
-            timestamp: new Date().toISOString(),
-          },
-          tags: ["chatbot", "nudge", "conversation"],
-        });
-      }
+      // if (isProductDetailsPage && nudge && showNudge) {
+      //   logEvent("append_conversation", {
+      //     event: "chat_message",
+      //     session_id: sessionId,
+      //     message: {
+      //       role: "nudge",
+      //       content: nudge,
+      //       timestamp: new Date().toISOString(),
+      //     },
+      //     tags: ["chatbot", "nudge", "conversation"],
+      //   });
+      // }
 
       // Normalize assistant products (convert to lowercase for case-insensitive match)
       if (assistantProducts && assistantProducts?.length > 0) {

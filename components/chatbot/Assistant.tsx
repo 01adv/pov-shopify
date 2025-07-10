@@ -50,7 +50,6 @@ export function AssistantChat() {
   const MAX_CHAT_HEIGHT = 560; // Maximum card height
   const HEADER_HEIGHT = 65; // Header + border
   const INPUT_HEIGHT = 72; // Input bar + padding
-  console.log('simple shopify log', shopifyPlaceholder, initRedirectShopify)
 
 
   // Initialize session ID and welcome message on mount
@@ -148,7 +147,6 @@ export function AssistantChat() {
   // 
   const handleSendMessage = async (messageOverride?: string) => {
     const message = messageOverride || input;
-    console.log('mess override', messageOverride, input)
     if (!message.trim()) return;
     // if (!input.trim()) return;
 
@@ -192,7 +190,6 @@ export function AssistantChat() {
         data.response.text || "Sorry, I couldn't process that.";
       const assistantProducts = data?.response?.products;
       const assistantTitle = data?.response?.title;
-      console.log('assistant ressss', assistantResponse);
 
       // Only update if the response is different
       if (assistantResponse !== latestResponse) {
@@ -237,7 +234,7 @@ export function AssistantChat() {
         const matchedProd = matchProducts(assistantProducts, products);
         console.log("matched", matchedProd);
 
-        if (matchProducts?.length > 0) {
+        if (matchedProd?.length > 0) {
           // Store in session storage
           const existing = JSON.parse(sessionStorage.getItem("aiRecommendedProducts") || "[]");
 
@@ -259,17 +256,9 @@ export function AssistantChat() {
           });
           console.log("message and recommendations", recommendedProducts);
           // setRecommendedProducts(mentionedProducts);
-          if (isPhone) {
-            setNudgeTimeout(50);
-            router.push("/recommended");
-          } else {
-            setTimeout(() => {
-              setIsDialogOpen(true);
-              setLoader(true);
-              setTimeout(() => {
-                setLoader(false);
-              }, 500);
-            }, 300);
+          if (matchedProd.length > 0) {
+            console.log('working on re com')
+            router.push('/recommended')
           }
         }
       }
@@ -283,17 +272,10 @@ export function AssistantChat() {
 
   //show agent response based on shopify placeholder, when user initialized from shopify
   useEffect(() => {
-    console.log('init placeholder assistant call', initRedirectShopify, shopifyPlaceholder)
+
     if (initRedirectShopify && shopifyPlaceholder) {
-      // Wait for input state to update before sending message
-      // setTimeout(() => {
-      //   console.log('sending plcehld quest to chat')
-      //   handleSendMessage(shopifyPlaceholder);
-      //   setInitRedirectShopify(false);
-      // }, 0);
       setTimeout(() => {
         if (isShopifyProductPage && initShopifyProductName) {
-          console.log('prouct page shopifyfff')
           handleSendMessage(`Product: ${initShopifyProductName}, Question: ${shopifyPlaceholder}`);
         }
         else {

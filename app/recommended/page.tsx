@@ -64,7 +64,7 @@ const Page = () => {
             <div className="flex min-h-screen flex-col relative">
                 <main className="flex-1">
                     <div className="mx-auto max-w-6xl px-4 sm:px-12 xl:px-6">
-                        <div className="space-y-5 mt-8 max-md:z-40 bg-white pb-1">
+                        <div className="md:hidden space-y-5 mt-8 max-md:z-40 bg-white pb-1">
 
                             <h1 className="text-xl md:text-2xl text-center">{title}</h1>
                         </div>

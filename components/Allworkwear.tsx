@@ -140,7 +140,7 @@ export default function AllWorkWear() {
         <div className="flex min-h-screen flex-col relative">
             <main className="flex-1">
                 <div className="mx-auto max-w-6xl px-4 sm:px-12 xl:px-12">
-                    <div className="space-y-5 md:mt-4 ">
+                    <div className="max-md:block hidden space-y-5 ">
                         <h1 className="text-[40px]">All Workwear</h1>
                         {/* <div className="block md:hidden"><ChatBot /></div> */}
                         <p className=" text-muted-foreground/75 max-w-md lg:max-w-3xl md:text-lg tracking-wide">
@@ -150,7 +150,7 @@ export default function AllWorkWear() {
                     </div>
 
                     {/* Filter and Sort */}
-                    <div className="-mt-4 md:mt-9 mb-4 md:mb-6 flex flex-wrap items-center justify-between gap-4">
+                    <div className="-mt-4 md:mt-4 mb-4 md:mb-6 flex flex-wrap items-center justify-between gap-4">
                         {/* <div className="mt-12 md:mt-14 lg:mt-16 mb-4 md:mb-6 lg:mb-9 flex flex-wrap items-center justify-between gap-4"> */}
                         {/* <div className="flex items-center gap-4">
                             <span className="md:hidden flex items-center gap-2 text-muted-foreground text-sm">

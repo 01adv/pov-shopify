@@ -322,9 +322,9 @@ export function AssistantChat() {
   }, [isExpanded, isTyping]);
 
   // Auto scroll to bottom when messages change
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [isTyping]);
+  // useEffect(() => {
+  //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  // }, [isTyping]);
 
   const shouldScroll = chatHeight === MAX_CHAT_HEIGHT;
 
@@ -333,9 +333,11 @@ export function AssistantChat() {
 
   return (
     <div
-      className=" z-40 fixed bottom-1 md:bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center pointer-events-none transition-all duration-150 ease-in-out"
+      // className=" z-40 fixed bottom-1 md:bottom-8 px-4 mx-auto lg:px-0 w-full flex items-center justify-center pointer-events-none transition-all duration-150 ease-in-out"
+      className=" z-40 w-full mx-auto flex items-center justify-center pointer-events-none transition-all duration-150 ease-in-out"
     >
-      <div className="relative w-full lg:max-w-[400px] pointer-events-auto">
+      {/* <div className="relative w-full lg:max-w-[400px] pointer-events-auto"> */}
+      <div className="relative w-full pointer-events-auto">
         {/* Product Popup */}
         {!isPhone && (
           <ProductPopup
@@ -361,25 +363,25 @@ export function AssistantChat() {
         {/* Chat Interface */}
         {isExpanded || (isProductDetailsPage && nudge) ? (
           <Card
-            className="shadow-lg flex flex-col transition-all duration-300 ease-in-out pt-1 pb-3 px-3 no-scrollbar gap-3"
+            className="max-md:shadow-lg md:shadow-none md:border-none flex flex-col transition-all duration-300 ease-in-out pt-1 md:pt-0 pb-3 md:pb-1 max-md:px-3 no-scrollbar gap-3 md:gap-2 md:bg-transparent"
             style={{
               maxHeight: `${MAX_CHAT_HEIGHT}px`,
               // minHeight: `${MIN_CHAT_HEIGHT}px`,
             }}
           >
             <div
-              className={`flex-1 no-scrollbar ${shouldScroll ? "overflow-y-auto" : "overflow-visible"
+              className={`flex-1 no-scrollbar ${shouldScroll ? "overflow-y-auto" : "overflow-visible md:order-2"
                 }`}
               ref={messagesContainerRef}
             >
               <div className="">
-                <span className=" flex justify-end w-full">
+                <span className="md:hidden flex justify-end w-full">
                   <button className="cursor-pointer" onClick={() => { setIsExpanded(false); setNudge(''); setLatestResponse(''); setWelcomeMessageSeen(true) }}>
                     <X className=" text-muted-foreground/40" size={12} />
                   </button>
                 </span>
                 <div className="flex justify-start">
-                  <div className="w-full rounded-xl p-2 bg-[#F9F9F9] border border-primary">
+                  <div className="w-full rounded-xl p-2 md:px-4 bg-[#F9F9F9] border border-primary">
 
                     {isFetching ? (
                       <ChatLoader showText={true} />
@@ -403,7 +405,7 @@ export function AssistantChat() {
               </div>
             </div>
 
-            <div className="">
+            <div className="md:order-1">
               <InputBar
                 className="border-muted-foreground/20"
                 input={input}

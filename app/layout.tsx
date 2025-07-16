@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import type React from "react";
 import "./globals.css";
+import GlobalChatUi from "@/components/chatbot/GlobalChatUi";
 // import { ThemeProvider } from "@/components/theme-provider"
 
 // Import Quicksand font from Google Fonts
@@ -33,8 +34,8 @@ export default function RootLayout({
       <body className={`${quicksand.variable} font-sans`}>
         <ProductProvider>
           <Header />
-          {/* <ChatBot /> */}
-          <AssistantChat />
+          {/* <AssistantChat /> */}
+          <GlobalChatUi />
           {children}
         </ProductProvider>
       </body>

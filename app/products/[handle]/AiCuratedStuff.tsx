@@ -29,10 +29,10 @@ const AiCuratedStuff = ({ handle }: { handle: string }) => {
 
     return (
         <div className=" w-full lg:ml-36">
-            <div className=" max-w-sm lg:w-[412px] py-2 px-4 bg-primary  lg:ml-2">
+            {/* <div className=" max-w-sm lg:w-[412px] py-2 px-4 bg-primary  lg:ml-2">
                 <p className="text-white text-center font-semibold">AI Curated Outfits</p>
-            </div>
-            <div className="pt-3 pb-2.5 lg:pb-10 lg:ml-2 max-w-5xl">
+            </div> */}
+            <div className=" pb-2.5 lg:pb-4 lg:ml-2 max-w-5xl">
                 <div className="flex justify-start space-x-4 overflow-x-scroll no-scrollbar ">
                     {/* {aiCuratedProducts.filter(aiProduct => aiProduct.name !== selectedVariant.id.toString()).map((product, index) => ( */}
                     {matchedProducts.filter(aiProduct => aiProduct.handle !== handle).map((product, index) => (
